@@ -64,13 +64,14 @@ async function requireSession() {
 
 function applyPermissions() {
   document.body.classList.toggle("is-admin", currentIsAdmin);
+  document.body.classList.toggle("body-admin", currentIsAdmin);
   document.querySelectorAll(".admin-only").forEach((element) => {
     element.hidden = !currentIsAdmin;
     element.style.display = currentIsAdmin ? "" : "none";
   });
 }
 
-function switchTab(pageId, element) {
+function switchTab(pageId, element, updateUrl = true) {
   // Tampilkan loading logo setiap kali berpindah tab (termasuk Event dan History).
   const pageLoader = document.getElementById("sportify-page-loader");
   if (pageLoader) {
@@ -85,13 +86,18 @@ function switchTab(pageId, element) {
   const selectedPage = document.getElementById("page-" + pageId);
   if (selectedPage) selectedPage.classList.add("active");
 
-  // Ikon Login Admin hanya ditampilkan pada halaman Galery/detail galeri.
-  const adminLoginIcon = document.getElementById("headerAdminLogin");
-  if (adminLoginIcon) {
-    adminLoginIcon.hidden = !["history", "event-detail"].includes(pageId);
+  if (updateUrl && pageId !== "event-detail") {
+    const url = new URL(window.location.href);
+    url.searchParams.set("tab", pageId);
+    url.hash = "";
+    history.pushState({ tab: pageId }, "", url);
   }
 
-  const activeLink = element || window.event?.currentTarget;
+  const adminLoginIcon = document.getElementById("headerAdminLogin");
+  if (adminLoginIcon) adminLoginIcon.hidden = false;
+
+  document.querySelectorAll(".nav-link").forEach(link => link.classList.remove("active"));
+  const activeLink = element || window.event?.currentTarget || [...document.querySelectorAll(".nav-link")].find(link => (link.getAttribute("onclick") || "").includes(`switchTab('${pageId}'`));
   if (activeLink) activeLink.classList.add("active");
 
   // Jadwal selalu dirender ulang dari data event terbaru saat halaman dibuka.
@@ -112,11 +118,8 @@ function showPage(pageId) {
   const selectedPage = document.getElementById("page-" + pageId);
   if (selectedPage) selectedPage.classList.add("active");
 
-  // Ikon Login Admin hanya tampil di Galery dan detail galeri.
   const adminLoginIcon = document.getElementById("headerAdminLogin");
-  if (adminLoginIcon) {
-    adminLoginIcon.hidden = !["history", "event-detail"].includes(pageId);
-  }
+  if (adminLoginIcon) adminLoginIcon.hidden = false;
 }
 
 function showToast(message, type = "success") {
@@ -1566,14 +1569,17 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   // Buka tab yang diminta dari halaman lain, misalnya crew.html -> Jadwal/Registrasi.
-  const requestedTab = params.get("tab") || window.location.hash.replace(/^#/, "");
+  const requestedTab = params.get("tab");
   if (requestedTab) {
-    const allowedTabs = ["beranda", "history", "event", "registrasi", "crew", "jadwal"];
+    const allowedTabs = ["beranda", "event", "event-detail", "history", "jadwal"];
     if (allowedTabs.includes(requestedTab)) {
-      const targetNav = [...document.querySelectorAll(".nav-link")].find((link) =>
-        (link.getAttribute("onclick") || "").includes(`switchTab('${requestedTab}'`)
-      );
-      switchTab(requestedTab, targetNav);
+      const targetNav = [...document.querySelectorAll(".nav-link")].find(link => (link.getAttribute("onclick") || "").includes(`switchTab('${requestedTab}'`));
+      switchTab(requestedTab, targetNav, false);
     }
   }
+});
+
+window.addEventListener("popstate", () => {
+  const tab = new URLSearchParams(location.search).get("tab") || "beranda";
+  if (["beranda", "event", "history", "jadwal"].includes(tab)) switchTab(tab, null, false);
 });

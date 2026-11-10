@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sportify Kandilo</title>
+    <title>Beranda • Sportify Kandilo</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -1320,7 +1320,7 @@ body.is-admin .admin-logout-nav{display:block!important;}
 .top .logout, .top .logout-link {color:#7f8c8d!important;text-decoration:none!important;font-size:18px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-left:2px!important;}
 .top .logout:hover, .top .logout-link:hover {color:#243746!important;}
 .kdm-admin-only-logout{display:none!important;}
-body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{display:inline-flex!important;}
+body.is-admin .kdm-admin-only-logout{display:inline-flex!important;}
 @media(max-width:600px){.top,.top-header{height:58px!important;padding:0 10px!important}.top .icons,.top-header .header-icons{gap:6px!important}.top .user,.top .user-profile{margin-left:3px!important;padding-left:8px!important}.top .icon-btn,.top-header .global-header-icon-btn,.top-header .header-icon-btn{width:30px!important;height:30px!important;min-width:30px!important}.top .avatar,.top .user-avatar{width:32px!important;height:32px!important;min-width:32px!important}}
 </style>
 
@@ -1336,7 +1336,7 @@ body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{dis
             <div class="brand-text"><b>SPORTIFY</b><span>KANDILO</span></div>
         </div>
         
-        <div class="menu-label">Main Menu</div>
+        <div class="menu-label">Menu Utama</div>
        <!-- KODE BARU (Sudah ditambahkan ', this') -->
 <ul class="nav-menu">
     <li class="nav-item">
@@ -1354,7 +1354,7 @@ body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{dis
     <li class="nav-item">
         <a class="nav-link" onclick="switchTab('history', this)">
             <i class="fa-solid fa-clock-rotate-left"></i>
-            <span>Galery</span>
+            <span>Galeri</span>
         </a>
     </li>
     <li class="nav-item">
@@ -1369,6 +1369,12 @@ body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{dis
         <a class="nav-link" href="crew.html" title="Crew">
             <i class="fa-solid fa-users"></i>
             <span>Crew</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="hobby.html" title="Hobby">
+            <i class="fa-solid fa-futbol"></i>
+            <span>Hobby</span>
         </a>
     </li>
     <li class="nav-item">
@@ -1405,7 +1411,7 @@ body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{dis
                     <button type="button" class="global-header-icon-btn" id="global-notification-btn" title="Notifikasi" aria-label="Notifikasi">
                         <i class="fa-regular fa-bell"></i><span class="global-header-badge" id="global-notification-badge">0</span>
                     </button>
-                    <a href="login.php" class="header-admin-login gallery-admin-login" id="headerAdminLogin" title="Login Admin" hidden><i class="fa-solid fa-trash-can"></i><span id="headerAdminLoginText">Login Admin</span></a>
+                    <a href="login.php?admin=1&amp;next=index.html" class="header-admin-login" id="headerAdminLogin" title="Login Admin"><i class="fa-solid fa-right-to-bracket"></i><span id="headerAdminLoginText">Login Admin</span></a>
                     <button type="button" class="global-header-icon-btn" id="global-message-btn" title="Pesan" aria-label="Pesan">
                         <i class="fa-regular fa-envelope"></i><span class="global-header-badge" id="global-message-badge"></span>
                     </button>
@@ -1432,7 +1438,7 @@ body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{dis
 
             <!-- 2. HISTORY PAGE -->
             <section id="page-history" class="page-view">
-                <h2 class="page-title">Galery - Arsip Acara</h2>
+                <h2 class="page-title">Galeri - Arsip Acara</h2>
                 <div class="card">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
@@ -1625,12 +1631,12 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
     if (link && text) {
       if (admin) {
-        link.href = 'switch_to_user.php';
-        link.title = 'Buka Halaman User';
-        text.textContent = 'Halaman User';
-        if (icon) icon.className = 'fa-solid fa-user';
+        link.href = 'logout.php?next=' + encodeURIComponent(location.pathname.split('/').pop() + location.search);
+        link.title = 'Keluar Admin';
+        text.textContent = 'Keluar Admin';
+        if (icon) icon.className = 'fa-solid fa-right-from-bracket';
       } else {
-        link.href = 'login.php';
+        link.href = 'login.php?admin=1&next=' + encodeURIComponent(location.pathname.split('/').pop() + location.search);
         link.title = 'Login Admin';
         text.textContent = 'Login Admin';
         if (icon) icon.className = 'fa-solid fa-right-to-bracket';
@@ -1718,8 +1724,7 @@ document.addEventListener('click',function(e){
 (function(){
   const link=document.getElementById('headerAdminLogin');
   if(!link) return;
-  const show=!!document.querySelector('#page-history.active, #page-event-detail.active');
-  link.hidden=!show;
+  link.hidden=false;
 })();
 </script>
 <style id="brand-logo-consistency">
@@ -1732,6 +1737,7 @@ document.addEventListener('click',function(e){
 
 
 <link rel="stylesheet" href="responsive.css">
+<script src="app-nav.js"></script>
 <script src="responsive.js"></script>
 </body>
 </html>
