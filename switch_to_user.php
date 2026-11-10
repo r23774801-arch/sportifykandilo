@@ -1,13 +1,4 @@
 <?php
-session_start();
-// Keluar dari mode Admin dan kembali ke halaman User/Public.
-$_SESSION = [];
-if (ini_get('session.use_cookies')) {
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
-        $params['path'], $params['domain'], $params['secure'], $params['httponly']
-    );
-}
-session_destroy();
-header('Location: index.html');
+// Backward-compatible route: this action is a logout.
+header('Location: logout.php?next=' . rawurlencode('index.html'));
 exit;

@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sportify Kandilo</title>
+<title>Gabung Event • Sportify Kandilo</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root{--dark:#111827;--blue:#243746;--yellow:#ffcf00;--orange:#f37021;--bg:#f4f7fb;--line:#e2e8f0;--muted:#667085;--green:#16a34a;--red:#dc2626;--purple:#7c3aed}
@@ -105,7 +105,7 @@
 
 <style id="admin-logout-sidebar">
 .admin-logout-nav{display:none!important;}
-body.body-admin .admin-logout-nav{display:block!important;}
+body.is-admin .admin-logout-nav{display:block!important;}
 .admin-logout-nav a{color:#ffb4b4!important;}
 .admin-logout-nav a:hover{background:rgba(239,68,68,.14)!important;color:#fff!important;}
 </style>
@@ -123,20 +123,20 @@ body.body-admin .admin-logout-nav{display:block!important;}
 .top .logout, .top .logout-link {color:#7f8c8d!important;text-decoration:none!important;font-size:18px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-left:2px!important;}
 .top .logout:hover, .top .logout-link:hover {color:#243746!important;}
 .kdm-admin-only-logout{display:none!important;}
-body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{display:inline-flex!important;}
+body.is-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{display:inline-flex!important;}
 @media(max-width:600px){.top,.top-header{height:58px!important;padding:0 10px!important}.top .icons,.top-header .header-icons{gap:6px!important}.top .user,.top .user-profile{margin-left:3px!important;padding-left:8px!important}.top .icon-btn,.top-header .global-header-icon-btn,.top-header .header-icon-btn{width:30px!important;height:30px!important;min-width:30px!important}.top .avatar,.top .user-avatar{width:32px!important;height:32px!important;min-width:32px!important}}
 </style>
 
 
 <style id="kdm-user-hide-account-top">
 /* KDM: pada halaman User, sembunyikan tulisan User dan ikon profil. Admin tetap melihat informasi akun. */
-body:not(.body-admin) .visitor-header-hidden{display:none!important;}
-body.body-admin .visitor-header-hidden{display:flex!important;}
+body:not(.is-admin) .visitor-header-hidden{display:none!important;}
+body.is-admin .visitor-header-hidden{display:flex!important;}
 </style>
 </head>
 <body>
 <aside class="sidebar"><div class="brand"><img src="./img/logo_sportify.jpeg" alt="Logo Sportify Kandilo"><div><b>SPORTIFY</b><span>KANDILO</span></div></div><div class="label">Menu Utama</div><ul class="nav">
-<li><a href="index.html"><i class="fa-solid fa-house"></i><span>Beranda</span></a></li><li><a class="active" href="registrasi.html"><i class="fa-solid fa-right-to-bracket"></i><span id="registerNavText">Join Event</span></a></li><li><a href="index.html?tab=history"><i class="fa-solid fa-clock-rotate-left"></i><span>Galery</span></a></li><li><a href="index.html?tab=event"><i class="fa-solid fa-trophy"></i><span>Event</span></a></li><li><a href="crew.html" title="Crew"><i class="fa-solid fa-users"></i><span>Crew</span></a></li><li><a href="index.html?tab=jadwal"><i class="fa-solid fa-calendar-days"></i><span>Jadwal</span></a></li><li><a href="tentang-kami.html"><i class="fa-solid fa-circle-info"></i><span>Tentang Kami</span></a></li>
+<li><a href="index.html"><i class="fa-solid fa-house"></i><span>Beranda</span></a></li><li><a class="active" href="registrasi.html"><i class="fa-solid fa-right-to-bracket"></i><span id="registerNavText">Join Event</span></a></li><li><a href="index.html?tab=history"><i class="fa-solid fa-clock-rotate-left"></i><span>Galeri</span></a></li><li><a href="index.html?tab=event"><i class="fa-solid fa-trophy"></i><span>Event</span></a></li><li><a href="crew.html" title="Crew"><i class="fa-solid fa-users"></i><span>Crew</span></a></li><li><a href="index.html?tab=jadwal"><i class="fa-solid fa-calendar-days"></i><span>Jadwal</span></a></li><li><a href="tentang-kami.html"><i class="fa-solid fa-circle-info"></i><span>Tentang Kami</span></a></li>
 <li class="admin-logout-nav"><a href="logout.php" title="Logout Admin"><i class="fa-solid fa-right-from-bracket"></i><span>Logout Admin</span></a></li></ul></aside>
 <div class="main"><header class="top">
 <div class="actions">
@@ -153,7 +153,7 @@ body.body-admin .visitor-header-hidden{display:flex!important;}
 </header><main class="content" id="content"></main></div>
 <script>
 let isAdmin=false;
-async function syncCommonHeader(){try{const r=await fetch('session.php?_='+Date.now(),{credentials:'same-origin',cache:'no-store'});const d=await r.json();const u=d?.user||{};isAdmin=!!d?.is_admin;document.body.classList.toggle('body-admin',isAdmin);const name=u?.nama_lengkap||u?.username||u?.nama||u?.name||(isAdmin?'admin':'User');const el=document.getElementById('headerUser');if(el)el.textContent=isAdmin?'admin':name;const prof=document.querySelector('.visitor-header-hidden');if(prof)prof.style.display=isAdmin?'flex':'none';}catch(e){const prof=document.querySelector('.visitor-header-hidden');if(prof)prof.style.display='none';}}
+async function syncCommonHeader(){try{const r=await fetch('session.php?_='+Date.now(),{credentials:'same-origin',cache:'no-store'});const d=await r.json();const u=d?.user||{};isAdmin=!!d?.is_admin;const name=u?.nama_lengkap||u?.username||u?.nama||u?.name||(isAdmin?'admin':'User');const el=document.getElementById('headerUser');if(el)el.textContent=isAdmin?'admin':name;const prof=document.querySelector('.visitor-header-hidden');if(prof)prof.style.display=isAdmin?'flex':'none';}catch(e){const prof=document.querySelector('.visitor-header-hidden');if(prof)prof.style.display='none';}}
 syncCommonHeader();const content=document.getElementById('content'),navText=document.getElementById('registerNavText');new MutationObserver(()=>{if(navText.textContent!=='Join Event')navText.textContent='Join Event'}).observe(navText,{childList:true});navText.textContent='Join Event';
 function esc(v){const d=document.createElement('div');d.textContent=v??'';return d.innerHTML}
 function fmtDate(v){if(!v)return '-';const d=new Date(v+'T00:00:00');return isNaN(d)?v:d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}
@@ -171,7 +171,7 @@ function statusBadge(s){const cls=s==='Disetujui'?'approved':s==='Ditolak'?'reje
 async function loadAdminRegistrations(){navText.textContent='Registrasi Akun';content.innerHTML=`<div class="card"><div class="admin-head"><div><h1 class="title">Registrasi Akun</h1><p class="subtitle">Daftar pendaftar yang masuk dari menu Gabung. Admin dapat menyetujui atau menolak pendaftaran.</p></div><button class="btn primary" onclick="loadAdminRegistrations()"><i class="fa-solid fa-rotate"></i> Refresh</button></div><div id="regArea" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Memuat pendaftaran...</div></div>`;try{const r=await fetch('api.php?action=get_registrations&_='+Date.now(),{credentials:'same-origin',cache:'no-store'});const d=await r.json();if(!r.ok||d.status==='error')throw new Error(d.message||'Data pendaftaran gagal dimuat.');const area=document.getElementById('regArea');if(!d.length){area.innerHTML='<div class="empty"><i class="fa-solid fa-user-plus" style="font-size:35px;margin-bottom:10px"></i><br>Belum ada pendaftaran dari User.</div>';return}const waiting=d.filter(x=>x.status==='Menunggu').length;area.innerHTML=`<div class="count">Total pendaftar: <b>${d.length}</b> &nbsp;•&nbsp; Menunggu persetujuan: <b>${waiting}</b></div><div class="table-wrap"><table class="user-table"><thead><tr><th>Foto</th><th>Nama</th><th>Alias</th><th>Instagram</th><th>WhatsApp</th><th>Jabatan</th><th>Event</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody>${d.map(r=>`<tr><td><div class="photo-wrap"><img class="avatar" src="${esc(r.foto_path)}" alt="Foto ${esc(r.nama_lengkap)}"></div></td><td><b>${esc(r.nama_lengkap)}</b></td><td>${esc(r.alias_nama||'-')}</td><td>${esc(r.instagram||'-')}</td><td>${esc(r.whatsapp)}</td><td><b>${esc(r.jabatan||'-')}</b></td><td><b>${esc(r.nama_event||'Event dihapus')}</b><br><span style="font-size:11px;color:#667085">${fmtDate(r.tanggal_pelaksanaan)}</span></td><td>${statusBadge(r.status)}</td><td>${fmtDate((r.created_at||'').slice(0,10))}</td><td><div style="display:flex;gap:6px;flex-wrap:wrap">${r.status!=='Disetujui'?`<button class="small-btn approve" onclick="setRegStatus(${r.id},'Disetujui')"><i class="fa-solid fa-check"></i> Setujui</button>`:''}${r.status!=='Ditolak'?`<button class="small-btn reject" onclick="setRegStatus(${r.id},'Ditolak')"><i class="fa-solid fa-xmark"></i> Tolak</button>`:''}<button class="small-btn del" onclick="deleteRegistration(${r.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('')}</tbody></table></div>`}catch(e){const area=document.getElementById('regArea');if(area)area.innerHTML=`<div class="error-box"><b>Gagal memuat pendaftaran.</b><br>${esc(e.message)}<br><button class="btn primary" style="margin-top:10px" onclick="loadAdminRegistrations()">Coba Lagi</button></div>`}}
 async function setRegStatus(id,status){if(status==='Disetujui'&&!confirm('Setujui pendaftaran ini?'))return;if(status==='Ditolak'&&!confirm('Tolak pendaftaran ini?'))return;try{const r=await fetch('api.php?action=update_registration_status',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({id,status})});const d=await r.json();if(!r.ok||d.status==='error')throw new Error(d.message||'Gagal mengubah status.');loadAdminRegistrations()}catch(e){alert(e.message)}}
 async function deleteRegistration(id){if(!confirm('Hapus data pendaftaran ini?'))return;try{const r=await fetch('api.php?action=delete_registration',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({id})});const d=await r.json();if(!r.ok||d.status==='error')throw new Error(d.message||'Gagal menghapus.');loadAdminRegistrations()}catch(e){alert(e.message)}}
-(async()=>{try{const s=await getSession();isAdmin=!!s.is_admin;document.body.classList.toggle('body-admin',isAdmin);document.body.classList.toggle('body-guest',!isAdmin);if(isAdmin)await loadAdminRegistrations();else renderUser()}catch(e){isAdmin=false;document.body.classList.remove('body-admin');document.body.classList.add('body-guest');renderUser()}})();
+(async()=>{try{const s=await getSession();isAdmin=!!s.is_admin;document.body.classList.toggle('body-guest',!isAdmin);if(isAdmin)await loadAdminRegistrations();else renderUser()}catch(e){isAdmin=false;document.body.classList.add('body-guest');renderUser()}})();
 </script>
 <style id="brand-consistency-final">
 @media(max-width:900px){
@@ -182,5 +182,6 @@ async function deleteRegistration(id){if(!confirm('Hapus data pendaftaran ini?')
 </style>
 
 <link rel="stylesheet" href="responsive.css">
+<script src="app-nav.js"></script>
 <script src="responsive.js"></script>
 </body></html>

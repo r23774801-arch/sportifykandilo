@@ -1,0 +1,29 @@
+<?php
+header('Content-Type: application/json; charset=UTF-8');
+require_once 'koneksi.php';
+require_once 'auth.php';
+function hobby_out($data,$code=200){http_response_code($code);echo json_encode($data,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);exit;}
+function hobby_admin(){if(!is_admin())hobby_out(['status'=>'error','message'=>'Akses hanya untuk admin.'],403);}
+$conn->query("CREATE TABLE IF NOT EXISTS hobby_members (id INT AUTO_INCREMENT PRIMARY KEY, nama VARCHAR(150) NOT NULL, nrp VARCHAR(80) NOT NULL, perusahaan VARCHAR(150) NOT NULL, hobby VARCHAR(100) NOT NULL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, UNIQUE KEY uniq_nrp_hobby (nrp,hobby)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+$photoColumn=$conn->query("SHOW COLUMNS FROM hobby_members LIKE 'foto_path'");
+if($photoColumn&&$photoColumn->num_rows===0)$conn->query("ALTER TABLE hobby_members ADD COLUMN foto_path VARCHAR(255) NULL AFTER hobby");
+$conn->query("CREATE TABLE IF NOT EXISTS hobby_settings (setting_key VARCHAR(40) PRIMARY KEY, setting_value LONGTEXT NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+$defaults=['hobbies'=>['Futsal','Basket','Badminton'],'companies'=>['PT. United Tractors Tbk','Sims','Pama']];
+foreach($defaults as $key=>$value){$stmt=$conn->prepare('INSERT IGNORE INTO hobby_settings(setting_key,setting_value) VALUES(?,?)');$json=json_encode($value,JSON_UNESCAPED_UNICODE);$stmt->bind_param('ss',$key,$json);$stmt->execute();$stmt->close();}
+$action=$_GET['action']??'get';
+if($action==='get'){$settings=$defaults;foreach($conn->query('SELECT setting_key,setting_value FROM hobby_settings') as $row){$decoded=json_decode($row['setting_value'],true);if(is_array($decoded))$settings[$row['setting_key']]=$decoded;}$members=[];$res=$conn->query('SELECT id,nama,nrp,perusahaan,hobby,foto_path FROM hobby_members ORDER BY nama');while($res&&$row=$res->fetch_assoc())$members[]=$row;hobby_out(['status'=>'success','settings'=>$settings,'members'=>$members,'is_admin'=>is_admin()]);}
+if($_SERVER['REQUEST_METHOD']!=='POST')hobby_out(['status'=>'error','message'=>'Metode tidak didukung.'],405);
+if($action==='upload_photo'){
+  if(!isset($_FILES['foto'])||$_FILES['foto']['error']!==UPLOAD_ERR_OK)hobby_out(['status'=>'error','message'=>'Pilih foto profil yang valid.'],400);
+  $foto=$_FILES['foto'];if($foto['size']>5*1024*1024)hobby_out(['status'=>'error','message'=>'Ukuran foto maksimal 5 MB.'],400);
+  $mime=(new finfo(FILEINFO_MIME_TYPE))->file($foto['tmp_name']);$allowed=['image/jpeg'=>'jpg','image/png'=>'png','image/webp'=>'webp'];if(!isset($allowed[$mime]))hobby_out(['status'=>'error','message'=>'Format foto harus JPG, PNG, atau WEBP.'],400);
+  $dir=__DIR__.'/uploads/hobby';if(!is_dir($dir)&&!mkdir($dir,0775,true))hobby_out(['status'=>'error','message'=>'Folder upload foto tidak dapat dibuat.'],500);
+  $name='hobby_'.date('Ymd_His').'_'.bin2hex(random_bytes(5)).'.'.$allowed[$mime];if(!move_uploaded_file($foto['tmp_name'],$dir.'/'.$name))hobby_out(['status'=>'error','message'=>'Foto profil gagal disimpan.'],500);
+  hobby_out(['status'=>'success','path'=>'uploads/hobby/'.$name]);
+}
+$payload=json_decode(file_get_contents('php://input'),true);if(!is_array($payload))hobby_out(['status'=>'error','message'=>'Data tidak valid.'],400);
+if($action==='register'){$nama=trim($payload['nama']??'');$nrp=trim($payload['nrp']??'');$perusahaan=trim($payload['perusahaan']??'');$hobby=trim($payload['hobby']??'');$photo=trim($payload['foto_path']??'');if(!$nama||!$nrp||!$perusahaan||!$hobby)hobby_out(['status'=>'error','message'=>'Semua kolom wajib diisi.'],400);$stmt=$conn->prepare('INSERT INTO hobby_members(nama,nrp,perusahaan,hobby,foto_path) VALUES(?,?,?,?,?)');$stmt->bind_param('sssss',$nama,$nrp,$perusahaan,$hobby,$photo);if(!$stmt->execute())hobby_out(['status'=>'error','message'=>$stmt->errno===1062?'NRP ini sudah terdaftar pada hobby tersebut.':'Pendaftaran gagal.'],400);hobby_out(['status'=>'success','message'=>'Pendaftaran hobby berhasil.']);}
+if($action==='settings'){hobby_admin();foreach(['hobbies','companies'] as $key){$items=array_values(array_unique(array_filter(array_map(fn($x)=>trim((string)$x),is_array($payload[$key]??null)?$payload[$key]:[]))));if(!$items)hobby_out(['status'=>'error','message'=>'Daftar hobby dan perusahaan tidak boleh kosong.'],400);$json=json_encode($items,JSON_UNESCAPED_UNICODE);$stmt=$conn->prepare('INSERT INTO hobby_settings(setting_key,setting_value) VALUES(?,?) ON DUPLICATE KEY UPDATE setting_value=VALUES(setting_value)');$stmt->bind_param('ss',$key,$json);$stmt->execute();}hobby_out(['status'=>'success','message'=>'Pilihan Hobby dan Perusahaan tersimpan.']);}
+if($action==='edit'){hobby_admin();$id=(int)($payload['id']??0);$nama=trim($payload['nama']??'');$nrp=trim($payload['nrp']??'');$perusahaan=trim($payload['perusahaan']??'');$hobby=trim($payload['hobby']??'');$photo=trim($payload['foto_path']??'');if(!$id||!$nama||!$nrp||!$perusahaan||!$hobby)hobby_out(['status'=>'error','message'=>'Semua kolom wajib diisi.'],400);$stmt=$conn->prepare('UPDATE hobby_members SET nama=?,nrp=?,perusahaan=?,hobby=?,foto_path=? WHERE id=?');$stmt->bind_param('sssssi',$nama,$nrp,$perusahaan,$hobby,$photo,$id);if(!$stmt->execute())hobby_out(['status'=>'error','message'=>'NRP tersebut sudah terdaftar untuk hobby ini.'],400);hobby_out(['status'=>'success','message'=>'Profil anggota berhasil diperbarui.']);}
+if($action==='delete'){hobby_admin();$id=(int)($payload['id']??0);if(!$id)hobby_out(['status'=>'error','message'=>'Anggota tidak valid.'],400);$stmt=$conn->prepare('DELETE FROM hobby_members WHERE id=?');$stmt->bind_param('i',$id);if(!$stmt->execute())hobby_out(['status'=>'error','message'=>'Data anggota gagal dihapus.'],500);if($stmt->affected_rows===0)hobby_out(['status'=>'error','message'=>'Anggota tidak ditemukan.'],404);hobby_out(['status'=>'success','message'=>'Anggota berhasil dihapus.']);}
+hobby_out(['status'=>'error','message'=>'Action tidak ditemukan.'],404);

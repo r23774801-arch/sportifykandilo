@@ -5,13 +5,15 @@ require_once 'auth.php';
 $error = '';
 
 $adminMode = isset($_GET['admin']) && $_GET['admin'] === '1';
+$next = trim((string)($_REQUEST['next'] ?? 'index.html'));
+if ($next === '' || preg_match('/^(?:[a-z]+:|\/\/|[\\\\])|\.\./i', $next) || str_contains($next, "\r") || str_contains($next, "\n")) $next = 'index.html';
 
 if (is_logged_in()) {
     if ($adminMode && !is_admin()) {
         $_SESSION = [];
         session_regenerate_id(true);
     } else {
-        header('Location: index.html');
+        header('Location: ' . $next);
         exit;
     }
 }
@@ -43,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'is_admin' => in_array(strtolower($role), ['admin','administrator','super admin','superadmin'], true)
         ];
         session_regenerate_id(true);
-        header('Location: index.html');
+        header('Location: ' . $next);
         exit;
         }
     }
@@ -115,6 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div id="sportify-page-loader" aria-hidden="true"><div class="sportify-loader-box"><div class="sportify-loader-wrap"><span class="sportify-loader-ring"></span><img class="sportify-loader-logo" src="img/logo_sportify.jpeg" alt="Sportify Kandilo"></div><div class="sportify-loader-text">SPORTIFY KANDILO</div><div class="sportify-loader-dots">•••</div></div></div>
 
     <form class="login-card" method="POST">
+        <input type="hidden" name="next" value="<?= htmlspecialchars($next, ENT_QUOTES, 'UTF-8') ?>">
         <div class="brand">
             <img src="img/logo_sportify.jpeg" alt="Logo Sportify Kandilo">
             <h1>SPORTIFY<span>KANDILO</span></h1>
