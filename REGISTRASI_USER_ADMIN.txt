@@ -1,0 +1,12 @@
+FITUR GABUNG -> REGISTRASI ADMIN
+
+Alur:
+1. User membuka sidebar "Registrasi Event".
+2. User mengisi nama, email, password.
+3. Data dikirim ke api.php?action=register_user.
+4. Server otomatis membuat role "User" jika belum ada.
+5. Akun disimpan ke tabel users dengan role User.
+6. Admin membuka halaman Registrasi; data diambil dari database dan akun baru tampil paling atas.
+7. Jika email sudah digunakan, pendaftaran ditolak.
+
+Tidak perlu import SQL tambahan untuk fitur registrasi jika tabel users dan roles sudah tersedia.

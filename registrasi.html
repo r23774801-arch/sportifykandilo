@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sportify Kandilo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--dark:#111827;--blue:#243746;--yellow:#ffcf00;--orange:#f37021;--bg:#f4f7fb;--line:#e2e8f0;--muted:#667085;--green:#16a34a;--red:#dc2626;--purple:#7c3aed}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Tahoma,sans-serif}body{background:var(--bg);color:#263746;min-height:100vh;display:flex}.sidebar{width:250px;min-height:100vh;background:linear-gradient(180deg,#111827,#243746);color:#fff;position:fixed;left:0;top:0;bottom:0}.brand{height:70px;padding:12px 18px;border-bottom:1px solid #ffffff18;display:flex;align-items:center;gap:12px;flex-shrink:0}.brand img{width:46px;height:46px;min-width:46px;object-fit:cover;border-radius:10px;background:#fff;display:block}.brand div{display:flex;flex-direction:column;justify-content:center;line-height:1.05;min-width:0}.brand b{font-size:17px;font-weight:800;letter-spacing:.3px}.brand span{display:block;color:var(--yellow);font-size:12px;font-weight:700;margin-top:4px;letter-spacing:.2px}.label{font-size:10px;color:#ffffff70;letter-spacing:1.3px;padding:22px 20px 9px;text-transform:uppercase}.nav{list-style:none;padding:0 12px}.nav li{margin-bottom:5px}.nav a{display:flex;gap:13px;align-items:center;padding:12px 15px;border-radius:10px;color:#ffffffb8;text-decoration:none;font-size:14px}.nav a:hover{background:#ffffff12;color:#fff}.nav a.active{background:linear-gradient(90deg,var(--yellow),var(--orange));color:#111827;font-weight:700}.nav i{width:20px;text-align:center}.main{margin-left:250px;width:calc(100% - 250px);min-height:100vh}.top{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:flex-end;padding:0 30px}.content{padding:30px;max-width:1200px;margin:auto}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:30px;box-shadow:0 10px 30px rgba(17,24,39,.06)}.title{font-size:30px;font-weight:800;color:#111827}.subtitle{margin-top:7px;color:var(--muted);font-size:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:25px}.field{display:flex;flex-direction:column;gap:7px}.field label{font-size:13px;font-weight:700;color:#344054}.field input,.field select{width:100%;padding:13px 14px;border:1px solid #d7dee8;border-radius:11px;outline:none;font-size:14px;background:#fff}.field input:focus,.field select:focus{border-color:#9b7aea;box-shadow:0 0 0 3px #7c3aed18}.full{grid-column:1/-1}.hint{font-size:12px;color:var(--muted);margin-top:2px}.actions{margin-top:24px;display:flex;gap:10px}.btn{border:0;border-radius:10px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:linear-gradient(90deg,var(--yellow),var(--orange));color:#111827}.outline{background:#fff;border:1px solid var(--line);color:#344054}.danger{background:#fee2e2;color:#b91c1c}.status{margin-top:15px;padding:12px;border-radius:10px;display:none;font-size:13px}.status.success{display:block;background:#ecfdf3;color:#027a48}.status.error{display:block;background:#fef3f2;color:#b42318}.status.info{display:block;background:#eff6ff;color:#1d4ed8}.admin-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:20px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}.user-table{width:100%;border-collapse:collapse;min-width:1000px}.user-table th,.user-table td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;vertical-align:middle}.user-table th{background:#f8fafc;color:#475467;font-size:12px;text-transform:uppercase;letter-spacing:.4px}.user-table tr:last-child td{border-bottom:0}.avatar{width:46px;height:46px;border-radius:10px;object-fit:cover;border:1px solid var(--line);background:#f8fafc}.badge{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800}.pending{background:#fef3c7;color:#92400e}.approved{background:#dcfce7;color:#166534}.rejected{background:#fee2e2;color:#991b1b}.small-btn{border:0;border-radius:8px;padding:7px 9px;font-weight:700;cursor:pointer;font-size:12px}.approve{background:#dcfce7;color:#166534}.reject{background:#fee2e2;color:#991b1b}.del{background:#f1f5f9;color:#475569}.empty{text-align:center;padding:35px;color:var(--muted)}.loading{text-align:center;padding:35px;color:#667085}.count{font-size:13px;color:var(--muted);margin-bottom:12px}.error-box{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239;padding:14px;border-radius:10px;font-size:13px;margin-top:15px}.event-note{margin-top:18px;padding:14px 16px;border-radius:12px;background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;font-size:13px}.photo-wrap{display:flex;align-items:center;gap:12px}.photo-wrap span{font-size:12px;color:var(--muted)}
+.combo{position:relative}.combo input{padding-right:42px}.combo-toggle{position:absolute;right:5px;top:5px;width:38px;height:38px;border:0;border-radius:8px;background:#f8fafc;color:#475467;cursor:pointer}.combo-list{position:absolute;z-index:30;left:0;right:0;top:calc(100% + 6px);max-height:250px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 16px 35px rgba(15,23,42,.16);padding:6px}.combo-option{width:100%;min-height:48px;border:0;background:#fff;border-radius:8px;padding:9px 10px;text-align:left;display:flex;align-items:center;gap:10px;cursor:pointer}.combo-option:hover,.combo-option:focus{background:#fff7ed;outline:2px solid #f3702130}.combo-option img{width:36px;height:36px;border-radius:9px;object-fit:cover;background:#f1f5f9}.combo-option small{display:block;color:var(--muted);margin-top:2px}.combo-empty{padding:14px;color:var(--muted);font-size:13px}.event-preview{display:none;align-items:center;gap:14px;margin-top:10px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#f8fafc}.event-preview.show{display:flex}.event-preview img{width:64px;height:64px;border-radius:12px;object-fit:cover;background:#e2e8f0}.event-preview b,.event-preview small{display:block}.event-preview small{color:var(--muted);margin-top:4px}
+@media(max-width:900px){.sidebar{width:78px}.brand div,.label,.nav span{display:none}.brand{justify-content:center}.nav a{justify-content:center}.main{margin-left:78px;width:calc(100% - 78px)}.content{padding:18px}.grid{grid-template-columns:1fr}.full{grid-column:auto}.admin-head{flex-direction:column}}
+.header-admin-login{display:inline-flex;align-items:center;justify-content:center;gap:0;width:36px;height:36px;padding:0;border:1px solid #e2e8f0;border-radius:9px;background:#fff;color:#243746;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;transition:.2s}.header-admin-login:hover{background:#fff3c4;border-color:#ffcf00;color:#111827}
+</style><style id="sportify-admin-login-responsive">.header-admin-login{display:inline-flex;align-items:center;justify-content:center;width:30px;height:38px;padding:0;border:0!important;border-radius:0;background:transparent!important;color:#6b168f!important;text-decoration:none;font-size:17px;font-weight:400;white-space:nowrap;transition:transform .15s ease,color .15s ease;box-shadow:none!important}.header-admin-login:hover{background:transparent!important;color:#4f0f6b!important;transform:scale(1.08)}.header-admin-login i{font-size:15px;line-height:1}.header-admin-login span{display:none!important}@media(max-width:600px){.header-admin-login{width:30px;height:38px;padding:0}.header-admin-login i{font-size:15px}}</style>
+<style id="sportify-user-top-icons-common">
+.top-header .header-actions, .top .actions, .top .header-actions{margin-left:auto!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;}
+.top-header .header-icons, .top .icons, .top .header-icons{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:14px!important;margin-left:auto!important;}
+.global-header-icon-btn,.header-icon-btn,.icon-btn{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#7f8c8d!important;text-decoration:none!important;box-shadow:none!important;cursor:pointer!important;}
+.global-header-icon-btn:hover,.header-icon-btn:hover,.icon-btn:hover{background:#f4f7fb!important;color:#243746!important;}
+.global-header-icon-btn i,.header-icon-btn i,.icon-btn i{font-size:17px!important;line-height:1!important;}
+.header-admin-login{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;color:#6b168f!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;text-decoration:none!important;box-shadow:none!important;}
+.header-admin-login:hover{background:#f4f7fb!important;color:#4f0f6b!important;transform:none!important;}
+.header-admin-login i{font-size:16px!important;line-height:1!important;}
+.header-admin-login span{display:none!important;}
+@media(max-width:600px){.top-header .header-icons,.top .icons,.top .header-icons{gap:8px!important;}.global-header-icon-btn,.header-icon-btn,.icon-btn,.header-admin-login{width:32px!important;height:32px!important;min-width:32px!important;}}
+</style>
+
+<style id="kdm-universal-user-top-icons">
+/* KDM: ikon header kanan atas diseragamkan di semua halaman user */
+.top, .top-header {
+  height: 64px !important;
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  padding: 0 28px !important;
+  background: #fff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+.top .actions, .top-header .header-actions {
+  width: 100% !important;
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+.top .icons, .top-header .header-icons {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+}
+.top .icon-btn, .top-header .global-header-icon-btn, .top-header .header-icon-btn, .top .header-icon-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #7f8c8d !important;
+  font-size: 18px !important;
+  box-shadow: none !important;
+}
+.top .icon-btn:hover, .top-header .global-header-icon-btn:hover, .top-header .header-icon-btn:hover {
+  background: #f4f6f8 !important;
+}
+.top .icon-btn i, .top-header .global-header-icon-btn i, .top-header .header-icon-btn i {
+  font-size: 17px !important;
+  line-height: 1 !important;
+}
+.header-admin-login {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #6b168f !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+.header-admin-login:hover {
+  background: #f4f6f8 !important;
+  color: #4f0f6b !important;
+  transform: none !important;
+}
+.header-admin-login i { font-size: 17px !important; line-height: 1 !important; }
+.header-admin-login span { display: none !important; }
+@media (max-width: 700px) {
+  .top, .top-header { padding: 0 16px !important; }
+  .top .icons, .top-header .header-icons { gap: 8px !important; }
+}
+</style>
+
+
+<style id="admin-logout-sidebar">
+.admin-logout-nav{display:none!important;}
+body.body-admin .admin-logout-nav{display:block!important;}
+.admin-logout-nav a{color:#ffb4b4!important;}
+.admin-logout-nav a:hover{background:rgba(239,68,68,.14)!important;color:#fff!important;}
+</style>
+
+<style id="kdm-common-top-header-final">
+/* Header kanan atas diseragamkan di semua halaman */
+.top, .top-header {height:64px!important;background:#fff!important;border-bottom:1px solid #e5e7eb!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;padding:0 18px!important;box-sizing:border-box!important;}
+.top .actions, .top-header .header-actions {margin-left:auto!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:0!important;height:100%!important;}
+.top .icons, .top-header .header-icons {display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:12px!important;margin:0!important;}
+.top .icon-btn, .top-header .global-header-icon-btn, .top-header .header-icon-btn {width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#7f8c8d!important;font-size:17px!important;cursor:pointer!important;}
+.top .icon-btn:hover, .top-header .global-header-icon-btn:hover, .top-header .header-icon-btn:hover {background:#f4f7fb!important;color:#243746!important;}
+.top .user, .top .user-profile {display:flex!important;align-items:center!important;gap:10px!important;margin-left:8px!important;padding-left:15px!important;border-left:1px solid #e5e7eb!important;height:36px!important;}
+.top .user > span:first-child, .top .user-profile > span:first-child {font-size:13px!important;font-weight:600!important;color:#263746!important;white-space:nowrap!important;}
+.top .avatar, .top .user-avatar {width:36px!important;height:36px!important;min-width:36px!important;border-radius:50%!important;background:#d1d5db!important;display:grid!important;place-items:center!important;color:#4b5563!important;}
+.top .logout, .top .logout-link {color:#7f8c8d!important;text-decoration:none!important;font-size:18px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-left:2px!important;}
+.top .logout:hover, .top .logout-link:hover {color:#243746!important;}
+.kdm-admin-only-logout{display:none!important;}
+body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{display:inline-flex!important;}
+@media(max-width:600px){.top,.top-header{height:58px!important;padding:0 10px!important}.top .icons,.top-header .header-icons{gap:6px!important}.top .user,.top .user-profile{margin-left:3px!important;padding-left:8px!important}.top .icon-btn,.top-header .global-header-icon-btn,.top-header .header-icon-btn{width:30px!important;height:30px!important;min-width:30px!important}.top .avatar,.top .user-avatar{width:32px!important;height:32px!important;min-width:32px!important}}
+</style>
+
+
+<style id="kdm-user-hide-account-top">
+/* KDM: pada halaman User, sembunyikan tulisan User dan ikon profil. Admin tetap melihat informasi akun. */
+body:not(.body-admin) .visitor-header-hidden{display:none!important;}
+body.body-admin .visitor-header-hidden{display:flex!important;}
+</style>
+</head>
+<body>
+<aside class="sidebar"><div class="brand"><img src="./img/logo_sportify.jpeg" alt="Logo Sportify Kandilo"><div><b>SPORTIFY</b><span>KANDILO</span></div></div><div class="label">Menu Utama</div><ul class="nav">
+<li><a href="index.html"><i class="fa-solid fa-house"></i><span>Beranda</span></a></li><li><a class="active" href="registrasi.html"><i class="fa-solid fa-right-to-bracket"></i><span id="registerNavText">Join Event</span></a></li><li><a href="index.html?tab=history"><i class="fa-solid fa-clock-rotate-left"></i><span>Galery</span></a></li><li><a href="index.html?tab=event"><i class="fa-solid fa-trophy"></i><span>Event</span></a></li><li><a href="crew.html" title="Crew"><i class="fa-solid fa-users"></i><span>Crew</span></a></li><li><a href="index.html?tab=jadwal"><i class="fa-solid fa-calendar-days"></i><span>Jadwal</span></a></li><li><a href="tentang-kami.html"><i class="fa-solid fa-circle-info"></i><span>Tentang Kami</span></a></li>
+<li class="admin-logout-nav"><a href="logout.php" title="Logout Admin"><i class="fa-solid fa-right-from-bracket"></i><span>Logout Admin</span></a></li></ul></aside>
+<div class="main"><header class="top">
+<div class="actions">
+  <div class="icons">
+    <button class="icon-btn" id="regNotificationBtn" title="Notifikasi" aria-label="Notifikasi"><i class="fa-regular fa-bell"></i><span class="about-badge" id="regNotificationBadge"></span></button>
+    <button class="icon-btn" id="regMessageBtn" title="Pesan" aria-label="Pesan"><i class="fa-regular fa-envelope"></i><span class="about-badge" id="regMessageBadge"></span></button>
+  </div>
+  <div class="user visitor-header-hidden">
+    <span id="headerUser">User</span>
+    <div class="avatar"><i class="fa-solid fa-user"></i></div>
+    <a href="logout.php" class="logout kdm-admin-only-logout" title="Logout Admin"><i class="fa-solid fa-right-from-bracket"></i></a>
+  </div>
+</div>
+</header><main class="content" id="content"></main></div>
+<script>
+let isAdmin=false;
+async function syncCommonHeader(){try{const r=await fetch('session.php?_='+Date.now(),{credentials:'same-origin',cache:'no-store'});const d=await r.json();const u=d?.user||{};isAdmin=!!d?.is_admin;document.body.classList.toggle('body-admin',isAdmin);const name=u?.nama_lengkap||u?.username||u?.nama||u?.name||(isAdmin?'admin':'User');const el=document.getElementById('headerUser');if(el)el.textContent=isAdmin?'admin':name;const prof=document.querySelector('.visitor-header-hidden');if(prof)prof.style.display=isAdmin?'flex':'none';}catch(e){const prof=document.querySelector('.visitor-header-hidden');if(prof)prof.style.display='none';}}
+syncCommonHeader();const content=document.getElementById('content'),navText=document.getElementById('registerNavText');new MutationObserver(()=>{if(navText.textContent!=='Join Event')navText.textContent='Join Event'}).observe(navText,{childList:true});navText.textContent='Join Event';
+function esc(v){const d=document.createElement('div');d.textContent=v??'';return d.innerHTML}
+function fmtDate(v){if(!v)return '-';const d=new Date(v+'T00:00:00');return isNaN(d)?v:d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})}
+async function getSession(){const r=await fetch('session.php?_='+Date.now(),{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw new Error('Belum login');return r.json()}
+let crewOptions=[],registrationEvents=[];
+function renderUser(){navText.textContent='Join Event';content.innerHTML=`<div class="card"><h1 class="title">Join Event</h1><p class="subtitle">Pilih nama yang sudah terdaftar di Crew, lalu pilih event yang ingin diikuti.</p><form id="registerForm"><div class="grid"><div class="field full"><label for="crew_search">Nama Crew <span style="color:#dc2626">*</span></label><div class="combo"><input id="crew_search" type="text" autocomplete="off" placeholder="Ketik atau pilih nama Crew..." aria-autocomplete="list" aria-controls="crew_options" aria-expanded="false"><input id="crew_id" name="crew_id" type="hidden"><button class="combo-toggle" id="crewToggle" type="button" aria-label="Buka daftar Crew"><i class="fa-solid fa-chevron-down"></i></button><div class="combo-list" id="crew_options" role="listbox" hidden></div></div><div class="hint">Belum terdaftar? Daftarkan data melalui menu Crew.</div></div><div class="field full"><label for="event_search">Pilih Event <span style="color:#dc2626">*</span></label><div class="combo"><input id="event_search" type="text" autocomplete="off" placeholder="Ketik atau pilih nama event..." aria-autocomplete="list" aria-controls="event_options" aria-expanded="false"><input id="event_id" name="event_id" type="hidden"><button class="combo-toggle" id="eventToggle" type="button" aria-label="Buka daftar event"><i class="fa-solid fa-chevron-down"></i></button><div class="combo-list" id="event_options" role="listbox" hidden></div></div><div class="hint">Semua event tersedia, termasuk event yang sudah selesai.</div><div class="event-preview" id="eventPreview"></div></div></div><div class="event-note"><i class="fa-solid fa-circle-info"></i> Setelah kamu mengirim permintaan join, statusnya <b>Menunggu Persetujuan</b>.</div><div class="actions"><button class="btn primary" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Join Event</button><a class="btn outline" href="index.html">Kembali</a></div><div id="status" class="status"></div></form></div>`;loadJoinData();document.getElementById('registerForm').addEventListener('submit',submitRegistration);setupCrewCombo();setupEventCombo()}
+async function loadJoinData(){try{const [cr,er]=await Promise.all([fetch('api.php?action=get_crew_options&_='+Date.now(),{cache:'no-store'}),fetch('api.php?action=get_registration_events&_='+Date.now(),{cache:'no-store'})]);crewOptions=await cr.json();registrationEvents=await er.json();if(!cr.ok||!Array.isArray(crewOptions))throw new Error(crewOptions.message||'Daftar Crew gagal dimuat.');if(!er.ok||!Array.isArray(registrationEvents))throw new Error(registrationEvents.message||'Event gagal dimuat.');renderCrewOptions('');renderEventOptions('')}catch(e){const s=document.getElementById('status');if(s){s.className='status error';s.textContent='✕ '+e.message}}}
+function setupCrewCombo(){const input=document.getElementById('crew_search'),list=document.getElementById('crew_options');const open=()=>{list.hidden=false;input.setAttribute('aria-expanded','true');renderCrewOptions(input.value)};input.addEventListener('focus',open);input.addEventListener('input',()=>{document.getElementById('crew_id').value='';open()});document.getElementById('crewToggle').addEventListener('click',()=>list.hidden?open():(list.hidden=true));document.addEventListener('click',e=>{if(!e.target.closest('.combo')){list.hidden=true;input.setAttribute('aria-expanded','false')}})}
+function renderCrewOptions(query){const list=document.getElementById('crew_options');if(!list)return;const q=(query||'').toLowerCase().trim();const rows=crewOptions.filter(c=>(c.nama_lengkap+' '+(c.alias_nama||'')+' '+(c.jabatan||'')).toLowerCase().includes(q));list.innerHTML=rows.length?rows.map(c=>`<button type="button" class="combo-option" role="option" data-id="${c.id}">${c.foto_path?`<img src="${esc(c.foto_path)}" alt="">`:'<span style="width:36px;height:36px;border-radius:9px;background:#f1f5f9;display:grid;place-items:center"><i class="fa-solid fa-user"></i></span>'}<span><b>${esc(c.nama_lengkap)}</b><small>${esc(c.alias_nama||c.jabatan||'Crew')}</small></span></button>`).join(''):'<div class="combo-empty">Nama Crew tidak ditemukan.</div>';list.querySelectorAll('[data-id]').forEach(b=>b.addEventListener('click',()=>{const c=crewOptions.find(x=>String(x.id)===b.dataset.id);document.getElementById('crew_id').value=b.dataset.id;document.getElementById('crew_search').value=c.nama_lengkap;list.hidden=true}))}
+function setupEventCombo(){const input=document.getElementById('event_search'),list=document.getElementById('event_options');const open=()=>{list.hidden=false;input.setAttribute('aria-expanded','true');renderEventOptions(input.value)};input.addEventListener('focus',open);input.addEventListener('input',()=>{document.getElementById('event_id').value='';renderEventPreview();open()});document.getElementById('eventToggle').addEventListener('click',()=>list.hidden?open():(list.hidden=true));document.addEventListener('click',e=>{if(!e.target.closest('#event_search')&&!e.target.closest('#eventToggle')&&!e.target.closest('#event_options')){list.hidden=true;input.setAttribute('aria-expanded','false')}})}
+function renderEventOptions(query){const list=document.getElementById('event_options');if(!list)return;const q=(query||'').toLowerCase().trim();const rows=registrationEvents.filter(e=>(e.nama_event+' '+(e.status||'')+' '+fmtDate(e.tanggal_pelaksanaan)).toLowerCase().includes(q));list.innerHTML=rows.length?rows.map(e=>`<button type="button" class="combo-option" role="option" data-event-id="${e.id}" style="padding:11px">${e.logo_event?`<img src="${esc(e.logo_event)}" alt="Logo ${esc(e.nama_event)}" style="width:48px;height:48px;object-fit:contain;background:#fff">`:'<span style="width:48px;height:48px;flex:0 0 48px;border-radius:10px;background:#f1f5f9;display:grid;place-items:center;color:#64748b"><i class="fa-solid fa-trophy"></i></span>'}<span style="min-width:0"><b style="display:block;font-size:14px;color:#1f2937">${esc(e.nama_event)}</b><small style="display:block;margin-top:4px;color:#667085">${fmtDate(e.tanggal_pelaksanaan)} • ${esc(e.status||'Tanpa status')}</small></span><span style="margin-left:auto;padding:4px 8px;border-radius:999px;background:${String(e.status).toLowerCase()==='selesai'?'#dcfce7':'#fff7d6'};color:${String(e.status).toLowerCase()==='selesai'?'#166534':'#92400e'};font-size:10px;font-weight:800">${esc(e.status||'Event')}</span></button>`).join(''):'<div class="combo-empty">Event tidak ditemukan.</div>';list.querySelectorAll('[data-event-id]').forEach(b=>b.addEventListener('click',()=>{const e=registrationEvents.find(x=>String(x.id)===b.dataset.eventId);document.getElementById('event_id').value=b.dataset.eventId;document.getElementById('event_search').value=e.nama_event;list.hidden=true;document.getElementById('event_search').setAttribute('aria-expanded','false');renderEventPreview()}))}
+function renderEventPreview(){const id=document.getElementById('event_id').value,p=document.getElementById('eventPreview'),e=registrationEvents.find(x=>String(x.id)===String(id));if(!e){p.className='event-preview';p.innerHTML='';return}p.className='event-preview show';p.innerHTML=`${e.logo_event?`<img src="${esc(e.logo_event)}" alt="Logo ${esc(e.nama_event)}" style="object-fit:contain">`:'<span style="width:64px;height:64px;border-radius:12px;background:#e2e8f0;display:grid;place-items:center"><i class="fa-solid fa-trophy"></i></span>'}<span><b>${esc(e.nama_event)}</b><small>${fmtDate(e.tanggal_pelaksanaan)} • ${esc(e.status||'Tanpa status')}</small></span>`}
+async function submitRegistration(e){e.preventDefault();const form=e.target,status=document.getElementById('status');if(!document.getElementById('crew_id').value){status.className='status error';status.textContent='✕ Pilih nama dari daftar Crew.';return}if(!document.getElementById('event_id').value){status.className='status error';status.textContent='✕ Pilih event dari daftar.';return}status.className='status info';status.textContent='Mengirim permintaan join...';const fd=new FormData(form);try{const r=await fetch('api.php?action=register_event',{method:'POST',body:fd,credentials:'same-origin'});const d=await r.json();if(!r.ok||d.status==='error')throw new Error(d.message||'Pendaftaran gagal.');status.className='status success';status.innerHTML='✓ Berhasil join <b>'+esc(d.event)+'</b>. Tunggu persetujuan Admin.';form.reset();renderEventPreview()}catch(err){status.className='status error';status.textContent='✕ '+(err.message||'Pendaftaran gagal.')}}
+function statusBadge(s){const cls=s==='Disetujui'?'approved':s==='Ditolak'?'rejected':'pending';return `<span class="badge ${cls}">${esc(s||'Menunggu')}</span>`}
+async function loadAdminRegistrations(){navText.textContent='Registrasi Akun';content.innerHTML=`<div class="card"><div class="admin-head"><div><h1 class="title">Registrasi Akun</h1><p class="subtitle">Daftar pendaftar yang masuk dari menu Gabung. Admin dapat menyetujui atau menolak pendaftaran.</p></div><button class="btn primary" onclick="loadAdminRegistrations()"><i class="fa-solid fa-rotate"></i> Refresh</button></div><div id="regArea" class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Memuat pendaftaran...</div></div>`;try{const r=await fetch('api.php?action=get_registrations&_='+Date.now(),{credentials:'same-origin',cache:'no-store'});const d=await r.json();if(!r.ok||d.status==='error')throw new Error(d.message||'Data pendaftaran gagal dimuat.');const area=document.getElementById('regArea');if(!d.length){area.innerHTML='<div class="empty"><i class="fa-solid fa-user-plus" style="font-size:35px;margin-bottom:10px"></i><br>Belum ada pendaftaran dari User.</div>';return}const waiting=d.filter(x=>x.status==='Menunggu').length;area.innerHTML=`<div class="count">Total pendaftar: <b>${d.length}</b> &nbsp;•&nbsp; Menunggu persetujuan: <b>${waiting}</b></div><div class="table-wrap"><table class="user-table"><thead><tr><th>Foto</th><th>Nama</th><th>Alias</th><th>Instagram</th><th>WhatsApp</th><th>Jabatan</th><th>Event</th><th>Status</th><th>Tanggal</th><th>Aksi</th></tr></thead><tbody>${d.map(r=>`<tr><td><div class="photo-wrap"><img class="avatar" src="${esc(r.foto_path)}" alt="Foto ${esc(r.nama_lengkap)}"></div></td><td><b>${esc(r.nama_lengkap)}</b></td><td>${esc(r.alias_nama||'-')}</td><td>${esc(r.instagram||'-')}</td><td>${esc(r.whatsapp)}</td><td><b>${esc(r.jabatan||'-')}</b></td><td><b>${esc(r.nama_event||'Event dihapus')}</b><br><span style="font-size:11px;color:#667085">${fmtDate(r.tanggal_pelaksanaan)}</span></td><td>${statusBadge(r.status)}</td><td>${fmtDate((r.created_at||'').slice(0,10))}</td><td><div style="display:flex;gap:6px;flex-wrap:wrap">${r.status!=='Disetujui'?`<button class="small-btn approve" onclick="setRegStatus(${r.id},'Disetujui')"><i class="fa-solid fa-check"></i> Setujui</button>`:''}${r.status!=='Ditolak'?`<button class="small-btn reject" onclick="setRegStatus(${r.id},'Ditolak')"><i class="fa-solid fa-xmark"></i> Tolak</button>`:''}<button class="small-btn del" onclick="deleteRegistration(${r.id})"><i class="fa-solid fa-trash"></i></button></div></td></tr>`).join('')}</tbody></table></div>`}catch(e){const area=document.getElementById('regArea');if(area)area.innerHTML=`<div class="error-box"><b>Gagal memuat pendaftaran.</b><br>${esc(e.message)}<br><button class="btn primary" style="margin-top:10px" onclick="loadAdminRegistrations()">Coba Lagi</button></div>`}}
+async function setRegStatus(id,status){if(status==='Disetujui'&&!confirm('Setujui pendaftaran ini?'))return;if(status==='Ditolak'&&!confirm('Tolak pendaftaran ini?'))return;try{const r=await fetch('api.php?action=update_registration_status',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({id,status})});const d=await r.json();if(!r.ok||d.status==='error')throw new Error(d.message||'Gagal mengubah status.');loadAdminRegistrations()}catch(e){alert(e.message)}}
+async function deleteRegistration(id){if(!confirm('Hapus data pendaftaran ini?'))return;try{const r=await fetch('api.php?action=delete_registration',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({id})});const d=await r.json();if(!r.ok||d.status==='error')throw new Error(d.message||'Gagal menghapus.');loadAdminRegistrations()}catch(e){alert(e.message)}}
+(async()=>{try{const s=await getSession();isAdmin=!!s.is_admin;document.body.classList.toggle('body-admin',isAdmin);document.body.classList.toggle('body-guest',!isAdmin);if(isAdmin)await loadAdminRegistrations();else renderUser()}catch(e){isAdmin=false;document.body.classList.remove('body-admin');document.body.classList.add('body-guest');renderUser()}})();
+</script>
+<style id="brand-consistency-final">
+@media(max-width:900px){
+  .brand{height:70px;padding:12px;justify-content:center;}
+  .brand img{width:46px;height:46px;min-width:46px;}
+  .brand div{display:none;}
+}
+</style>
+
+<link rel="stylesheet" href="responsive.css">
+<script src="responsive.js"></script>
+</body></html>

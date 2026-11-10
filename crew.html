@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sportify Kandilo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--dark:#111827;--blue:#243746;--yellow:#ffcf00;--orange:#f37021;--bg:#f4f7fb;--muted:#7f8c8d;--line:#e2e8f0;--white:#fff;--sidebar:250px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Tahoma,sans-serif}body{background:var(--bg);color:#263746;min-height:100vh;display:flex}.sidebar{width:var(--sidebar);min-height:100vh;background:linear-gradient(180deg,#111827,#243746);color:#fff;position:fixed;left:0;top:0;bottom:0;padding-bottom:20px;z-index:10}.brand{height:70px;padding:12px 18px;border-bottom:1px solid #ffffff18;display:flex;align-items:center;gap:12px;flex-shrink:0}.brand img{width:46px;height:46px;min-width:46px;object-fit:cover;border-radius:10px;background:#fff;display:block}.brand div{display:flex;flex-direction:column;justify-content:center;line-height:1.05;min-width:0}.brand b{font-size:17px;font-weight:800;letter-spacing:.3px}.brand span{display:block;color:var(--yellow);font-size:12px;font-weight:700;margin-top:4px;letter-spacing:.2px}.label{font-size:10px;color:#ffffff70;letter-spacing:1.3px;padding:22px 20px 9px;text-transform:uppercase}.nav{list-style:none;padding:0 12px}.nav li{margin-bottom:5px}.nav a{display:flex;gap:13px;align-items:center;padding:12px 15px;border-radius:10px;color:#ffffffb8;text-decoration:none;font-size:14px}.nav a:hover{background:#ffffff12;color:#fff}.nav a.active{background:linear-gradient(90deg,var(--yellow),var(--orange));color:#111827;font-weight:700}.nav i{width:20px;text-align:center}.main{margin-left:var(--sidebar);width:calc(100% - var(--sidebar));min-height:100vh}.top{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;flex-shrink:0}.welcome-text{display:none!important}.welcome-text h2{font-size:18px;font-weight:600;color:#263746}.header-actions{display:flex;align-items:center;gap:20px}.search-box{position:relative;width:260px}.search-box input{width:100%;padding:8px 16px 8px 38px;border-radius:20px;border:1px solid var(--line);background:#f4f7fb;font-size:13px;outline:none}.search-box i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#7f8c8d;font-size:14px}.header-icons{display:flex;gap:15px;color:#7f8c8d;font-size:18px}.header-icons i{cursor:pointer}.header-icon-btn{position:relative;width:38px;height:38px;border:0;background:transparent;color:#7f8c8d;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;transition:.2s}.header-icon-btn:hover{background:rgba(255,193,7,.12);color:#f59e0b}.header-badge{display:none;position:absolute;top:1px;right:1px;min-width:16px;height:16px;padding:0 4px;border-radius:999px;background:#ef4444;color:#fff;font:700 10px/16px Arial;text-align:center}.header-badge:not(:empty){display:block}.header-popover{position:fixed;right:95px;top:62px;width:340px;max-width:calc(100vw - 30px);background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 18px 45px rgba(15,23,42,.18);padding:16px;z-index:9999}.header-popover h4{margin:0 0 10px;font-size:15px;color:#263746}.header-popover p{font-size:12px;color:#667085;line-height:1.5;margin:0}.header-popover-item{padding:11px;border:1px solid #edf0f3;border-radius:10px;background:#f8fafc;margin-top:8px}.header-popover-item strong{display:block;font-size:13px;color:#263746}.header-popover-item span{display:block;font-size:11px;color:#667085;margin-top:3px}.user-profile{display:flex;align-items:center;gap:10px;padding-left:15px;border-left:1px solid var(--line)}.user-avatar{width:36px;height:36px;border-radius:50%;background:#d1d5db;display:flex;align-items:center;justify-content:center;color:#4b5563}.logout-link{color:#7f8c8d;text-decoration:none;font-size:18px}.top .user-name{font-size:13px;font-weight:600;color:#263746}.visitor-header-hidden{display:none!important}.body-admin .visitor-header-hidden{display:flex!important}.content{padding:30px;max-width:1250px;margin:auto}.hero{background:linear-gradient(135deg,#111827,#243746);border-radius:20px;padding:32px;color:#fff;position:relative;overflow:hidden}.hero:after{content:'CREW';position:absolute;right:20px;bottom:-38px;font-size:110px;font-weight:900;color:#ffffff08}.hero h1{font-size:34px;letter-spacing:2px}.hero p{color:#ffffffb8;margin-top:7px}.stats{display:flex;gap:12px;margin-top:22px}.stat{background:#ffffff12;border:1px solid #ffffff18;border-radius:12px;padding:12px 18px}.stat strong{display:block;font-size:22px;color:var(--yellow)}.stat small{color:#fff9}.search{margin:22px 0;position:relative}.search input{width:100%;border:1px solid var(--line);background:#fff;padding:14px 18px 14px 44px;border-radius:12px;outline:none}.search i{position:absolute;left:17px;top:14px;color:#8a949d}.section-title{display:flex;align-items:center;justify-content:space-between;margin:28px 0 13px}.section-title h3{font-size:18px}.section-title span{font-size:12px;color:var(--muted)}.leader-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.role-section{margin-bottom:25px}.role-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}.role-head .icon{width:34px;height:34px;border-radius:10px;background:#fff0c2;color:#a36f00;display:grid;place-items:center}.role-head h4{font-size:15px}.role-head p{font-size:11px;color:var(--muted)}.crew-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;align-items:center;gap:15px;box-shadow:0 4px 14px #18212b08}.crew-photo{width:62px;height:62px;border-radius:16px;background:linear-gradient(135deg,#111827,#f37021);color:#fff;display:grid;place-items:center;font-size:20px;font-weight:800;flex-shrink:0}.crew-info{flex:1}.crew-info h5{font-size:16px}.crew-info .alias{font-size:12px;color:#f37021;font-weight:700;margin-top:2px}.crew-info p{font-size:12px;color:var(--muted);margin-top:5px}.badge{font-size:10px;padding:6px 9px;border-radius:999px;background:#fff5cf;color:#8a6500;font-weight:700}.member-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.member-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;display:flex;align-items:center;gap:12px}.member-photo{width:48px;height:48px;border-radius:13px;background:#eef2f7;display:grid;place-items:center;font-weight:800;color:#243746}.member-info{flex:1}.member-info h5{font-size:14px}.member-info p{font-size:11px;color:var(--muted);margin-top:3px}.empty{padding:35px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:15px}.crew-actions{display:none!important}.crew-photo,.member-photo{overflow:hidden}.crew-photo img,.member-photo img{width:100%;height:100%;object-fit:cover}.modal-box h3{margin-bottom:18px}.footer-note{margin-top:28px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:13px;font-size:12px;color:var(--muted)}
+
+/* LUXURY CREW STRUCTURE */
+.crew-structure{position:relative;padding:10px 4px 20px}.rank-row{display:flex;justify-content:center;gap:20px;position:relative;margin:0 auto 34px;flex-wrap:wrap}.rank-row:not(:last-child)::after{content:"";position:absolute;width:2px;height:34px;left:50%;bottom:-34px;background:linear-gradient(var(--yellow),var(--orange));transform:translateX(-50%);opacity:.65}.rank-row.two::before{content:"";position:absolute;top:-17px;left:25%;right:25%;height:2px;background:linear-gradient(90deg,transparent,var(--yellow),var(--orange),transparent);opacity:.65}.lux-card{position:relative;width:min(390px,100%);padding:24px 24px 22px;border-radius:22px;background:linear-gradient(145deg,#fff,#f7fafc);border:1px solid #e6eaf0;box-shadow:0 18px 40px rgba(17,24,39,.10),inset 0 1px #fff;display:flex;align-items:center;gap:18px;overflow:hidden}.lux-card::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:linear-gradient(180deg,var(--yellow),var(--orange))}.lux-card.primary{width:min(470px,100%);padding:30px;border:1px solid #f3d77a;box-shadow:0 22px 55px rgba(17,24,39,.16)}.lux-card.primary .lux-photo{width:88px;height:88px;border-radius:24px}.lux-photo{width:68px;height:68px;border-radius:20px;flex:0 0 auto;display:grid;place-items:center;background:linear-gradient(135deg,#111827,#374b5c 55%,#f37021);color:#fff;font-size:22px;font-weight:900;overflow:hidden;border:3px solid #fff;box-shadow:0 7px 18px #11182726}.lux-photo img{width:100%;height:100%;object-fit:cover}.lux-info{min-width:0;flex:1}.lux-role{display:inline-flex;align-items:center;gap:7px;font-size:10px;letter-spacing:1.4px;font-weight:900;color:#8b6500;background:#fff3c4;padding:6px 10px;border-radius:999px;text-transform:uppercase;margin-bottom:8px}.lux-info h5{font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lux-card.primary .lux-info h5{font-size:24px}.lux-info p{font-size:12px;color:var(--muted);margin-top:5px}.structure-label{text-align:center;margin:5px 0 16px;color:#8b6500;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:900}.role-section .role-head{display:none}.role-section.lux-hidden{display:none}.rank-row .lux-card{animation:rise .45s ease both}.rank-row .lux-card:nth-child(2){animation-delay:.08s}@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(max-width:900px){.sidebar{width:78px}.brand{justify-content:center}.brand div,.label{display:none}.nav a span{display:none}.nav a{justify-content:center}.main{margin-left:78px;width:calc(100% - 78px)}.leader-grid,.member-grid{grid-template-columns:1fr}.content{padding:18px}.top{padding:0 18px}}
+
+
+.event-crew-selector{margin:22px 0 12px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 24px rgba(17,24,39,.05)}.event-crew-selector label{font-size:12px;font-weight:800;color:#475467;white-space:nowrap}.event-crew-selector select{flex:1;min-width:0;border:1px solid #d8dee8;border-radius:10px;padding:11px 12px;background:#f8fafc;font-size:13px;outline:none}.selected-event-note{font-size:12px;color:#667085;margin:6px 0 14px}.admin-event-select{width:100%;border:1px solid #d8dee8;border-radius:10px;padding:11px 12px;background:#fff;font-size:13px;margin-bottom:14px}.structure-slide-title{font-size:14px;font-weight:800;margin-bottom:14px;color:#263746}.structure-slide-title span{font-weight:500;color:#667085;margin-left:6px}.admin-empty{padding:18px;border:1px dashed #d8dee8;border-radius:12px;color:#667085;background:#fff;text-align:center}
+.admin-crew-panel{margin:22px 0;padding:20px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 8px 24px rgba(17,24,39,.07)}
+.admin-panel-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}.admin-panel-head h3{font-size:18px}.admin-panel-head p{font-size:12px;color:#667085;margin-top:4px}.admin-slide-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;margin-bottom:12px;background:#f8fafc;border:1px solid var(--line);border-radius:12px}.admin-slide-nav strong{font-size:13px;color:#263746}.admin-slide-nav .crew-btn:disabled{opacity:.4;cursor:not-allowed}
+.admin-group-editor{border:1px solid #e5e7eb;border-radius:14px;padding:15px;margin-bottom:12px;background:#f8fafc}.editor-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.editor-row input,.editor-row textarea{width:100%;border:1px solid #d8dee8;border-radius:8px;padding:9px;font-size:13px;background:#fff}.editor-row textarea{resize:vertical;min-height:70px}.editor-label{display:block;font-size:11px;font-weight:700;color:#475467;margin-bottom:5px}.member-editor{display:grid;grid-template-columns:1fr 1fr 1.35fr auto;gap:8px;align-items:end;margin-top:10px}.member-editor input{width:100%;border:1px solid #d8dee8;border-radius:8px;padding:9px;font-size:12px}.photo-upload{display:flex;align-items:center;gap:8px}.photo-upload input[type=file]{padding:7px;background:#fff}.photo-upload small{display:block;color:#667085;font-size:10px;margin-top:4px}.crew-btn{border:1px solid #d8dee8;background:#fff;border-radius:8px;padding:9px 12px;font-weight:700;cursor:pointer}.crew-btn:hover{background:#f3f4f6}.crew-btn.primary{background:linear-gradient(90deg,#ffcf00,#f37021);border:0;color:#111827}.move-btns{display:flex;gap:5px}.editor-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.editor-title strong{font-size:14px}.admin-panel-actions{display:flex;align-items:center;gap:10px;margin-top:15px}.admin-panel-actions span{font-size:12px;color:#16a34a}.is-admin .crew-actions{display:flex!important}.crew-actions{margin-left:auto;display:none;gap:5px}.crew-actions button{border:1px solid #d8dee8;background:#fff;border-radius:7px;padding:6px 8px;cursor:pointer}.crew-actions button:hover{background:#f3f4f6}@media(max-width:800px){.editor-row,.member-editor{grid-template-columns:1fr}.admin-panel-head{align-items:flex-start;flex-direction:column}}
+@media (max-width:900px){.crew-cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.crew-card .lux-photo{width:78px;height:78px}.crew-card h4{font-size:15px}}@media (max-width:600px){.crew-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.crew-slide-inner{padding:20px}.crew-card .lux-photo{width:68px;height:68px}.crew-card h4{font-size:14px}.crew-card p{font-size:11px}}.header-admin-login{display:inline-flex;align-items:center;justify-content:center;gap:0;width:36px;height:36px;padding:0;border:1px solid #e2e8f0;border-radius:9px;background:#fff;color:#243746;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;transition:.2s}.header-admin-login:hover{background:#fff3c4;border-color:#ffcf00;color:#111827}</style>
+<style id="music-widget-style">
+.compact-player{position:fixed;right:22px;bottom:22px;z-index:9999;width:min(360px,calc(100vw - 30px));height:58px;background:#fff;border:1px solid #e5e7eb;box-shadow:0 10px 30px rgba(15,23,42,.18);display:flex;align-items:center;padding:0 12px;gap:10px;font-family:inherit}
+.player-btn{width:38px;height:38px;border:0;background:transparent;color:#8b7bc8;border-radius:8px;cursor:pointer;font-size:16px;display:grid;place-items:center}.player-btn:hover{background:#f1eff8}.player-play{color:#5c7fc7;background:#eef2fa}.player-track{flex:1;min-width:0;color:#4b5563;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.player-volume{color:#7a8795}.compact-player iframe{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+@media(max-width:600px){.compact-player{right:10px;bottom:10px;height:54px}.player-btn{width:34px;height:34px}}
+
+.admin-crew-panel{margin:22px 0;padding:20px;background:#fff;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 8px 24px rgba(17,24,39,.07)}
+.admin-panel-head{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:16px}.admin-panel-head h3{font-size:18px}.admin-panel-head p{font-size:12px;color:#667085;margin-top:4px}.admin-group-editor{border:1px solid #e5e7eb;border-radius:14px;padding:15px;margin-bottom:12px;background:#f8fafc}.editor-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.editor-row input,.editor-row textarea{width:100%;border:1px solid #d8dee8;border-radius:8px;padding:9px;font-size:13px;background:#fff}.editor-row textarea{resize:vertical;min-height:70px}.editor-label{display:block;font-size:11px;font-weight:700;color:#475467;margin-bottom:5px}.member-editor{display:grid;grid-template-columns:1fr 1fr 1.35fr auto;gap:8px;align-items:end;margin-top:10px}.member-editor input{width:100%;border:1px solid #d8dee8;border-radius:8px;padding:9px;font-size:12px}.photo-upload{display:flex;align-items:center;gap:8px}.photo-upload input[type=file]{padding:7px;background:#fff}.photo-upload small{display:block;color:#667085;font-size:10px;margin-top:4px}.crew-btn{border:1px solid #d8dee8;background:#fff;border-radius:8px;padding:9px 12px;font-weight:700;cursor:pointer}.crew-btn:hover{background:#f3f4f6}.crew-btn.primary{background:linear-gradient(90deg,#ffcf00,#f37021);border:0;color:#111827}.move-btns{display:flex;gap:5px}.editor-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.editor-title strong{font-size:14px}.admin-panel-actions{display:flex;align-items:center;gap:10px;margin-top:15px}.admin-panel-actions span{font-size:12px;color:#16a34a}.is-admin .crew-actions{display:flex!important}.crew-actions{margin-left:auto;display:none;gap:5px}.crew-actions button{border:1px solid #d8dee8;background:#fff;border-radius:7px;padding:6px 8px;cursor:pointer}.crew-actions button:hover{background:#f3f4f6}@media(max-width:800px){.editor-row,.member-editor{grid-template-columns:1fr}.admin-panel-head{align-items:flex-start;flex-direction:column}}
+
+/* CREW SLIDER */
+.crew-slider{position:relative;margin:10px auto 28px;max-width:760px}.crew-viewport{overflow:hidden;border-radius:24px}.crew-track{display:flex;transition:transform .45s ease;will-change:transform}.crew-slide{min-width:100%;padding:8px}.crew-slide-inner{min-height:300px;padding:28px;border-radius:24px;background:linear-gradient(145deg,#fff,#f7fafc);border:1px solid #e6eaf0;box-shadow:0 18px 45px rgba(17,24,39,.10);position:relative;overflow:hidden}.crew-cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;width:100%;position:relative;z-index:1}.crew-card{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:0}.crew-card .lux-photo{width:92px;height:92px;border-radius:24px;font-size:24px;margin-bottom:12px}.crew-card .lux-role{margin-bottom:7px;font-size:12px}.crew-card h4{font-size:18px;margin:0;word-break:break-word}.crew-card p{font-size:12px;color:var(--muted);margin-top:5px;word-break:break-word}.crew-slide-inner:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,var(--yellow),var(--orange))}.crew-slide .lux-role{display:inline-flex;align-items:center;gap:6px}.slider-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px}.slider-btn{width:40px;height:40px;border:1px solid var(--line);background:#fff;border-radius:50%;cursor:pointer;color:#263746;box-shadow:0 4px 12px rgba(17,24,39,.08)}.slider-btn:hover{background:#fff3c4}.slider-btn:disabled{opacity:.35;cursor:not-allowed}.slider-dots{display:flex;gap:7px;justify-content:center;align-items:center;max-width:70%;overflow:hidden}.slider-dot{width:8px;height:8px;border:0;border-radius:50%;background:#cbd5e1;cursor:pointer;padding:0;flex:0 0 auto}.slider-dot.active{width:22px;border-radius:8px;background:linear-gradient(90deg,var(--yellow),var(--orange))}.slider-count{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+@media (max-width:900px){.crew-cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.crew-card .lux-photo{width:78px;height:78px}.crew-card h4{font-size:15px}}@media (max-width:600px){.crew-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.crew-slide-inner{padding:20px}.crew-card .lux-photo{width:68px;height:68px}.crew-card h4{font-size:14px}.crew-card p{font-size:11px}}</style>
+
+<style id="simple-vertical-crew">
+/* Kartu Crew ringkas dan terstruktur */
+.top{position:sticky;top:0;z-index:1000;box-shadow:0 3px 12px rgba(15,23,42,.06)}
+.crew-tools{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.8fr);gap:14px;align-items:stretch;margin:22px 0 10px}.crew-tools .search,.crew-tools .event-crew-selector{margin:0;padding:12px 14px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 8px 24px rgba(17,24,39,.05)}.crew-tools .search{display:flex;flex-direction:column}.crew-tools label{display:block;margin-bottom:7px;font-size:12px;font-weight:800;color:#475467}.crew-search-control{position:relative;flex:1}.crew-search-control input,.crew-tools .event-crew-selector select{width:100%;height:46px;min-height:46px;border:1px solid #d8dee8;border-radius:10px;background:#f8fafc;outline:none}.crew-search-control input{padding:11px 14px 11px 42px}.crew-search-control i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#8a949d;z-index:1}.crew-tools .event-crew-selector{display:flex;flex-direction:column}.crew-tools .event-crew-selector select{flex:none;padding:11px 12px}.admin-approved-row{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(220px,.8fr) 118px;gap:16px;align-items:start}.admin-approved-name{height:46px;padding:0 14px;background:#fff;border:1px solid #d8dee8;border-radius:10px;font-size:13px;font-weight:700;display:flex;align-items:center}.admin-approved-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px;color:#667085;font-size:12px}.admin-approved-role input{display:block;width:100%!important;height:46px!important;min-height:46px!important;margin:0!important;padding:0 13px!important;border:1px solid #d8dee8!important;border-radius:10px!important;background:#fff!important;font:inherit!important;outline:none}.admin-approved-role input:focus{border-color:#f3c400!important;box-shadow:0 0 0 3px rgba(243,196,0,.14)}.admin-approved-save{width:118px;height:46px;min-height:46px;margin-top:16px;align-self:start;white-space:nowrap}
+.crew-slider{max-width:none!important;margin:8px 0 26px!important}.crew-slide{padding:4px!important}.crew-slide-inner{min-height:0!important;padding:22px!important;border-radius:18px!important;box-shadow:0 10px 28px rgba(17,24,39,.08)!important}.crew-cards{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(260px,340px))!important;justify-content:center!important;gap:16px!important;width:100%!important}.crew-card{position:relative;width:100%!important;min-height:210px!important;display:grid!important;grid-template-columns:106px minmax(0,1fr)!important;align-items:center!important;gap:18px!important;text-align:left!important;padding:22px!important;background:#fff!important;border:1px solid var(--line)!important;border-radius:18px!important;box-shadow:0 6px 20px rgba(17,24,39,.07)!important}.crew-profile-visual{display:flex;flex-direction:column;align-items:center;gap:10px}.crew-card .lux-photo{width:92px!important;height:92px!important;min-width:92px!important;margin:0!important;border-radius:50%!important;border:3px solid #fff!important;box-shadow:0 0 0 2px #f3c400,0 8px 20px rgba(17,24,39,.13)!important;overflow:hidden}.crew-card .lux-photo img{width:100%;height:100%;object-fit:cover}.crew-card-info{min-width:0}.crew-card .lux-role{margin:0 0 8px!important}.crew-card h4{font-size:18px!important;margin:0!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crew-card p{margin-top:5px!important}.crew-event-logos{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;min-height:30px}.crew-event-logos img{width:28px!important;height:28px!important;border-radius:50%!important;padding:2px!important;box-shadow:0 2px 7px rgba(17,24,39,.10)}.crew-detail-btn{position:absolute;top:12px;right:12px;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:#fff;color:#475467;display:grid;place-items:center;cursor:pointer}.crew-detail-btn:hover{background:#fff7d6;color:#111827;border-color:#f3c400}.structure-slide-title{margin-bottom:16px!important}.selected-event-note{padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:12px;width:fit-content;max-width:100%}#publicCrewRegistration{box-shadow:none!important;background:#fffdf7!important;border-color:#fde7a8!important}.hero{padding:26px 28px!important}.hero h1{font-size:30px!important}.profile-summary{display:grid;grid-template-columns:120px minmax(0,1fr);gap:22px;align-items:center;padding:18px;border:1px solid var(--line);border-radius:16px;background:#f8fafc}.profile-summary-photo{width:108px;height:108px;border-radius:50%;object-fit:cover;background:#e2e8f0;border:4px solid #fff;box-shadow:0 0 0 2px #f3c400}.profile-summary-events{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.profile-summary-events span{display:inline-flex;align-items:center;gap:7px;padding:6px 9px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:11px;font-weight:700}.profile-summary-events img{width:26px;height:26px;border-radius:50%;object-fit:contain}.profile-summary-actions{display:flex;justify-content:flex-end;margin-top:16px}#crewProfileDialog>.admin-panel-head{position:sticky;top:-24px;z-index:20;margin:-24px -24px 20px;padding:22px 24px 16px;background:#fff;border-bottom:1px solid #e5e7eb;box-shadow:0 5px 12px rgba(15,23,42,.05)}
+.admin-approved-save{margin-top:23px}
+@media(max-width:900px){.crew-tools{grid-template-columns:1fr}.crew-cards{grid-template-columns:1fr!important}.admin-approved-row{grid-template-columns:1fr}.admin-approved-save{width:100%;margin-top:0}}
+@media(max-width:600px){.crew-card{grid-template-columns:88px minmax(0,1fr)!important;padding:18px!important;gap:13px!important}.crew-card .lux-photo{width:78px!important;height:78px!important;min-width:78px!important}.crew-card h4{font-size:15px!important}.crew-slide-inner{padding:16px!important}.hero{padding:22px!important}.stats{flex-wrap:wrap}.profile-summary{grid-template-columns:1fr;text-align:center}.profile-summary-photo{margin:auto}.profile-summary-events{justify-content:center}#crewProfileForm .editor-row{grid-template-columns:1fr!important}#crewProfileModal{padding:10px!important}#crewProfileModal>div{margin:10px auto!important;padding:18px!important}#crewProfileDialog>.admin-panel-head{top:-18px;margin:-18px -18px 18px;padding:18px}}
+</style>
+
+<style id="sportify-loading-style">#sportify-page-loader{position:fixed;inset:0;background:rgba(17,24,39,.97);display:flex;align-items:center;justify-content:center;z-index:99999;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}#sportify-page-loader.hide{opacity:0;visibility:hidden;pointer-events:none}.sportify-loader-box{text-align:center}.sportify-loader-wrap{position:relative;width:150px;height:150px;margin:0 auto;display:flex;align-items:center;justify-content:center}.sportify-loader-logo-base,.sportify-loader-logo-fill{position:absolute;width:150px;height:150px;object-fit:contain;display:block}.sportify-loader-logo-base{opacity:.28;filter:brightness(0) invert(1) drop-shadow(0 8px 18px rgba(0,0,0,.35))}.sportify-loader-logo-fill{padding:0;background:linear-gradient(120deg,transparent 0%,transparent 30%,#ffcf00 45%,#f37021 55%,transparent 70%,transparent 100%);background-size:260% 100%;-webkit-mask-image:url('./img/logo_sportify_loader.png');mask-image:url('./img/logo_sportify_loader.png');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;animation:sportifyLogoLoad 1.35s ease-in-out infinite;filter:drop-shadow(0 8px 18px rgba(255,207,0,.22))}.sportify-loader-text{margin-top:14px;color:#fff;font-weight:800;letter-spacing:1.5px;font-size:15px}.sportify-loader-dots{margin-top:8px;color:#ffcf00;letter-spacing:4px;animation:sportifyDots 1s infinite}@keyframes sportifyLogoLoad{0%{background-position:100% 0;transform:scale(.96)}50%{background-position:0 0;transform:scale(1.02)}100%{background-position:-100% 0;transform:scale(.96)}}@keyframes sportifyDots{0%,100%{opacity:.35}50%{opacity:1}}</style>
+
+<style id="sportify-header-icons-keep-visible">
+.header-icon-btn,.global-header-icon-btn{display:inline-flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+.header-icon-btn i,.global-header-icon-btn i{visibility:visible!important;opacity:1!important;}
+.header-badge,.global-header-badge,.about-badge{pointer-events:none;}
+</style>
+
+<style id="sportify-header-icons-right-fix">
+/* Header: lonceng dan pesan berada di sisi kanan */
+.top-header{position:relative}.top{position:sticky!important;top:0;z-index:1000}
+.header-actions, .actions { margin-left: auto !important; display:flex !important; align-items:center !important; justify-content:flex-end !important; }
+.header-icons, .icons { margin-left:auto !important; display:flex !important; align-items:center !important; justify-content:flex-end !important; }
+/* Kolom pencarian header disembunyikan agar ikon berada di kanan */
+.top-header .search-box, .top .search-box { display:none !important; }
+.top-header .search, .top .search { display:none !important; }
+@media (max-width:600px){ .header-actions,.actions{gap:8px !important;} }
+</style>
+<style id="sportify-admin-login-responsive">.header-admin-login{display:inline-flex;align-items:center;justify-content:center;width:30px;height:38px;padding:0;border:0!important;border-radius:0;background:transparent!important;color:#6b168f!important;text-decoration:none;font-size:17px;font-weight:400;white-space:nowrap;transition:transform .15s ease,color .15s ease;box-shadow:none!important}.header-admin-login:hover{background:transparent!important;color:#4f0f6b!important;transform:scale(1.08)}.header-admin-login i{font-size:15px;line-height:1}.header-admin-login span{display:none!important}@media(max-width:600px){.header-admin-login{width:30px;height:38px;padding:0}.header-admin-login i{font-size:15px}}</style>
+<style id="sportify-user-top-icons-common">
+.top-header .header-actions, .top .actions, .top .header-actions{margin-left:auto!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;}
+.top-header .header-icons, .top .icons, .top .header-icons{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:14px!important;margin-left:auto!important;}
+.global-header-icon-btn,.header-icon-btn,.icon-btn{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#7f8c8d!important;text-decoration:none!important;box-shadow:none!important;cursor:pointer!important;}
+.global-header-icon-btn:hover,.header-icon-btn:hover,.icon-btn:hover{background:#f4f7fb!important;color:#243746!important;}
+.global-header-icon-btn i,.header-icon-btn i,.icon-btn i{font-size:17px!important;line-height:1!important;}
+.header-admin-login{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;color:#6b168f!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;text-decoration:none!important;box-shadow:none!important;}
+.header-admin-login:hover{background:#f4f7fb!important;color:#4f0f6b!important;transform:none!important;}
+.header-admin-login i{font-size:16px!important;line-height:1!important;}
+.header-admin-login span{display:none!important;}
+@media(max-width:600px){.top-header .header-icons,.top .icons,.top .header-icons{gap:8px!important;}.global-header-icon-btn,.header-icon-btn,.icon-btn,.header-admin-login{width:32px!important;height:32px!important;min-width:32px!important;}}
+</style>
+
+<style id="kdm-universal-user-top-icons">
+/* KDM: ikon header kanan atas diseragamkan di semua halaman user */
+.top, .top-header {
+  height: 64px !important;
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  padding: 0 28px !important;
+  background: #fff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+.top .actions, .top-header .header-actions {
+  width: 100% !important;
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+.top .icons, .top-header .header-icons {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+}
+.top .icon-btn, .top-header .global-header-icon-btn, .top-header .header-icon-btn, .top .header-icon-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #7f8c8d !important;
+  font-size: 18px !important;
+  box-shadow: none !important;
+}
+.top .icon-btn:hover, .top-header .global-header-icon-btn:hover, .top-header .header-icon-btn:hover {
+  background: #f4f6f8 !important;
+}
+.top .icon-btn i, .top-header .global-header-icon-btn i, .top-header .header-icon-btn i {
+  font-size: 17px !important;
+  line-height: 1 !important;
+}
+.header-admin-login {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #6b168f !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+.header-admin-login:hover {
+  background: #f4f6f8 !important;
+  color: #4f0f6b !important;
+  transform: none !important;
+}
+.header-admin-login i { font-size: 17px !important; line-height: 1 !important; }
+.header-admin-login span { display: none !important; }
+@media (max-width: 700px) {
+  .top, .top-header { padding: 0 16px !important; }
+  .top .icons, .top-header .header-icons { gap: 8px !important; }
+}
+</style>
+
+
+<style id="admin-logout-sidebar">
+.admin-logout-nav{display:none!important;}
+.body-admin .admin-logout-nav{display:block!important;}
+.admin-logout-nav a{color:#ffb4b4!important;}
+.admin-logout-nav a:hover{background:rgba(239,68,68,.14)!important;color:#fff!important;}
+</style>
+
+<style id="kdm-common-top-header-final">
+/* Header kanan atas diseragamkan di semua halaman */
+.top, .top-header {height:64px!important;background:#fff!important;border-bottom:1px solid #e5e7eb!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;padding:0 18px!important;box-sizing:border-box!important;}
+.top .actions, .top-header .header-actions {margin-left:auto!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:0!important;height:100%!important;}
+.top .icons, .top-header .header-icons {display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:12px!important;margin:0!important;}
+.top .icon-btn, .top-header .global-header-icon-btn, .top-header .header-icon-btn {width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#7f8c8d!important;font-size:17px!important;cursor:pointer!important;}
+.top .icon-btn:hover, .top-header .global-header-icon-btn:hover, .top-header .header-icon-btn:hover {background:#f4f7fb!important;color:#243746!important;}
+.top .user, .top .user-profile {display:flex!important;align-items:center!important;gap:10px!important;margin-left:8px!important;padding-left:15px!important;border-left:1px solid #e5e7eb!important;height:36px!important;}
+.top .user > span:first-child, .top .user-profile > span:first-child {font-size:13px!important;font-weight:600!important;color:#263746!important;white-space:nowrap!important;}
+.top .avatar, .top .user-avatar {width:36px!important;height:36px!important;min-width:36px!important;border-radius:50%!important;background:#d1d5db!important;display:grid!important;place-items:center!important;color:#4b5563!important;}
+.top .logout, .top .logout-link {color:#7f8c8d!important;text-decoration:none!important;font-size:18px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-left:2px!important;}
+.top .logout:hover, .top .logout-link:hover {color:#243746!important;}
+.kdm-admin-only-logout{display:none!important;}
+body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{display:inline-flex!important;}
+@media(max-width:600px){.top,.top-header{height:58px!important;padding:0 10px!important}.top .icons,.top-header .header-icons{gap:6px!important}.top .user,.top .user-profile{margin-left:3px!important;padding-left:8px!important}.top .icon-btn,.top-header .global-header-icon-btn,.top-header .header-icon-btn{width:30px!important;height:30px!important;min-width:30px!important}.top .avatar,.top .user-avatar{width:32px!important;height:32px!important;min-width:32px!important}}
+</style>
+
+
+<style id="kdm-user-hide-account-top">
+/* KDM: pada halaman User, sembunyikan tulisan User dan ikon profil. Admin tetap melihat informasi akun. */
+body:not(.body-admin) .visitor-header-hidden{display:none!important;}
+body.body-admin .visitor-header-hidden{display:flex!important;}
+</style>
+</head>
+<body>
+<div id="sportify-page-loader" class="hide" aria-hidden="true"><div class="sportify-loader-box"><div class="sportify-loader-wrap"><img class="sportify-loader-logo-base" src="img/logo_sportify_loader.png" alt=""><span class="sportify-loader-logo-fill" aria-hidden="true"></span></div><div class="sportify-loader-text">SPORTIFY KANDILO</div><div class="sportify-loader-dots">•••</div></div></div>
+
+<aside class="sidebar"><div class="brand"><img src="./img/logo_sportify.jpeg" alt="Logo Sportify Kandilo"><div><b>SPORTIFY</b><span>KANDILO</span></div></div><div class="label">Menu Utama</div><ul class="nav"><li><a href="index.html"><i class="fa-solid fa-house"></i><span>Beranda</span></a></li>
+<li><a href="registrasi.html" id="registerNavLink"><i class="fa-solid fa-right-to-bracket"></i><span id="registerNavText">Join Event</span></a></li><li><a href="index.html?tab=history"><i class="fa-solid fa-clock-rotate-left"></i><span>Galery</span></a></li><li><a href="index.html?tab=event"><i class="fa-solid fa-trophy"></i><span>Event</span></a></li><li><a class="active" href="crew.html"><i class="fa-solid fa-users"></i><span>Crew</span></a></li><li><a href="index.html?tab=jadwal"><i class="fa-solid fa-calendar-days"></i><span>Jadwal</span></a></li><li><a href="tentang-kami.html"><i class="fa-solid fa-circle-info"></i><span>Tentang Kami</span></a></li><li class="admin-logout-nav"><a href="logout.php" title="Logout Admin"><i class="fa-solid fa-right-from-bracket"></i><span>Logout Admin</span></a></li></ul></aside>
+<main class="main"><header class="top">
+<div class="header-actions">
+  <div class="header-icons">
+    <button type="button" class="header-icon-btn" id="crew-notification-btn" title="Notifikasi" aria-label="Notifikasi"><i class="fa-regular fa-bell"></i><span class="header-badge" id="crew-notification-badge"></span></button>
+    <button type="button" class="header-icon-btn" id="crew-message-btn" title="Pesan" aria-label="Pesan"><i class="fa-regular fa-envelope"></i><span class="header-badge" id="crew-message-badge"></span></button>
+  </div>
+  <div class="user-profile visitor-header-hidden">
+    <span><span class="user-name" id="header-user-name">User</span><small id="header-user-role" style="display:block;font-size:10px;color:#f37021;font-weight:700"></small></span>
+    <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+    <a href="logout.php" class="logout-link kdm-admin-only-logout" title="Logout Admin"><i class="fa-solid fa-right-from-bracket"></i></a>
+  </div>
+</div>
+</header>
+<section class="content"><div class="hero"><h1>THE CREW</h1><p>Struktur kepengurusan dan anggota resmi Sportify Kandilo.</p><div class="stats"><div class="stat"><strong id="totalCrew">0</strong><small>Total Crew</small></div><div class="stat"><strong>2026</strong><small>Periode Kepengurusan</small></div></div></div>
+<div id="syncStatus" style="font-size:12px;color:#667085;margin:10px 0 0;text-align:right">↻ Menyinkronkan akun...</div><div class="crew-tools"><div class="search"><label for="search">Cari Crew</label><div class="crew-search-control"><i class="fa-solid fa-magnifying-glass"></i><input id="search" placeholder="Cari nama, alias, atau jabatan..."></div></div>
+<div class="event-crew-selector"><label for="crewEventSelect">Pilih Event</label><select id="crewEventSelect"></select></div></div><div id="selectedCrewEventNote" class="selected-event-note"></div>
+<div id="crewContainer"></div>
+<style>@media(max-width:800px){#publicCrewForm .editor-row{grid-template-columns:1fr!important}#publicCrewRegistration .admin-panel-actions{align-items:flex-start;flex-direction:column}#toggleCrewRegistration{min-height:44px}}</style>
+<section class="admin-crew-panel" id="publicCrewRegistration" style="display:block;margin-top:18px">
+  <div class="admin-panel-head"><div><h3>Pendaftaran Crew</h3><p>Belum menjadi Crew? Daftarkan data diri di sini, lalu gunakan menu Join Event.</p></div><button type="button" class="crew-btn primary" id="toggleCrewRegistration" aria-expanded="false" aria-controls="publicCrewForm"><i class="fa-solid fa-user-plus"></i> Daftar Crew</button></div>
+  <form id="publicCrewForm" hidden enctype="multipart/form-data">
+    <div class="editor-row" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <div><label class="editor-label" for="publicCrewName">Nama Lengkap *</label><input id="publicCrewName" name="nama_lengkap" required placeholder="Masukkan nama lengkap"></div>
+      <div><label class="editor-label" for="publicCrewAlias">Nama Panggilan / Alias</label><input id="publicCrewAlias" name="alias_nama" placeholder="Nama panggilan"></div>
+      <div><label class="editor-label" for="publicCrewPhone">Nomor WhatsApp *</label><input id="publicCrewPhone" name="whatsapp" required inputmode="tel" placeholder="Contoh: 08123456789"></div>
+      <div><label class="editor-label" for="publicCrewInstagram">Instagram</label><input id="publicCrewInstagram" name="instagram" placeholder="@username"></div>
+      <div><label class="editor-label" for="publicCrewRole">Jabatan</label><input id="publicCrewRole" name="jabatan" value="Anggota Crew" placeholder="Contoh: Captain atau Anggota Crew"></div>
+      <div><label class="editor-label" for="publicCrewPhoto">Pas Foto</label><input id="publicCrewPhoto" name="foto" type="file" accept="image/jpeg,image/png,image/webp"><small style="display:block;color:#667085;margin-top:5px">JPG, PNG, atau WEBP. Maksimal 3MB.</small></div>
+    </div>
+    <div class="admin-panel-actions" style="margin-top:14px"><button class="crew-btn primary" type="submit"><i class="fa-solid fa-paper-plane"></i> Simpan Pendaftaran Crew</button><span id="publicCrewStatus" role="status"></span></div>
+  </form>
+</section>
+<div id="crewProfileModal" hidden role="dialog" aria-modal="true" aria-labelledby="crewProfileTitle" style="position:fixed;inset:0;z-index:250000;background:rgba(15,23,42,.68);padding:24px;overflow:hidden">
+  <div id="crewProfileDialog" style="width:min(780px,100%);max-height:calc(100dvh - 48px);margin:0 auto;background:#fff;border-radius:20px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.28);overflow-y:auto;overscroll-behavior:contain">
+    <div class="admin-panel-head"><div><h3 id="crewProfileTitle">Detail Akun Crew</h3><p>Lihat profil dan riwayat event yang pernah diikuti.</p></div><button type="button" class="crew-btn" id="closeCrewProfile" aria-label="Tutup detail profil"><i class="fa-solid fa-xmark"></i> Tutup</button></div>
+    <div id="crewProfileSummary" class="profile-summary"></div>
+    <div id="crewProfileSummaryActions" class="profile-summary-actions"><button type="button" class="crew-btn primary" id="editCrewProfileBtn"><i class="fa-solid fa-user-pen"></i> Edit Profil</button></div>
+    <form id="crewProfileForm" hidden enctype="multipart/form-data" style="margin-top:18px;padding-top:18px;border-top:1px solid #e5e7eb"><input type="hidden" name="id">
+      <div class="editor-row" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div><label class="editor-label">Nama Lengkap *</label><input name="nama_lengkap" required></div><div><label class="editor-label">Jabatan *</label><input name="jabatan" required></div><div><label class="editor-label">Alias</label><input name="alias_nama"></div><div><label class="editor-label">WhatsApp *</label><input name="whatsapp" required inputmode="tel"></div><div><label class="editor-label">Instagram</label><input name="instagram"></div><div><label class="editor-label">Foto Profil</label><input id="crewProfilePhotoInput" name="foto" type="file" accept="image/jpeg,image/png,image/webp" hidden><div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap"><label for="crewProfilePhotoInput" class="crew-btn" style="cursor:pointer"><i class="fa-solid fa-camera"></i> Ganti Foto</label><small id="crewProfilePhotoName" style="color:#667085">Belum ada foto baru</small></div></div></div>
+      <label class="editor-label" for="profileEventSearch" style="margin-top:16px">Event yang Pernah Diikuti</label>
+      <div style="position:relative"><div style="display:flex;gap:8px"><input id="profileEventSearch" type="text" autocomplete="off" placeholder="Ketik atau pilih nama event..." aria-autocomplete="list" aria-controls="profileEventOptions" style="width:100%;border:1px solid #d8dee8;border-radius:9px;padding:11px"><button type="button" class="crew-btn" id="showProfileEventOptions" aria-label="Buka pilihan event"><i class="fa-solid fa-chevron-down"></i></button></div><div id="profileEventOptions" role="listbox" hidden style="position:absolute;z-index:5;left:0;right:48px;top:48px;max-height:220px;overflow:auto;background:#fff;border:1px solid #d8dee8;border-radius:10px;padding:6px;box-shadow:0 14px 35px rgba(15,23,42,.16)"></div></div>
+      <div id="publicEventHistory" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
+      <div class="admin-panel-actions"><button type="submit" class="crew-btn primary"><i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan</button><button type="button" class="crew-btn" id="cancelCrewProfileEdit">Batal</button><span id="editCrewSaveStatus" role="status"></span></div>
+    </form>
+  </div>
+</div>
+<div id="adminCrewPanel" hidden></div>
+<div class="footer-note"><b>Pengelolaan Crew:</b> Klik ikon detail di sudut kartu untuk melihat akun, foto profil, dan seluruh event yang pernah diikuti.</div>
+</section></main>
+
+<script>
+/* DATA CREW — PER EVENT */
+const defaultCrewData=[
+ {role:'Captain',desc:'Pimpinan utama Crew',members:[{name:'Nama Captain',alias:'Captain KDM',photo:''}]},
+ {role:'Co-Captain',desc:'Mendampingi dan membantu Captain',members:[{name:'Nama Co-Captain',alias:'Co-Captain KDM',photo:''}]},
+ {role:'Sekretaris',desc:'Administrasi dan dokumentasi organisasi',members:[{name:'Nama Sekretaris',alias:'Sekretaris KDM',photo:''}]},
+ {role:'Bendahara',desc:'Pengelolaan administrasi dan keuangan',members:[{name:'Nama Bendahara',alias:'Bendahara KDM',photo:''}]},
+ {role:'Koordinator',desc:'Koordinator kegiatan dan operasional',members:[{name:'Nama Koordinator 1',alias:'Koordinator Event',photo:''},{name:'Nama Koordinator 2',alias:'Koordinator Crew',photo:''}]},
+ {role:'Anggota Crew',desc:'Anggota resmi Sportify Kandilo',members:[{name:'Nama Anggota 1',alias:'Crew',photo:''},{name:'Nama Anggota 2',alias:'Crew',photo:''}]}
+];
+let eventsList=[];
+let selectedEventId=localStorage.getItem('kdmSelectedCrewEvent')||'';
+let crewByEvent=JSON.parse(localStorage.getItem('kdmCrewByEvent')||'{}');
+let crewData=[];
+let isAdmin=false;
+let currentSlide=0;
+const icons={Captain:'fa-crown','Co-Captain':'fa-user-tie',Sekretaris:'fa-file-signature',Bendahara:'fa-wallet',Koordinator:'fa-people-arrows','Anggota Crew':'fa-users'};
+function initials(n){return (n||'K').split(' ').filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()||'K'}
+function photoHtml(m,cls){return m.photo?`<div class="${cls}"><img src="${String(m.photo).replace(/"/g,'&quot;')}" alt="${String(m.name||'Crew').replace(/"/g,'&quot;')}"></div>`:`<div class="${cls}">${initials(m.name)}</div>`}
+function esc(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function eventLabel(e){return e?.nama_event||e?.name||('Event #'+(e?.id||''))}
+function eventKey(id){return String(id||'')}
+function getEventCrew(id){return Array.isArray(crewByEvent[eventKey(id)])?crewByEvent[eventKey(id)]:[]}
+function setEventCrew(id,data){crewByEvent[eventKey(id)]=Array.isArray(data)?data:[];crewData=crewByEvent[eventKey(id)];}
+function renderEventSelectors(){
+ const options=eventsList.map(e=>`<option value="${esc(eventKey(e.id))}">${esc(eventLabel(e))}${e.status?' — '+esc(e.status):''}</option>`).join('');
+ const pub=document.getElementById('crewEventSelect'); if(pub){pub.innerHTML=options||'<option value="">Belum ada event</option>';pub.value=selectedEventId;}
+ const adm=document.getElementById('adminCrewEventSelect'); if(adm){adm.innerHTML=options||'<option value="">Belum ada event</option>';adm.value=selectedEventId;}
+ const e=eventsList.find(x=>eventKey(x.id)===eventKey(selectedEventId));
+ const note=document.getElementById('selectedCrewEventNote');if(note)note.innerHTML=e?`<span style="display:flex;align-items:center;gap:10px">${e.logo_event?`<img src="${esc(e.logo_event)}" alt="Logo ${esc(eventLabel(e))}" style="width:42px;height:42px;border-radius:9px;object-fit:contain;background:#fff">`:'<span style="width:42px;height:42px;border-radius:9px;background:#fff;display:grid;place-items:center"><i class="fa-solid fa-trophy"></i></span>'}<span>Crew untuk event: <b>${esc(eventLabel(e))}</b></span></span>`:'Pilih event untuk melihat struktur Crew.';
+}
+async function loadEvents(){
+ try{const r=await fetch('events.php?_='+Date.now(),{cache:'no-store'});const d=await r.json();eventsList=Array.isArray(d)?d:[];
+   if(!eventsList.some(e=>eventKey(e.id)===eventKey(selectedEventId))) selectedEventId=eventsList[0]?eventKey(eventsList[0].id):'';
+   localStorage.setItem('kdmSelectedCrewEvent',selectedEventId);renderEventSelectors();await loadCrewForEvent(selectedEventId);
+ }catch(e){console.warn('Gagal memuat event',e);renderEventSelectors();}
+}
+async function loadCrewForEvent(id){
+ selectedEventId=eventKey(id);localStorage.setItem('kdmSelectedCrewEvent',selectedEventId);currentSlide=0;
+ if(!selectedEventId){crewData=[];render();if(isAdmin)renderAdmin();return;}
+ try{
+   // Crew publik mengambil data langsung dari pendaftaran event yang SUDAH DISETUJUI.
+   const r=await fetch(`api.php?action=get_event_participants&event_id=${encodeURIComponent(selectedEventId)}&_=${Date.now()}`,{cache:'no-store',credentials:'same-origin'});
+   const text=await r.text();
+   let participants;
+   try{participants=JSON.parse(text)}catch(_){throw new Error('Server tidak mengembalikan JSON valid.');}
+   if(!r.ok||!Array.isArray(participants))throw new Error(participants?.message||'Data peserta event gagal dimuat.');
+   const profilePairs=await Promise.all([...new Set(participants.map(p=>Number(p.crew_id)).filter(Boolean))].map(async crewId=>{try{const pr=await fetch('api.php?action=get_crew_profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:crewId})}),pd=await pr.json();return [crewId,pd?.member||null]}catch(_){return [crewId,null]}}));
+   const profiles=new Map(profilePairs);const groups=[];const byRole={};
+   participants.forEach(p=>{
+     const role=String(p.jabatan||'Anggota').trim()||'Anggota';
+     const key=role.toLowerCase();
+     if(!byRole[key]){byRole[key]={role,desc:`Peserta event dengan jabatan ${role}`,members:[]};groups.push(byRole[key]);}
+     const profile=profiles.get(Number(p.crew_id));const historyIds=profile?.event_ids||[];
+     byRole[key].members.push({id:Number(p.crew_id)||0,name:p.nama_lengkap||'Tanpa Nama',alias:p.alias_nama||'',phone:p.whatsapp||'',photo:p.foto_path||'',events:eventsList.filter(e=>historyIds.map(String).includes(String(e.id)))});
+   });
+   setEventCrew(selectedEventId,groups);
+   const st=document.getElementById('syncStatus');if(st)st.textContent=`✓ ${participants.length} peserta yang disetujui berhasil dimuat`;
+ }catch(e){
+   console.error('Gagal memuat peserta Crew',e);
+   setEventCrew(selectedEventId,[]);
+   const st=document.getElementById('syncStatus');if(st)st.textContent='⚠ Data peserta belum dapat dimuat.';
+ }
+ renderEventSelectors();render();if(isAdmin)renderAdmin();
+}
+function render(filter=''){
+ const q=filter.toLowerCase().trim();
+ const matched=crewData.map(g=>{const roleMatch=!q||(g.role+' '+(g.desc||'')).toLowerCase().includes(q);const members=(g.members||[]).filter(m=>roleMatch||((m.name||'')+' '+(m.alias||'')+' '+(m.phone||'')).toLowerCase().includes(q));return {...g,members}}).filter(g=>g.members.length);
+ const pageSize=window.innerWidth<=600?3:(window.innerWidth<=900?4:6),pages=[];
+ matched.forEach(g=>{const count=Math.ceil(g.members.length/pageSize);for(let i=0;i<count;i++)pages.push({...g,members:g.members.slice(i*pageSize,(i+1)*pageSize),rolePage:i+1,rolePageCount:count})});
+ const total=pages.length;currentSlide=total?Math.min(currentSlide,total-1):0;
+ const container=document.getElementById('crewContainer');
+ document.getElementById('totalCrew').textContent=crewData.reduce((n,g)=>n+(g.members||[]).length,0);
+ if(!selectedEventId){container.innerHTML='<div class="empty">Belum ada event yang tersedia.</div>';return;}
+ if(!total){container.innerHTML='<div class="empty">Belum ada struktur Crew untuk event ini.</div>';return;}
+ const slides=pages.map((g,si)=>`<article class="crew-slide" aria-label="Struktur ${si+1} dari ${total}"><div class="crew-slide-inner"><div class="structure-slide-title">${esc(g.role)} <span>• ${esc(g.desc||'')}${g.rolePageCount>1?` • Bagian ${g.rolePage} dari ${g.rolePageCount}`:''}</span></div><div class="crew-cards">${(g.members||[]).map(m=>`<div class="crew-card">${m.id?`<button type="button" class="crew-detail-btn" onclick="openCrewProfile(${m.id})" aria-label="Lihat detail akun ${esc(m.name)}" title="Lihat detail akun"><i class="fa-solid fa-eye"></i></button>`:''}<div class="crew-profile-visual">${photoHtml(m,'lux-photo')}<div class="crew-event-logos" aria-label="Event yang pernah diikuti">${(m.events||[]).map(e=>e.logo_event?`<img src="${esc(e.logo_event)}" title="${esc(eventLabel(e))}" alt="Logo ${esc(eventLabel(e))}">`:'').join('')}</div></div><div class="crew-card-info"><div class="lux-role"><i class="fa-solid ${icons[g.role]||'fa-user'}"></i>${esc(g.role)}</div><h4 title="${esc(m.name)}">${esc(m.name)}</h4><p>${m.phone ? 'No. HP: '+esc(m.phone) : esc(m.alias||'Crew')}</p></div></div>`).join('')}</div></div></article>`).join('');
+ const dots=pages.map((_,i)=>`<button type="button" class="slider-dot ${i===currentSlide?'active':''}" aria-label="Ke slide ${i+1}" onclick="goCrewSlide(${i})"></button>`).join('');
+ container.innerHTML=`<div class="crew-slider"><div class="crew-viewport"><div class="crew-track" id="crewTrack">${slides}</div></div><div class="slider-nav"><button type="button" class="slider-btn" id="crewPrev" onclick="changeCrewSlide(-1)" aria-label="Crew sebelumnya"><i class="fa-solid fa-chevron-left"></i></button><div class="slider-dots">${dots}</div><button type="button" class="slider-btn" id="crewNext" onclick="changeCrewSlide(1)" aria-label="Crew berikutnya"><i class="fa-solid fa-chevron-right"></i></button></div><div class="slider-count" id="crewSlideCount">Slide ${currentSlide+1} dari ${total}</div></div>`;
+ updateCrewSlider();
+}
+function updateCrewSlider(){const track=document.getElementById('crewTrack');if(!track)return;track.style.transform=`translateX(-${currentSlide*100}%)`;const total=track.children.length;const prev=document.getElementById('crewPrev'),next=document.getElementById('crewNext');if(prev)prev.disabled=currentSlide<=0;if(next)next.disabled=currentSlide>=total-1;const count=document.getElementById('crewSlideCount');if(count)count.textContent=`Slide ${currentSlide+1} dari ${total}`;document.querySelectorAll('.slider-dot').forEach((d,i)=>d.classList.toggle('active',i===currentSlide));}
+window.goCrewSlide=i=>{const total=document.getElementById('crewTrack')?.children.length||0;if(i<0||i>=total)return;currentSlide=i;updateCrewSlider()};
+window.changeCrewSlide=delta=>{const total=document.getElementById('crewTrack')?.children.length||0;const next=currentSlide+delta;if(next<0||next>=total)return;currentSlide=next;updateCrewSlider()};
+async function loadApprovedParticipantsForAdmin(){
+ const box=document.getElementById('adminCrewList');
+ if(!box||!isAdmin)return;
+ if(!selectedEventId){box.innerHTML='<div class="admin-empty">Pilih event terlebih dahulu.</div>';return;}
+ box.innerHTML='<div class="admin-empty">Memuat peserta yang disetujui...</div>';
+ try{
+   const r=await fetch(`api.php?action=get_event_participants&event_id=${encodeURIComponent(selectedEventId)}&_=${Date.now()}`,{cache:'no-store',credentials:'same-origin'});
+   const d=await r.json();
+   if(!r.ok||!Array.isArray(d))throw new Error(d?.message||'Gagal memuat peserta.');
+   if(!d.length){box.innerHTML='<div class="admin-empty">Belum ada peserta yang <b>Disetujui Admin</b> pada event ini.</div>';return;}
+   box.innerHTML=d.map(p=>`<div class="admin-group-editor" style="margin-bottom:10px"><div class="admin-approved-row"><div><label class="editor-label">Nama Peserta</label><div class="admin-approved-name">${esc(p.nama_lengkap||'Tanpa Nama')}</div><div class="admin-approved-meta"><span>No. HP: ${esc(p.whatsapp||'-')}</span><span>Status: <b style="color:#16a34a">Disetujui</b></span></div></div><div class="admin-approved-role"><label class="editor-label" for="jabatan-${p.id}">Jabatan</label><input id="jabatan-${p.id}" value="${esc(p.jabatan||'Anggota')}" placeholder="Contoh: Captain"></div><button type="button" class="crew-btn primary admin-approved-save" onclick="saveApprovedRole(${Number(p.id)})"><i class="fa-solid fa-floppy-disk"></i> Simpan</button></div></div>`).join('');
+ }catch(e){console.error(e);box.innerHTML=`<div class="admin-empty">Gagal memuat peserta: ${esc(e.message)}</div>`;}
+}
+window.saveApprovedRole=async function(id){
+ const input=document.getElementById('jabatan-'+id); if(!input)return;
+ const jabatan=input.value.trim(); if(!jabatan){alert('Jabatan wajib diisi.');input.focus();return;}
+ const st=document.getElementById('crewSaveStatus'); if(st)st.textContent='Menyimpan jabatan...';
+ try{
+   const r=await fetch('api.php?action=update_registration_role',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({id,jabatan})});
+   const d=await r.json();
+   if(!r.ok||d.status!=='success')throw new Error(d.message||'Gagal menyimpan jabatan.');
+   if(st)st.textContent='✓ Jabatan berhasil disimpan ke database';
+   await loadCrewForEvent(selectedEventId);
+   await loadApprovedParticipantsForAdmin();
+ }catch(e){if(st)st.textContent='⚠ Jabatan belum tersimpan';alert(e.message);}
+};
+let masterCrewMembers=[];
+async function loadMasterCrewMembers(){const box=document.getElementById('crewMemberEditor');if(!box||!isAdmin)return;box.innerHTML='<div class="admin-empty">Memuat data master Crew...</div>';try{const r=await fetch(`api.php?action=get_crew_members&_=${Date.now()}`,{credentials:'same-origin',cache:'no-store'});const d=await r.json();if(!r.ok||!Array.isArray(d))throw new Error(d?.message||'Data Crew gagal dimuat.');masterCrewMembers=d;renderMasterCrewMembers()}catch(e){box.innerHTML=`<div class="admin-empty">${esc(e.message)}</div>`}}
+function eventChecks(selected=[]){return eventsList.map(e=>`<label style="display:flex;align-items:center;gap:8px;padding:8px;border:1px solid #e5e7eb;border-radius:9px;background:#fff;cursor:pointer"><input type="checkbox" data-history-event value="${esc(e.id)}" ${selected.map(String).includes(String(e.id))?'checked':''}>${e.logo_event?`<img src="${esc(e.logo_event)}" alt="" style="width:32px;height:32px;border-radius:7px;object-fit:contain">`:'<span style="width:32px;height:32px;border-radius:7px;background:#f1f5f9;display:grid;place-items:center"><i class="fa-solid fa-trophy"></i></span>'}<span><b style="display:block;font-size:12px">${esc(eventLabel(e))}</b><small style="color:#667085">${esc(e.status||'')}</small></span></label>`).join('')||'<small>Belum ada event.</small>'}
+function crewEditorCard(m={id:0,nama_lengkap:'',alias_nama:'',instagram:'',whatsapp:'',jabatan:'Anggota Crew',foto_path:'',event_ids:[]}){return `<form class="admin-group-editor master-crew-form" data-id="${Number(m.id||0)}" style="margin-bottom:14px"><div class="editor-row" style="grid-template-columns:repeat(2,minmax(0,1fr))"><div><label class="editor-label">Nama Lengkap</label><input name="nama_lengkap" required value="${esc(m.nama_lengkap)}"></div><div><label class="editor-label">Jabatan</label><input name="jabatan" required value="${esc(m.jabatan)}"></div><div><label class="editor-label">Alias</label><input name="alias_nama" value="${esc(m.alias_nama||'')}"></div><div><label class="editor-label">WhatsApp</label><input name="whatsapp" value="${esc(m.whatsapp||'')}"></div><div><label class="editor-label">Instagram</label><input name="instagram" value="${esc(m.instagram||'')}"></div><div><label class="editor-label">Foto Crew</label><input name="foto" type="file" accept="image/jpeg,image/png,image/webp"></div></div><label class="editor-label" style="margin-top:13px">Event yang pernah diikuti</label><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px">${eventChecks(m.event_ids||[])}</div><div class="admin-panel-actions" style="margin-top:12px"><button class="crew-btn primary" type="submit"><i class="fa-solid fa-floppy-disk"></i> Simpan Detail Crew</button><span class="member-save-status"></span></div></form>`}
+function renderMasterCrewMembers(){const box=document.getElementById('crewMemberEditor');if(!box)return;box.innerHTML=masterCrewMembers.length?masterCrewMembers.map(crewEditorCard).join(''):'<div class="admin-empty">Belum ada Crew. Klik Tambah Crew untuk mendaftarkan.</div>';bindMasterCrewForms()}
+function bindMasterCrewForms(){document.querySelectorAll('.master-crew-form:not([data-bound])').forEach(form=>{form.dataset.bound='1';form.addEventListener('submit',async e=>{e.preventDefault();const st=form.querySelector('.member-save-status'),fd=new FormData(form);fd.set('id',form.dataset.id);fd.set('event_ids',JSON.stringify([...form.querySelectorAll('[data-history-event]:checked')].map(x=>Number(x.value))));st.textContent='Menyimpan...';try{const r=await fetch('api.php?action=save_crew_member',{method:'POST',body:fd,credentials:'same-origin'}),d=await r.json();if(!r.ok||d.status!=='success')throw new Error(d.message||'Gagal menyimpan.');st.textContent='✓ Tersimpan';await loadMasterCrewMembers();await loadCrewForEvent(selectedEventId)}catch(err){st.textContent='⚠ '+err.message}})})}
+document.getElementById('addCrewMemberBtn')?.addEventListener('click',()=>{const box=document.getElementById('crewMemberEditor');box.insertAdjacentHTML('afterbegin',crewEditorCard());bindMasterCrewForms();box.querySelector('input[name="nama_lengkap"]')?.focus()});
+function renderAdmin(){
+ const box=document.getElementById('adminCrewList');if(!box)return;
+ if(!isAdmin){document.getElementById('adminCrewPanel').style.display='none';return;}
+ document.getElementById('adminCrewPanel').style.display='block';
+ loadMasterCrewMembers();
+ loadApprovedParticipantsForAdmin();
+}
+async function persistCrew(message='Tersimpan'){readAdminInputs();if(!selectedEventId)return false;const st=document.getElementById('crewSaveStatus');try{const payload=JSON.stringify({event_id:selectedEventId,data:crewData});const r=await fetch('crew_api.php?action=save',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:payload});const text=await r.text();let d=null;try{d=JSON.parse(text)}catch(_){throw new Error('Server tidak mengembalikan JSON. Cek crew_api.php dan koneksi database.')}if(!r.ok||d.status!=='success')throw new Error(d.message||'Gagal menyimpan ke database');if(Array.isArray(d.data))setEventCrew(selectedEventId,d.data);localStorage.setItem('kdmSelectedCrewEvent',selectedEventId);if(st)st.textContent='✓ '+message+' — TERSIMPAN DI DATABASE';render();renderAdmin();return true}catch(e){if(st)st.textContent='⚠ BELUM TERSIMPAN DI DATABASE: '+e.message;console.error(e);return false}}
+let crewAutosaveTimer=null;
+async function autosaveCrewEdits(){
+  readAdminInputs(); if(!selectedEventId)return; setEventCrew(selectedEventId,crewData);
+  const st=document.getElementById('crewSaveStatus');
+  try{const r=await fetch('crew_api.php?action=save',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({event_id:selectedEventId,data:crewData})}); const d=await r.json();
+    if(!r.ok||d.status!=='success')throw new Error(d.message||'Gagal menyimpan ke server');
+    if(Array.isArray(d.data))setEventCrew(selectedEventId,d.data); if(st)st.textContent='✓ Perubahan Crew tersimpan otomatis';
+  }catch(e){if(st)st.textContent='⚠ Perubahan belum tersimpan: '+e.message;}
+}
+function scheduleCrewAutosave(){readAdminInputs(); if(!selectedEventId)return; setEventCrew(selectedEventId,crewData); clearTimeout(crewAutosaveTimer); const st=document.getElementById('crewSaveStatus'); if(st)st.textContent='Menyimpan perubahan...'; crewAutosaveTimer=setTimeout(autosaveCrewEdits,600);}
+document.addEventListener('input',e=>{if(e.target.matches('[data-group-role],[data-group-desc],[data-member-name],[data-member-alias]'))scheduleCrewAutosave();});
+document.addEventListener('change',e=>{if(e.target.matches('[data-group-role],[data-group-desc],[data-member-name],[data-member-alias]'))scheduleCrewAutosave();});
+document.getElementById('saveCrewBtn')?.addEventListener('click',()=>persistCrew('Perubahan Crew'));
+document.getElementById('crewEventSelect')?.addEventListener('change',e=>loadCrewForEvent(e.target.value));
+document.getElementById('adminCrewEventSelect')?.addEventListener('change',e=>loadCrewForEvent(e.target.value));
+document.getElementById('search')?.addEventListener('input',e=>{currentSlide=0;render(e.target.value)});
+document.getElementById('toggleCrewRegistration')?.addEventListener('click',e=>{const form=document.getElementById('publicCrewForm'),open=form.hidden;form.hidden=!open;e.currentTarget.setAttribute('aria-expanded',String(open));e.currentTarget.innerHTML=open?'<i class="fa-solid fa-xmark"></i> Tutup Form':'<i class="fa-solid fa-user-plus"></i> Daftar Crew';if(open)document.getElementById('publicCrewName')?.focus()});
+document.getElementById('publicCrewForm')?.addEventListener('submit',async e=>{e.preventDefault();const form=e.currentTarget,st=document.getElementById('publicCrewStatus'),button=form.querySelector('button[type="submit"]');st.textContent='Menyimpan pendaftaran...';button.disabled=true;try{const r=await fetch('api.php?action=register_crew',{method:'POST',body:new FormData(form),credentials:'same-origin'}),d=await r.json();if(!r.ok||d.status!=='success')throw new Error(d.message||'Pendaftaran Crew gagal.');st.innerHTML=`<span style="color:#15803d">✓ ${esc(d.message)}</span> <a href="registrasi.html" style="color:#7c3aed;font-weight:700">Lanjut Join Event</a>`;form.reset();document.getElementById('publicCrewRole').value='Anggota Crew'}catch(err){st.innerHTML=`<span style="color:#b42318">⚠ ${esc(err.message)}</span>`}finally{button.disabled=false}});
+let selectedProfileEvents=new Set(),currentCrewProfile=null,crewPageScrollY=0;
+// Letakkan modal langsung di body agar tidak ikut area konten/slider yang dapat bergeser.
+document.body.appendChild(document.getElementById('crewProfileModal'));
+function renderSelectedProfileEvents(){const box=document.getElementById('publicEventHistory'),selected=eventsList.filter(e=>selectedProfileEvents.has(String(e.id)));box.innerHTML=selected.length?selected.map(e=>`<span style="display:inline-flex;align-items:center;gap:8px;padding:7px 8px;border:1px solid #d8dee8;border-radius:10px;background:#f8fafc">${e.logo_event?`<img src="${esc(e.logo_event)}" alt="Logo ${esc(eventLabel(e))}" style="width:34px;height:34px;border-radius:8px;object-fit:contain;background:#fff">`:'<span style="width:34px;height:34px;border-radius:8px;background:#e2e8f0;display:grid;place-items:center"><i class="fa-solid fa-trophy"></i></span>'}<b style="font-size:12px">${esc(eventLabel(e))}</b><button type="button" onclick="removeProfileEvent('${esc(e.id)}')" aria-label="Hapus ${esc(eventLabel(e))}" style="width:30px;height:30px;border:0;border-radius:7px;background:#fee2e2;color:#b91c1c;cursor:pointer"><i class="fa-solid fa-xmark"></i></button></span>`).join(''):'<small style="color:#667085">Belum ada event yang ditambahkan.</small>'}
+function renderProfileEventOptions(query=''){const box=document.getElementById('profileEventOptions'),q=query.toLowerCase().trim(),available=eventsList.filter(e=>!selectedProfileEvents.has(String(e.id))&&eventLabel(e).toLowerCase().includes(q));box.innerHTML=available.length?available.map(e=>`<button type="button" data-add-profile-event="${esc(e.id)}" role="option" style="width:100%;display:flex;align-items:center;gap:9px;border:0;border-radius:8px;background:#fff;padding:8px;text-align:left;cursor:pointer">${e.logo_event?`<img src="${esc(e.logo_event)}" alt="" style="width:36px;height:36px;border-radius:8px;object-fit:contain;background:#fff">`:'<span style="width:36px;height:36px;border-radius:8px;background:#e2e8f0;display:grid;place-items:center"><i class="fa-solid fa-trophy"></i></span>'}<span><b style="display:block">${esc(eventLabel(e))}</b><small style="color:#667085">${esc(e.status||'')}</small></span></button>`).join(''):'<div style="padding:12px;color:#667085;font-size:12px">Event tidak ditemukan atau sudah ditambahkan.</div>';box.querySelectorAll('[data-add-profile-event]').forEach(btn=>btn.addEventListener('click',()=>{selectedProfileEvents.add(String(btn.dataset.addProfileEvent));document.getElementById('profileEventSearch').value='';box.hidden=true;renderSelectedProfileEvents()}))}
+window.removeProfileEvent=id=>{selectedProfileEvents.delete(String(id));renderSelectedProfileEvents()};
+function openProfileEventOptions(){const box=document.getElementById('profileEventOptions');renderProfileEventOptions(document.getElementById('profileEventSearch').value);box.hidden=false}
+document.getElementById('profileEventSearch')?.addEventListener('focus',openProfileEventOptions);document.getElementById('profileEventSearch')?.addEventListener('input',openProfileEventOptions);document.getElementById('showProfileEventOptions')?.addEventListener('click',()=>{const box=document.getElementById('profileEventOptions');if(box.hidden)openProfileEventOptions();else box.hidden=true});
+function renderCrewProfileSummary(m){const box=document.getElementById('crewProfileSummary'),selected=eventsList.filter(e=>(m.event_ids||[]).map(String).includes(String(e.id))),initial=(m.nama_lengkap||'?').trim().charAt(0).toUpperCase();const photo=m.foto_path?`<img class="profile-summary-photo" src="${esc(m.foto_path)}" alt="Foto profil ${esc(m.nama_lengkap||'Crew')}">`:`<div class="profile-summary-photo" style="display:grid;place-items:center;font-size:38px;font-weight:800;color:#344054">${esc(initial)}</div>`;box.innerHTML=`${photo}<div><span class="lux-role"><i class="fa-solid fa-user"></i>${esc(m.jabatan||'Anggota Crew')}</span><h3 style="margin:10px 0 5px;font-size:24px">${esc(m.nama_lengkap||'-')}</h3><p style="margin:0;color:#667085">${m.alias_nama?esc(m.alias_nama)+' · ':''}${m.whatsapp?'WhatsApp '+esc(m.whatsapp):'Nomor WhatsApp belum diisi'}</p>${m.instagram?`<p style="margin:5px 0 0;color:#667085"><i class="fa-brands fa-instagram"></i> ${esc(m.instagram)}</p>`:''}<div class="profile-summary-events">${selected.length?selected.map(e=>`<span>${e.logo_event?`<img src="${esc(e.logo_event)}" alt="Logo ${esc(eventLabel(e))}">`:'<i class="fa-solid fa-trophy"></i>'}${esc(eventLabel(e))}</span>`).join(''):'<small style="color:#667085">Belum ada riwayat event.</small>'}</div></div>`}
+function showCrewProfileDetail(){document.getElementById('crewProfileSummary').hidden=false;document.getElementById('crewProfileSummaryActions').hidden=false;document.getElementById('crewProfileForm').hidden=true;document.getElementById('editCrewSaveStatus').textContent=''}
+window.openCrewProfile=async function(id){const modal=document.getElementById('crewProfileModal'),dialog=document.getElementById('crewProfileDialog'),form=document.getElementById('crewProfileForm'),summary=document.getElementById('crewProfileSummary');crewPageScrollY=window.scrollY;document.body.style.position='fixed';document.body.style.top=`-${crewPageScrollY}px`;document.body.style.left='0';document.body.style.right='0';document.body.style.width='100%';modal.hidden=false;dialog.scrollTop=0;form.hidden=true;document.getElementById('crewProfileSummaryActions').hidden=true;summary.hidden=false;summary.innerHTML='<div style="grid-column:1/-1;padding:18px;text-align:center;color:#667085"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuat profil...</div>';try{const r=await fetch('api.php?action=get_crew_profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})}),d=await r.json();if(!r.ok||d.status!=='success')throw new Error(d.message||'Profil tidak dapat dibuka.');const m=currentCrewProfile=d.member;form.reset();form.elements.id.value=m.id;form.elements.nama_lengkap.value=m.nama_lengkap||'';form.elements.alias_nama.value=m.alias_nama||'';form.elements.instagram.value=m.instagram||'';form.elements.whatsapp.value=m.whatsapp||'';form.elements.jabatan.value=m.jabatan||'Anggota Crew';selectedProfileEvents=new Set((m.event_ids||[]).map(String));document.getElementById('profileEventSearch').value='';document.getElementById('profileEventOptions').hidden=true;document.getElementById('crewProfilePhotoName').textContent='Belum ada foto baru';renderSelectedProfileEvents();renderCrewProfileSummary(m);showCrewProfileDetail()}catch(err){summary.innerHTML=`<div style="grid-column:1/-1;color:#b42318">⚠ ${esc(err.message)}</div>`}};
+function closeCrewProfileModal(){document.getElementById('crewProfileModal').hidden=true;document.body.style.position='';document.body.style.top='';document.body.style.left='';document.body.style.right='';document.body.style.width='';window.scrollTo(0,crewPageScrollY);currentCrewProfile=null}
+document.getElementById('editCrewProfileBtn')?.addEventListener('click',()=>{document.getElementById('crewProfileSummary').hidden=true;document.getElementById('crewProfileSummaryActions').hidden=true;document.getElementById('crewProfileForm').hidden=false;document.getElementById('crewProfileDialog').scrollTop=0});
+document.getElementById('cancelCrewProfileEdit')?.addEventListener('click',showCrewProfileDetail);document.getElementById('crewProfilePhotoInput')?.addEventListener('change',e=>{document.getElementById('crewProfilePhotoName').textContent=e.target.files?.[0]?.name||'Belum ada foto baru'});
+document.getElementById('closeCrewProfile')?.addEventListener('click',closeCrewProfileModal);document.getElementById('crewProfileModal')?.addEventListener('click',e=>{if(e.target.id==='crewProfileModal')closeCrewProfileModal()});
+document.getElementById('crewProfileForm')?.addEventListener('submit',async e=>{e.preventDefault();const form=e.currentTarget,st=document.getElementById('editCrewSaveStatus'),button=form.querySelector('button[type="submit"]'),fd=new FormData(form);fd.set('event_ids',JSON.stringify([...selectedProfileEvents].map(Number)));st.textContent='Menyimpan perubahan...';button.disabled=true;try{const r=await fetch('api.php?action=update_crew_profile',{method:'POST',body:fd}),d=await r.json();if(!r.ok||d.status!=='success')throw new Error(d.message||'Profil gagal disimpan.');st.innerHTML=`<span style="color:#15803d">✓ ${esc(d.message)}</span>`;await loadCrewForEvent(selectedEventId);setTimeout(closeCrewProfileModal,500)}catch(err){st.innerHTML=`<span style="color:#b42318">⚠ ${esc(err.message)}</span>`}finally{button.disabled=false}});
+async function syncCrewHeaderUser(){const welcomeEl=document.getElementById('welcome-name'),nameEl=document.getElementById('header-user-name'),roleEl=document.getElementById('header-user-role');try{const res=await fetch('session.php?_='+Date.now(),{cache:'no-store',credentials:'same-origin'});if(!res.ok)throw new Error();const data=await res.json();const user=data?.user||null;const name=user?.nama_lengkap||'Pengunjung';const role=user?.role||'User';isAdmin=Boolean(data?.is_admin);if(welcomeEl)welcomeEl.textContent=name;if(nameEl)nameEl.textContent=name;if(roleEl)roleEl.textContent=isAdmin?'ADMIN':String(role).toUpperCase();document.body.classList.toggle('is-admin',isAdmin);document.body.classList.toggle('body-admin',isAdmin);document.body.classList.toggle('body-guest',!isAdmin);if(isAdmin)renderAdmin();else document.getElementById('adminCrewPanel').style.display='none'}catch(e){isAdmin=false;if(welcomeEl)welcomeEl.textContent='Pengunjung';if(nameEl)nameEl.textContent='Pengunjung';if(roleEl)roleEl.textContent='';document.body.classList.remove('is-admin');document.getElementById('adminCrewPanel').style.display='none'}}
+render();renderEventSelectors();loadEvents();syncCrewHeaderUser();
+</script>
+<script id="crew-header-notifications">
+(function(){
+  const nb=document.getElementById('crew-notification-badge'), mb=document.getElementById('crew-message-badge');
+  const messageKey='sportifyMessageSeen', eventKey='sportifySeenEventNotifications';
+  const eventId=e=>String(e.id||e.id_event||((e.nama_event||'')+'|'+(e.tanggal_pelaksanaan||'')));
+  function syncMessage(){const seen=localStorage.getItem(messageKey)==='1';if(mb){mb.textContent=seen?'':'1';mb.classList.toggle('active',!seen)}}
+  async function syncEvents(){try{const r=await fetch('events.php?_='+Date.now(),{cache:'no-store'});const events=await r.json();const seen=JSON.parse(localStorage.getItem(eventKey)||'[]');const active=(Array.isArray(events)?events:[]).filter(e=>String(e.status||'').toLowerCase()!=='selesai'&&!seen.includes(eventId(e)));if(nb){nb.textContent=active.length?String(Math.min(active.length,9)):'';nb.classList.toggle('active',active.length>0)}}catch(_){} }
+  document.getElementById('crew-message-btn')?.addEventListener('click',()=>{localStorage.setItem(messageKey,'1');if(mb){mb.textContent='';mb.classList.remove('active')}});
+  document.getElementById('crew-notification-btn')?.addEventListener('click',async()=>{let events=[];try{const r=await fetch('events.php?_='+Date.now(),{cache:'no-store'});events=await r.json()}catch(_){}const ids=(Array.isArray(events)?events:[]).filter(e=>String(e.status||'').toLowerCase()!=='selesai').map(eventId);localStorage.setItem(eventKey,JSON.stringify([...new Set(ids)]));if(nb){nb.textContent='';nb.classList.remove('active')}});
+  syncMessage();syncEvents();
+})();
+</script>
+<div class="compact-player" id="compactPlayer">
+  <button class="player-btn" type="button" onclick="restartMusic()" title="Sebelumnya / ulangi"><i class="fa-solid fa-backward-step"></i></button>
+  <button class="player-btn player-play" id="musicPlayBtn" type="button" onclick="toggleMusic()" title="Putar / jeda"><i class="fa-solid fa-play"></i></button>
+  <button class="player-btn" type="button" onclick="nextMusic()" title="Berikutnya"><i class="fa-solid fa-forward-step"></i></button>
+  <div class="player-track">UT Jingle - United Tractors</div>
+  <button class="player-btn player-volume" id="musicVolumeBtn" type="button" onclick="toggleMusicVolume()" title="Suara"><i class="fa-solid fa-volume-high"></i></button>
+  <audio id="kdmMusic" preload="auto" src="./ut_jingle.mp3" loop autoplay></audio>
+</div>
+<script id="kdm-music-controller">
+let musicPlaying=false,musicMuted=false;
+const kdmAudio=document.getElementById('kdmMusic');
+const KDM_POS_KEY='kdm_ut_jingle_position';
+const KDM_PLAY_KEY='kdm_ut_jingle_playing';
+let kdmUserPaused=false;
+function saveKdmMusicState(){if(!kdmAudio)return;try{localStorage.setItem(KDM_POS_KEY,String(kdmAudio.currentTime||0));localStorage.setItem(KDM_PLAY_KEY,kdmAudio.paused?'0':'1');}catch(e){}}
+function syncMusicIcon(){const i=document.querySelector('#musicPlayBtn i');if(i)i.className=musicPlaying?'fa-solid fa-pause':'fa-solid fa-play';}
+function toggleMusic(){if(!kdmAudio)return;if(kdmAudio.paused){kdmUserPaused=false;kdmAudio.play().then(()=>{musicPlaying=true;saveKdmMusicState();syncMusicIcon();}).catch(()=>{});}else{kdmUserPaused=true;kdmAudio.pause();musicPlaying=false;saveKdmMusicState();syncMusicIcon();}}
+function restartMusic(){if(!kdmAudio)return;kdmUserPaused=false;kdmAudio.currentTime=0;kdmAudio.play().then(()=>{musicPlaying=true;saveKdmMusicState();syncMusicIcon();}).catch(()=>{});}
+function nextMusic(){restartMusic();}
+function toggleMusicVolume(){if(!kdmAudio)return;kdmAudio.muted=!kdmAudio.muted;musicMuted=kdmAudio.muted;const i=document.querySelector('#musicVolumeBtn i');if(i)i.className=musicMuted?'fa-solid fa-volume-xmark':'fa-solid fa-volume-high';}
+function autoStartKdmMusic(){
+  if(!kdmAudio)return;
+  let savedPos=0,savedPlay=true;
+  try{const p=parseFloat(localStorage.getItem(KDM_POS_KEY)||'0');if(Number.isFinite(p)&&p>=0)savedPos=p;savedPlay=localStorage.getItem(KDM_PLAY_KEY)!=='0';}catch(e){}
+  const restore=()=>{try{if(savedPos>0&&kdmAudio.duration&&savedPos<kdmAudio.duration-0.5)kdmAudio.currentTime=savedPos;}catch(e){}};
+  if(kdmAudio.readyState>=1)restore();else kdmAudio.addEventListener('loadedmetadata',restore,{once:true});
+  const tryStart=()=>{if(!savedPlay||kdmUserPaused)return;kdmAudio.play().then(()=>{musicPlaying=true;syncMusicIcon();}).catch(()=>{});};
+  tryStart();
+  ['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,tryStart,{once:true,passive:true}));
+}
+if(kdmAudio){kdmAudio.addEventListener('play',()=>{musicPlaying=true;syncMusicIcon();saveKdmMusicState();});kdmAudio.addEventListener('pause',()=>{musicPlaying=false;syncMusicIcon();saveKdmMusicState();});kdmAudio.addEventListener('ended',()=>{kdmAudio.currentTime=0;kdmAudio.play().then(()=>{musicPlaying=true;syncMusicIcon();saveKdmMusicState();}).catch(()=>{});});}
+document.addEventListener('DOMContentLoaded',autoStartKdmMusic);
+</script>
+
+
+<script id="sportify-loading-script">(function(){
+const loader=document.getElementById('sportify-page-loader');
+function show(){if(loader){loader.classList.remove('hide');loader.setAttribute('aria-hidden','false');}}
+function hide(){if(loader){loader.classList.add('hide');loader.setAttribute('aria-hidden','true');}}
+// Loader awal dibuat terlihat cukup lama agar transisi benar-benar terlihat.
+window.addEventListener('load',function(){setTimeout(hide,500);});
+if(document.readyState==='complete') setTimeout(hide,500);
+// Semua perpindahan halaman memakai loader. Navigasi ditunda sedikit agar animasi sempat tampil.
+document.addEventListener('click',function(e){
+  const a=e.target.closest('a');
+  if(!a||!loader) return;
+  const href=a.getAttribute('href')||'';
+  if(!href||href.startsWith('#')||href.startsWith('javascript:')||a.target==='_blank'||a.hasAttribute('download')) return;
+  if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey||e.button!==0) return;
+  let u;
+  try{u=new URL(a.href,location.href);}catch(_){return;}
+  if(u.origin!==location.origin) return;
+  // Jangan menahan link yang benar-benar sama tanpa perubahan hash/query.
+  if(u.href===location.href) return;
+  e.preventDefault();
+  show();
+  sessionStorage.setItem('sportifyShowLoader','1');
+  setTimeout(function(){location.href=u.href;},650);
+},true);
+})();</script>
+<style id="sportify-notification-click-fix">
+#sportify-universal-utility{position:fixed;top:62px;right:24px;width:330px;max-width:calc(100vw - 32px);background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 18px 45px rgba(15,23,42,.18);z-index:200000;display:none;overflow:hidden;font-family:inherit}
+#sportify-universal-utility.show{display:block;animation:sportifyUtilityIn .18s ease-out}
+#sportify-universal-utility .su-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #eef2f7;font-weight:700;color:#1e293b}
+#sportify-universal-utility .su-close{border:0;background:#f1f5f9;border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:17px}
+#sportify-universal-utility .su-body{padding:16px;color:#64748b;font-size:13px;line-height:1.6}
+@keyframes sportifyUtilityIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+</style>
+<div id="sportify-universal-utility" aria-live="polite"><div class="su-head"><span id="su-title">Notifikasi</span><button class="su-close" type="button" id="su-close">×</button></div><div class="su-body" id="su-body"></div></div>
+<script id="sportify-notification-click-fix-script">
+(function(){
+  function ready(fn){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fn,{once:true});else fn();}
+  ready(function(){
+    const panel=document.getElementById('sportify-universal-utility');
+    const title=document.getElementById('su-title');
+    const body=document.getElementById('su-body');
+    const close=document.getElementById('su-close');
+    if(!panel||!title||!body)return;
+    const notifIds=['global-notification-btn','crew-notification-btn','aboutNotificationBtn'];
+    const msgIds=['global-message-btn','crew-message-btn','aboutMessageBtn'];
+    const hideBadges=ids=>ids.forEach(id=>{const btn=document.getElementById(id);if(!btn)return;const p=btn.querySelector('.global-header-badge, .header-badge, .about-badge');if(p){p.textContent='';p.classList.remove('active');p.style.display='none';}btn.style.display='inline-flex';btn.style.visibility='visible';btn.style.opacity='1';});
+    function show(type){
+      panel.classList.add('show');
+      if(type==='message'){
+        title.textContent='Pesan';
+        body.innerHTML='<strong>Sportify Kandilo</strong><p style="margin:8px 0 0">Selamat datang di Sportify Kandilo. Informasi kegiatan dan jadwal terbaru tersedia melalui menu di sidebar.</p>';
+        localStorage.setItem('sportifyMessageSeen','1'); hideBadges(msgIds);
+      }else{
+        title.textContent='Notifikasi';
+        body.innerHTML='<strong>Tidak ada notifikasi baru.</strong><p style="margin:8px 0 0">Notifikasi yang sudah dibuka akan ditandai sebagai telah dibaca.</p>';
+        localStorage.setItem('sportifyNotificationsRead','1'); hideBadges(notifIds);
+      }
+    }
+    function hide(){panel.classList.remove('show');}
+    close.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();hide();});
+    document.addEventListener('click',function(e){
+      const btn=e.target.closest('button');
+      if(!btn)return;
+      if(notifIds.includes(btn.id)){e.preventDefault();e.stopImmediatePropagation();show('notification');return;}
+      if(msgIds.includes(btn.id)){e.preventDefault();e.stopImmediatePropagation();show('message');return;}
+      if(panel.classList.contains('show')&&!panel.contains(e.target))hide();
+    },true);
+    window.addEventListener('pageshow',hide);
+  });
+})();
+</script>
+<script id="register-nav-mode">
+(async function(){
+  try {
+    const r=await fetch('session.php?_='+Date.now(),{credentials:'same-origin',cache:'no-store'});
+    const d=await r.json();
+    const admin=!!d.is_admin;
+    const text=document.getElementById('registerNavText');
+    const link=document.getElementById('registerNavLink');
+    if(text) text.textContent='Join Event';
+    if(link) link.title='Join Event';
+  } catch(e) {}
+})();
+</script>
+<style id="brand-consistency-final">
+@media(max-width:900px){
+  .brand{height:70px;padding:12px;justify-content:center;}
+  .brand img{width:46px;height:46px;min-width:46px;}
+  .brand div{display:none;}
+}
+</style>
+
+
+<link rel="stylesheet" href="responsive.css">
+<script src="responsive.js"></script>
+</body></html>

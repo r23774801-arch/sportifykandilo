@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sportify Kandilo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--dark:#111827;--blue:#243746;--yellow:#ffcf00;--orange:#f37021;--bg:#f4f7fb;--line:#e2e8f0;--muted:#667085}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Tahoma,sans-serif}body{background:var(--bg);color:#263746;min-height:100vh}.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:linear-gradient(180deg,#111827,#243746);color:#fff}.brand{height:70px;padding:12px 18px;border-bottom:1px solid #ffffff18;display:flex;align-items:center;gap:12px;flex-shrink:0}.brand img{width:46px;height:46px;min-width:46px;object-fit:cover;border-radius:10px;background:#fff;display:block}.brand div{display:flex;flex-direction:column;justify-content:center;line-height:1.05;min-width:0}.brand b{font-size:17px;font-weight:800;letter-spacing:.3px}.brand span{display:block;color:var(--yellow);font-size:12px;font-weight:700;margin-top:4px;letter-spacing:.2px}.label{font-size:10px;color:#ffffff70;letter-spacing:1.3px;padding:22px 20px 9px;text-transform:uppercase}.nav{list-style:none;padding:0 12px}.nav li{margin-bottom:5px}.nav a{display:flex;gap:13px;align-items:center;padding:12px 15px;border-radius:10px;color:#ffffffb8;text-decoration:none;font-size:14px}.nav a:hover{background:#ffffff12;color:#fff}.nav a.active{background:linear-gradient(90deg,var(--yellow),var(--orange));color:#111827;font-weight:700}.nav i{width:20px;text-align:center}.main{margin-left:250px;min-height:100vh}.top{height:70px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px}.welcome{display:none!important}.welcome h2{font-size:18px}.actions{display:flex;align-items:center;gap:18px}.search{position:relative;width:260px}.search input{width:100%;padding:9px 16px 9px 38px;border:1px solid var(--line);border-radius:20px;background:#f4f7fb;outline:none}.search i{position:absolute;left:14px;top:10px;color:#7f8c8d}.icons{display:flex;gap:10px}.icon-btn{width:38px;height:38px;border:0;background:transparent;color:#7f8c8d;border-radius:10px;cursor:pointer;font-size:18px}.icon-btn:hover{background:#fff5cf;color:#f37021}.user{display:flex;align-items:center;gap:10px;padding-left:15px;border-left:1px solid var(--line)}.avatar{width:36px;height:36px;border-radius:50%;background:#d1d5db;display:grid;place-items:center;color:#4b5563}.logout{color:#7f8c8d;text-decoration:none;font-size:18px}.visitor-header-hidden{display:none!important}.body-admin .visitor-header-hidden{display:flex!important}.content{padding:30px;max-width:1250px;margin:auto}.hero{background:linear-gradient(135deg,#111827,#243746);border-radius:22px;padding:40px;color:#fff;position:relative;overflow:hidden}.hero:after{content:'SPORTIFY';position:absolute;right:-10px;bottom:-35px;font-size:90px;font-weight:900;color:#ffffff08}.eyebrow{display:inline-block;background:#fff3c4;color:#8b6500;border-radius:999px;padding:7px 12px;font-size:11px;font-weight:800;letter-spacing:1px}.hero h1{font-size:38px;margin:16px 0 10px}.hero p{max-width:720px;color:#ffffffbd;line-height:1.7}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px rgba(17,24,39,.06)}.card .ico{width:44px;height:44px;border-radius:13px;background:#fff3c4;color:#9a7000;display:grid;place-items:center;margin-bottom:14px}.card h3{margin-bottom:8px}.card p{color:var(--muted);font-size:13px;line-height:1.7}.info{margin-top:20px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:25px}.info h2{margin-bottom:10px}.info p{color:var(--muted);line-height:1.8;font-size:14px}@media(max-width:900px){.sidebar{width:78px}.brand div,.label,.nav span{display:none}.brand{justify-content:center}.nav a{justify-content:center}.main{margin-left:78px}.top{padding:0 16px}.search{display:none}.cards{grid-template-columns:1fr}.content{padding:18px}}
+.about-badge{display:none!important}
+.top{position:sticky;top:0;z-index:1000;box-shadow:0 3px 12px rgba(15,23,42,.06)}
+</style>
+<style id="music-widget-style">
+.compact-player{position:fixed;right:22px;bottom:22px;z-index:9999;width:min(360px,calc(100vw - 30px));height:58px;background:#fff;border:1px solid #e5e7eb;box-shadow:0 10px 30px rgba(15,23,42,.18);display:flex;align-items:center;padding:0 12px;gap:10px;font-family:inherit}
+.player-btn{width:38px;height:38px;border:0;background:transparent;color:#8b7bc8;border-radius:8px;cursor:pointer;font-size:16px;display:grid;place-items:center}.player-btn:hover{background:#f1eff8}.player-play{color:#5c7fc7;background:#eef2fa}.player-track{flex:1;min-width:0;color:#4b5563;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.player-volume{color:#7a8795}.compact-player iframe{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+@media(max-width:600px){.compact-player{right:10px;bottom:10px;height:54px}.player-btn{width:34px;height:34px}}
+</style>
+
+<style id="sportify-loading-style">#sportify-page-loader{position:fixed;inset:0;background:rgba(17,24,39,.97);display:flex;align-items:center;justify-content:center;z-index:99999;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}#sportify-page-loader.hide{opacity:0;visibility:hidden;pointer-events:none}.sportify-loader-box{text-align:center}.sportify-loader-wrap{position:relative;width:150px;height:150px;margin:0 auto;display:flex;align-items:center;justify-content:center}.sportify-loader-logo-base,.sportify-loader-logo-fill{position:absolute;width:150px;height:150px;object-fit:contain;display:block}.sportify-loader-logo-base{opacity:.28;filter:brightness(0) invert(1) drop-shadow(0 8px 18px rgba(0,0,0,.35))}.sportify-loader-logo-fill{padding:0;background:linear-gradient(120deg,transparent 0%,transparent 30%,#ffcf00 45%,#f37021 55%,transparent 70%,transparent 100%);background-size:260% 100%;-webkit-mask-image:url('./img/logo_sportify_loader.png');mask-image:url('./img/logo_sportify_loader.png');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;animation:sportifyLogoLoad 1.35s ease-in-out infinite;filter:drop-shadow(0 8px 18px rgba(255,207,0,.22))}.sportify-loader-text{margin-top:14px;color:#fff;font-weight:800;letter-spacing:1.5px;font-size:15px}.sportify-loader-dots{margin-top:8px;color:#ffcf00;letter-spacing:4px;animation:sportifyDots 1s infinite}@keyframes sportifyLogoLoad{0%{background-position:100% 0;transform:scale(.96)}50%{background-position:0 0;transform:scale(1.02)}100%{background-position:-100% 0;transform:scale(.96)}}@keyframes sportifyDots{0%,100%{opacity:.35}50%{opacity:1}}</style>
+
+<style id="sportify-header-icons-keep-visible">
+.header-icon-btn,.global-header-icon-btn{display:inline-flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+.header-icon-btn i,.global-header-icon-btn i{visibility:visible!important;opacity:1!important;}
+.header-badge,.global-header-badge,.about-badge{pointer-events:none;}
+</style>
+
+<style id="sportify-header-icons-right-fix">
+/* Header: lonceng dan pesan berada di sisi kanan */
+.top-header{position:relative}.top{position:sticky!important;top:0;z-index:1000}
+.header-actions, .actions { margin-left: auto !important; display:flex !important; align-items:center !important; justify-content:flex-end !important; }
+.header-icons, .icons { margin-left:auto !important; display:flex !important; align-items:center !important; justify-content:flex-end !important; }
+/* Kolom pencarian header disembunyikan agar ikon berada di kanan */
+.top-header .search-box, .top .search-box { display:none !important; }
+.top-header .search, .top .search { display:none !important; }
+@media (max-width:600px){ .header-actions,.actions{gap:8px !important;} }
+</style>
+<style id="sportify-admin-login-responsive">.header-admin-login{display:inline-flex;align-items:center;justify-content:center;width:30px;height:38px;padding:0;border:0!important;border-radius:0;background:transparent!important;color:#6b168f!important;text-decoration:none;font-size:17px;font-weight:400;white-space:nowrap;transition:transform .15s ease,color .15s ease;box-shadow:none!important}.header-admin-login:hover{background:transparent!important;color:#4f0f6b!important;transform:scale(1.08)}.header-admin-login i{font-size:15px;line-height:1}.header-admin-login span{display:none!important}@media(max-width:600px){.header-admin-login{width:30px;height:38px;padding:0}.header-admin-login i{font-size:15px}}</style>
+<style id="sportify-user-top-icons-common">
+.top-header .header-actions, .top .actions, .top .header-actions{margin-left:auto!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;}
+.top-header .header-icons, .top .icons, .top .header-icons{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:14px!important;margin-left:auto!important;}
+.global-header-icon-btn,.header-icon-btn,.icon-btn{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#7f8c8d!important;text-decoration:none!important;box-shadow:none!important;cursor:pointer!important;}
+.global-header-icon-btn:hover,.header-icon-btn:hover,.icon-btn:hover{background:#f4f7fb!important;color:#243746!important;}
+.global-header-icon-btn i,.header-icon-btn i,.icon-btn i{font-size:17px!important;line-height:1!important;}
+.header-admin-login{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;color:#6b168f!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;text-decoration:none!important;box-shadow:none!important;}
+.header-admin-login:hover{background:#f4f7fb!important;color:#4f0f6b!important;transform:none!important;}
+.header-admin-login i{font-size:16px!important;line-height:1!important;}
+.header-admin-login span{display:none!important;}
+@media(max-width:600px){.top-header .header-icons,.top .icons,.top .header-icons{gap:8px!important;}.global-header-icon-btn,.header-icon-btn,.icon-btn,.header-admin-login{width:32px!important;height:32px!important;min-width:32px!important;}}
+</style>
+
+<style id="kdm-universal-user-top-icons">
+/* KDM: ikon header kanan atas diseragamkan di semua halaman user */
+.top, .top-header {
+  height: 64px !important;
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  padding: 0 28px !important;
+  background: #fff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+.top .actions, .top-header .header-actions {
+  width: 100% !important;
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+.top .icons, .top-header .header-icons {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+}
+.top .icon-btn, .top-header .global-header-icon-btn, .top-header .header-icon-btn, .top .header-icon-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #7f8c8d !important;
+  font-size: 18px !important;
+  box-shadow: none !important;
+}
+.top .icon-btn:hover, .top-header .global-header-icon-btn:hover, .top-header .header-icon-btn:hover {
+  background: #f4f6f8 !important;
+}
+.top .icon-btn i, .top-header .global-header-icon-btn i, .top-header .header-icon-btn i {
+  font-size: 17px !important;
+  line-height: 1 !important;
+}
+.header-admin-login {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #6b168f !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+.header-admin-login:hover {
+  background: #f4f6f8 !important;
+  color: #4f0f6b !important;
+  transform: none !important;
+}
+.header-admin-login i { font-size: 17px !important; line-height: 1 !important; }
+.header-admin-login span { display: none !important; }
+@media (max-width: 700px) {
+  .top, .top-header { padding: 0 16px !important; }
+  .top .icons, .top-header .header-icons { gap: 8px !important; }
+}
+</style>
+
+
+<style id="admin-logout-sidebar">
+.admin-logout-nav{display:none!important;}
+.body-admin .admin-logout-nav{display:block!important;}
+.admin-logout-nav a{color:#ffb4b4!important;}
+.admin-logout-nav a:hover{background:rgba(239,68,68,.14)!important;color:#fff!important;}
+</style>
+
+<style id="kdm-common-top-header-final">
+/* Header kanan atas diseragamkan di semua halaman */
+.top, .top-header {height:64px!important;background:#fff!important;border-bottom:1px solid #e5e7eb!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;padding:0 18px!important;box-sizing:border-box!important;}
+.top .actions, .top-header .header-actions {margin-left:auto!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:0!important;height:100%!important;}
+.top .icons, .top-header .header-icons {display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:12px!important;margin:0!important;}
+.top .icon-btn, .top-header .global-header-icon-btn, .top-header .header-icon-btn {width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#7f8c8d!important;font-size:17px!important;cursor:pointer!important;}
+.top .icon-btn:hover, .top-header .global-header-icon-btn:hover, .top-header .header-icon-btn:hover {background:#f4f7fb!important;color:#243746!important;}
+.top .user, .top .user-profile {display:flex!important;align-items:center!important;gap:10px!important;margin-left:8px!important;padding-left:15px!important;border-left:1px solid #e5e7eb!important;height:36px!important;}
+.top .user > span:first-child, .top .user-profile > span:first-child {font-size:13px!important;font-weight:600!important;color:#263746!important;white-space:nowrap!important;}
+.top .avatar, .top .user-avatar {width:36px!important;height:36px!important;min-width:36px!important;border-radius:50%!important;background:#d1d5db!important;display:grid!important;place-items:center!important;color:#4b5563!important;}
+.top .logout, .top .logout-link {color:#7f8c8d!important;text-decoration:none!important;font-size:18px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-left:2px!important;}
+.top .logout:hover, .top .logout-link:hover {color:#243746!important;}
+.kdm-admin-only-logout{display:none!important;}
+body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{display:inline-flex!important;}
+@media(max-width:600px){.top,.top-header{height:58px!important;padding:0 10px!important}.top .icons,.top-header .header-icons{gap:6px!important}.top .user,.top .user-profile{margin-left:3px!important;padding-left:8px!important}.top .icon-btn,.top-header .global-header-icon-btn,.top-header .header-icon-btn{width:30px!important;height:30px!important;min-width:30px!important}.top .avatar,.top .user-avatar{width:32px!important;height:32px!important;min-width:32px!important}}
+</style>
+
+
+<style id="kdm-user-hide-account-top">
+/* KDM: pada halaman User, sembunyikan tulisan User dan ikon profil. Admin tetap melihat informasi akun. */
+body:not(.body-admin) .visitor-header-hidden{display:none!important;}
+body.body-admin .visitor-header-hidden{display:flex!important;}
+</style>
+</head>
+<body>
+<div id="sportify-page-loader" class="hide" aria-hidden="true"><div class="sportify-loader-box"><div class="sportify-loader-wrap"><img class="sportify-loader-logo-base" src="img/logo_sportify_loader.png" alt=""><span class="sportify-loader-logo-fill" aria-hidden="true"></span></div><div class="sportify-loader-text">SPORTIFY KANDILO</div><div class="sportify-loader-dots">•••</div></div></div>
+
+<aside class="sidebar"><div class="brand"><img src="./img/logo_sportify.jpeg" alt="Logo Sportify Kandilo"><div><b>SPORTIFY</b><span>KANDILO</span></div></div><div class="label">Menu Utama</div><ul class="nav">
+<li><a href="index.html"><i class="fa-solid fa-house"></i><span>Beranda</span></a></li>
+<li><a href="registrasi.html" id="registerNavLink"><i class="fa-solid fa-right-to-bracket"></i><span id="registerNavText">Join Event</span></a></li>
+<li><a href="index.html?tab=history"><i class="fa-solid fa-clock-rotate-left"></i><span>Galery</span></a></li>
+<li><a href="index.html?tab=event"><i class="fa-solid fa-trophy"></i><span>Event</span></a></li>
+
+<li><a href="crew.html" title="Crew"><i class="fa-solid fa-users"></i><span>Crew</span></a></li><li><a href="index.html?tab=jadwal"><i class="fa-solid fa-calendar-days"></i><span>Jadwal</span></a></li>
+<li><a class="active" href="tentang-kami.html"><i class="fa-solid fa-circle-info"></i><span>Tentang Kami</span></a></li><li class="admin-logout-nav"><a href="logout.php" title="Logout Admin"><i class="fa-solid fa-right-from-bracket"></i><span>Logout Admin</span></a></li></ul></aside>
+<main class="main"><header class="top"><div class="actions"><div class="icons"><button class="icon-btn" id="aboutNotificationBtn" title="Notifikasi" aria-label="Notifikasi"><i class="fa-regular fa-bell"></i><span class="about-badge" id="aboutNotificationBadge"></span></button><button class="icon-btn" id="aboutMessageBtn" title="Pesan" aria-label="Pesan"><i class="fa-regular fa-envelope"></i><span class="about-badge" id="aboutMessageBadge"></span></button></div><div class="user visitor-header-hidden"><span id="headerUser">User</span><div class="avatar"><i class="fa-solid fa-user"></i></div><a href="logout.php" class="logout kdm-admin-only-logout" title="Logout Admin"><i class="fa-solid fa-right-from-bracket"></i></a></div></div></header>
+<section class="content"><div class="hero"><span class="eyebrow">SPORTIFY KANDILO</span><h1>Tentang Kami</h1><p>Sportify Kandilo merupakan platform informasi dan pengelolaan event yang dirancang untuk memudahkan pengguna dalam menemukan, mengikuti, dan mengelola berbagai kegiatan. Melalui satu platform, informasi mengenai event, jadwal, komunitas, serta aktivitas dapat disajikan secara terstruktur, informatif, dan mudah diakses.</p></div><div class="cards"><div class="card"><div class="ico"><i class="fa-solid fa-bullseye"></i></div><h3>Tujuan</h3><p>Mewujudkan pengelolaan event yang lebih terorganisir dan mudah diakses.
+Sportify Kandilo hadir untuk membantu menyampaikan informasi kegiatan secara jelas, mempermudah koordinasi, serta memberikan pengalaman yang lebih praktis bagi pengguna dalam mengikuti berbagai event yang tersedia.</p></div><div class="card"><div class="ico"><i class="fa-solid fa-users"></i></div><h3>Komunitas</h3><p>Membangun komunitas yang aktif, terbuka, dan kolaboratif.
+Sportify Kandilo menjadi ruang bagi crew dan anggota untuk saling terhubung, berbagi informasi, berkoordinasi, serta berpartisipasi dalam berbagai kegiatan dan event.</p></div><div class="card"><div class="ico"><i class="fa-solid fa-calendar-check"></i></div><h3>Aktivitas</h3><p>Temukan berbagai kegiatan dalam satu platform.
+Mulai dari event yang akan datang, jadwal kegiatan, aktivitas komunitas, hingga dokumentasi dan riwayat event. Seluruh informasi disajikan secara terpusat agar pengguna dapat mengikuti setiap kegiatan dengan lebih mudah.</p></div></div><div class="info"><h2>Sportify Kandilo</h2><p>Sportify Kandilo dirancang untuk membuat proses pengelolaan dan penyampaian informasi event menjadi lebih sederhana, terstruktur, dan transparan. Dengan informasi event, jadwal, dan aktivitas yang terintegrasi, pengguna dapat mengetahui berbagai kegiatan yang tersedia dan berpartisipasi dengan lebih mudah.</p></div></section></main>
+<div id="utilityModal" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:9999;align-items:center;justify-content:center;padding:20px">
+<div style="width:min(520px,100%);background:#fff;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden">
+<div style="padding:18px 22px;border-bottom:1px solid #e5e7eb;display:flex;justify-content:space-between;align-items:center"><b id="utilityTitle">Notifikasi</b><button id="closeUtility" style="border:0;background:#f3f4f6;width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:18px">×</button></div>
+<div id="utilityBody" style="padding:22px;color:#667085;line-height:1.7">Memuat...</div></div></div>
+<script>
+(function(){
+  const modal=document.getElementById('utilityModal'), title=document.getElementById('utilityTitle'), body=document.getElementById('utilityBody');
+  const nb=document.getElementById('aboutNotificationBadge'), mb=document.getElementById('aboutMessageBadge');
+  const messageKey='sportifyMessageSeen', eventKey='sportifySeenEventNotifications';
+  const close=()=>modal.style.display='none';
+  const eventId=e=>String(e.id||e.id_event||((e.nama_event||e.name||'')+'|'+(e.tanggal_pelaksanaan||e.tanggal||e.date||'')));
+  function syncBadges(){const msgSeen=localStorage.getItem(messageKey)==='1';if(mb){mb.textContent=msgSeen?'':'1';mb.style.display=msgSeen?'none':'';}try{const seen=JSON.parse(localStorage.getItem(eventKey)||'[]');if(nb){nb.textContent='';nb.style.display=seen.length?'none':'';}}catch(_){}}
+  document.getElementById('closeUtility').onclick=close;
+  modal.onclick=e=>{if(e.target===modal)close()};
+  async function getEvents(){try{const r=await fetch('events.php?_='+Date.now(),{cache:'no-store'});if(!r.ok)return [];const d=await r.json();return Array.isArray(d)?d:(Array.isArray(d.events)?d.events:[])}catch(e){return []}}
+  async function showNotification(){
+    title.textContent='Notifikasi';
+    const events=await getEvents();
+    const active=events.filter(e=>String(e.status||e.state||'').toLowerCase()!=='selesai');
+    localStorage.setItem(eventKey,JSON.stringify([...new Set(active.map(eventId))]));
+    if(nb){nb.textContent='';nb.style.display='none';}
+    body.innerHTML='Memuat notifikasi...'; modal.style.display='flex';
+    if(!active.length){body.innerHTML='<b>Tidak ada notifikasi baru.</b><br><small>Belum ada event aktif.</small>';return;}
+    body.innerHTML=active.slice(0,8).map(e=>`<div style="padding:12px 0;border-bottom:1px solid #eee"><b>${e.nama_event||e.nama||e.name||'Event'}</b><br><small>${e.tanggal_pelaksanaan||e.tanggal||e.date||''} ${e.jam_pelaksanaan||e.jam||e.time||''} ${(e.lokasi||e.location)?'• '+(e.lokasi||e.location):''}</small></div>`).join('');
+  }
+  function showMessage(){localStorage.setItem(messageKey,'1');if(mb){mb.textContent='';mb.style.display='none';}title.textContent='Pesan';body.innerHTML='<b>Sportify Kandilo</b><p style="margin-top:8px">Selamat datang di Sportify Kandilo. Gunakan menu Event, History, Crew, Jadwal, dan Tentang Kami untuk mengelola informasi kegiatan.</p>';modal.style.display='flex';}
+  document.getElementById('aboutNotificationBtn')?.addEventListener('click',showNotification);
+  document.getElementById('aboutMessageBtn')?.addEventListener('click',showMessage);
+  syncBadges();
+  fetch('session.php?_='+Date.now(),{cache:'no-store',credentials:'same-origin'}).then(r=>r.json()).then(d=>{const u=d?.user||{};const n=u?.nama_lengkap||u?.username||u?.nama||u?.name||'User';const admin=!!d?.is_admin;const hu=document.getElementById('headerUser');if(hu)hu.textContent=admin?'admin':n;document.body.classList.toggle('body-admin',admin);document.body.classList.toggle('body-guest',!admin);const userName=document.getElementById('userName');if(userName)userName.textContent=admin?n:'Pengunjung';if(hu)hu.textContent=n}).catch(()=>{document.body.classList.add('body-guest');const userName=document.getElementById('userName'),headerUser=document.getElementById('headerUser');if(userName)userName.textContent='Pengunjung';if(headerUser)headerUser.textContent='';});
+})();
+</script>
+
+<div class="compact-player" id="compactPlayer">
+  <button class="player-btn" type="button" onclick="restartMusic()" title="Sebelumnya / ulangi"><i class="fa-solid fa-backward-step"></i></button>
+  <button class="player-btn player-play" id="musicPlayBtn" type="button" onclick="toggleMusic()" title="Putar / jeda"><i class="fa-solid fa-play"></i></button>
+  <button class="player-btn" type="button" onclick="nextMusic()" title="Berikutnya"><i class="fa-solid fa-forward-step"></i></button>
+  <div class="player-track">UT Jingle - United Tractors</div>
+  <button class="player-btn player-volume" id="musicVolumeBtn" type="button" onclick="toggleMusicVolume()" title="Suara"><i class="fa-solid fa-volume-high"></i></button>
+  <audio id="kdmMusic" preload="auto" src="./ut_jingle.mp3" loop autoplay></audio>
+</div>
+<script id="kdm-music-controller">
+let musicPlaying=false,musicMuted=false;
+const kdmAudio=document.getElementById('kdmMusic');
+const KDM_POS_KEY='kdm_ut_jingle_position';
+const KDM_PLAY_KEY='kdm_ut_jingle_playing';
+let kdmUserPaused=false;
+function saveKdmMusicState(){if(!kdmAudio)return;try{localStorage.setItem(KDM_POS_KEY,String(kdmAudio.currentTime||0));localStorage.setItem(KDM_PLAY_KEY,kdmAudio.paused?'0':'1');}catch(e){}}
+function syncMusicIcon(){const i=document.querySelector('#musicPlayBtn i');if(i)i.className=musicPlaying?'fa-solid fa-pause':'fa-solid fa-play';}
+function toggleMusic(){if(!kdmAudio)return;if(kdmAudio.paused){kdmUserPaused=false;kdmAudio.play().then(()=>{musicPlaying=true;saveKdmMusicState();syncMusicIcon();}).catch(()=>{});}else{kdmUserPaused=true;kdmAudio.pause();musicPlaying=false;saveKdmMusicState();syncMusicIcon();}}
+function restartMusic(){if(!kdmAudio)return;kdmUserPaused=false;kdmAudio.currentTime=0;kdmAudio.play().then(()=>{musicPlaying=true;saveKdmMusicState();syncMusicIcon();}).catch(()=>{});}
+function nextMusic(){restartMusic();}
+function toggleMusicVolume(){if(!kdmAudio)return;kdmAudio.muted=!kdmAudio.muted;musicMuted=kdmAudio.muted;const i=document.querySelector('#musicVolumeBtn i');if(i)i.className=musicMuted?'fa-solid fa-volume-xmark':'fa-solid fa-volume-high';}
+function autoStartKdmMusic(){
+  if(!kdmAudio)return;
+  let savedPos=0,savedPlay=true;
+  try{const p=parseFloat(localStorage.getItem(KDM_POS_KEY)||'0');if(Number.isFinite(p)&&p>=0)savedPos=p;savedPlay=localStorage.getItem(KDM_PLAY_KEY)!=='0';}catch(e){}
+  const restore=()=>{try{if(savedPos>0&&kdmAudio.duration&&savedPos<kdmAudio.duration-0.5)kdmAudio.currentTime=savedPos;}catch(e){}};
+  if(kdmAudio.readyState>=1)restore();else kdmAudio.addEventListener('loadedmetadata',restore,{once:true});
+  const tryStart=()=>{if(!savedPlay||kdmUserPaused)return;kdmAudio.play().then(()=>{musicPlaying=true;syncMusicIcon();}).catch(()=>{});};
+  tryStart();
+  ['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,tryStart,{once:true,passive:true}));
+}
+if(kdmAudio){kdmAudio.addEventListener('play',()=>{musicPlaying=true;syncMusicIcon();saveKdmMusicState();});kdmAudio.addEventListener('pause',()=>{musicPlaying=false;syncMusicIcon();saveKdmMusicState();});kdmAudio.addEventListener('ended',()=>{kdmAudio.currentTime=0;kdmAudio.play().then(()=>{musicPlaying=true;syncMusicIcon();saveKdmMusicState();}).catch(()=>{});});}
+document.addEventListener('DOMContentLoaded',autoStartKdmMusic);
+</script>
+
+
+<script id="sportify-loading-script">(function(){
+const loader=document.getElementById('sportify-page-loader');
+function show(){if(loader){loader.classList.remove('hide');loader.setAttribute('aria-hidden','false');}}
+function hide(){if(loader){loader.classList.add('hide');loader.setAttribute('aria-hidden','true');}}
+// Loader awal dibuat terlihat cukup lama agar transisi benar-benar terlihat.
+window.addEventListener('load',function(){setTimeout(hide,500);});
+if(document.readyState==='complete') setTimeout(hide,500);
+// Semua perpindahan halaman memakai loader. Navigasi ditunda sedikit agar animasi sempat tampil.
+document.addEventListener('click',function(e){
+  const a=e.target.closest('a');
+  if(!a||!loader) return;
+  const href=a.getAttribute('href')||'';
+  if(!href||href.startsWith('#')||href.startsWith('javascript:')||a.target==='_blank'||a.hasAttribute('download')) return;
+  if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey||e.button!==0) return;
+  let u;
+  try{u=new URL(a.href,location.href);}catch(_){return;}
+  if(u.origin!==location.origin) return;
+  // Jangan menahan link yang benar-benar sama tanpa perubahan hash/query.
+  if(u.href===location.href) return;
+  e.preventDefault();
+  show();
+  sessionStorage.setItem('sportifyShowLoader','1');
+  setTimeout(function(){location.href=u.href;},650);
+},true);
+})();</script>
+<style id="sportify-notification-click-fix">
+#sportify-universal-utility{position:fixed;top:62px;right:24px;width:330px;max-width:calc(100vw - 32px);background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 18px 45px rgba(15,23,42,.18);z-index:200000;display:none;overflow:hidden;font-family:inherit}
+#sportify-universal-utility.show{display:block;animation:sportifyUtilityIn .18s ease-out}
+#sportify-universal-utility .su-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #eef2f7;font-weight:700;color:#1e293b}
+#sportify-universal-utility .su-close{border:0;background:#f1f5f9;border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:17px}
+#sportify-universal-utility .su-body{padding:16px;color:#64748b;font-size:13px;line-height:1.6}
+@keyframes sportifyUtilityIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+</style>
+<div id="sportify-universal-utility" aria-live="polite"><div class="su-head"><span id="su-title">Notifikasi</span><button class="su-close" type="button" id="su-close">×</button></div><div class="su-body" id="su-body"></div></div>
+<script id="sportify-notification-click-fix-script">
+(function(){
+  function ready(fn){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fn,{once:true});else fn();}
+  ready(function(){
+    const panel=document.getElementById('sportify-universal-utility');
+    const title=document.getElementById('su-title');
+    const body=document.getElementById('su-body');
+    const close=document.getElementById('su-close');
+    if(!panel||!title||!body)return;
+    const notifIds=['global-notification-btn','crew-notification-btn','aboutNotificationBtn'];
+    const msgIds=['global-message-btn','crew-message-btn','aboutMessageBtn'];
+    const hideBadges=ids=>ids.forEach(id=>{const btn=document.getElementById(id);if(!btn)return;const p=btn.querySelector('.global-header-badge, .header-badge, .about-badge');if(p){p.textContent='';p.classList.remove('active');p.style.display='none';}btn.style.display='inline-flex';btn.style.visibility='visible';btn.style.opacity='1';});
+    function show(type){
+      panel.classList.add('show');
+      if(type==='message'){
+        title.textContent='Pesan';
+        body.innerHTML='<strong>Sportify Kandilo</strong><p style="margin:8px 0 0">Selamat datang di Sportify Kandilo. Informasi kegiatan dan jadwal terbaru tersedia melalui menu di sidebar.</p>';
+        localStorage.setItem('sportifyMessageSeen','1'); hideBadges(msgIds);
+      }else{
+        title.textContent='Notifikasi';
+        body.innerHTML='<strong>Tidak ada notifikasi baru.</strong><p style="margin:8px 0 0">Notifikasi yang sudah dibuka akan ditandai sebagai telah dibaca.</p>';
+        localStorage.setItem('sportifyNotificationsRead','1'); hideBadges(notifIds);
+      }
+    }
+    function hide(){panel.classList.remove('show');}
+    close.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();hide();});
+    document.addEventListener('click',function(e){
+      const btn=e.target.closest('button');
+      if(!btn)return;
+      if(notifIds.includes(btn.id)){e.preventDefault();e.stopImmediatePropagation();show('notification');return;}
+      if(msgIds.includes(btn.id)){e.preventDefault();e.stopImmediatePropagation();show('message');return;}
+      if(panel.classList.contains('show')&&!panel.contains(e.target))hide();
+    },true);
+    window.addEventListener('pageshow',hide);
+  });
+})();
+</script>
+<script id="register-nav-mode">
+(async function(){
+  try {
+    const r=await fetch('session.php?_='+Date.now(),{credentials:'same-origin',cache:'no-store'});
+    const d=await r.json();
+    const admin=!!d.is_admin;
+    const text=document.getElementById('registerNavText');
+    const link=document.getElementById('registerNavLink');
+    if(text) text.textContent='Join Event';
+    if(link) link.title='Join Event';
+  } catch(e) {}
+})();
+</script>
+<style id="brand-consistency-final">
+@media(max-width:900px){
+  .brand{height:70px;padding:12px;justify-content:center;}
+  .brand img{width:46px;height:46px;min-width:46px;}
+  .brand div{display:none;}
+}
+</style>
+
+
+<link rel="stylesheet" href="responsive.css">
+<script src="responsive.js"></script>
+</body></html>

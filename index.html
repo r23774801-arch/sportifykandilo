@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sportify Kandilo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #111827;
+            --primary-blue: #243746;
+            --accent-cyan: #ffcf00;
+            --accent-orange: #f37021;
+            --bg-light: #f4f7fb;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border-color: #e2e8f0;
+            --sidebar-width: 250px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, #111827 0%, #243746 100%);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .brand-logo {
+            padding: 22px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .brand-logo img {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #ffffff;
+        }
+
+        .brand-logo h1 {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .brand-logo h1 span {
+            color: var(--accent-cyan);
+            display: block;
+        }
+
+        /* Brand logo dibuat konsisten dengan seluruh halaman */
+        .brand-logo { height:70px; padding:12px 18px; display:flex; align-items:center; gap:12px; flex-shrink:0; }
+        .brand-logo img { width:46px; height:46px; min-width:46px; border-radius:10px; object-fit:cover; background:#fff; display:block; }
+        .brand-logo .brand-text { display:flex; flex-direction:column; justify-content:center; line-height:1.05; min-width:0; }
+        .brand-logo .brand-text b { font-size:17px; font-weight:800; letter-spacing:.3px; color:#fff; }
+        .brand-logo .brand-text span { display:block; margin-top:4px; font-size:12px; font-weight:700; color:#ffcf00; letter-spacing:.2px; }
+
+        .menu-label {
+            padding: 20px 20px 10px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0 12px;
+        }
+
+        .nav-item {
+            margin-bottom: 6px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            color: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-link i {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link.active {
+            color: #111827;
+            background: linear-gradient(90deg, #ffcf00 0%, #f37021 100%);
+            box-shadow: 0 4px 12px rgba(243, 112, 33, 0.28);
+        }
+
+        /* Main Content Layout */
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Header Styling */
+        .top-header {
+            height: 70px;
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            flex-shrink: 0;
+        }
+
+        .welcome-text { display:none !important; }
+        .welcome-text h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 260px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 8px 16px 8px 38px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+            font-size: 13px;
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .header-icons i {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .header-icons i:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Header notification/message buttons - aktif di seluruh halaman/tab */
+        .global-header-icon-btn {
+            position: relative; z-index: 100001; pointer-events: auto; width: 34px; height: 34px; border: 0; background: transparent;
+            color: var(--text-muted); border-radius: 9px; display: inline-flex; align-items: center;
+            justify-content: center; font-size: 18px; cursor: pointer; transition: .2s;
+        }
+        .global-header-icon-btn:hover { background: rgba(255,207,0,.15); color: var(--primary-blue); }
+        .global-header-badge {
+            display: none; position: absolute; top: 0; right: 0; min-width: 15px; height: 15px;
+            padding: 0 4px; border-radius: 999px; background: #ef4444; color: #fff;
+            font: 700 9px/15px Arial; text-align: center;
+        }
+        .global-header-badge.active { display: block; }
+        .global-header-popover {
+            position: fixed; right: 95px; top: 62px; width: 350px; max-width: calc(100vw - 30px);
+            background: #fff; border: 1px solid #e5e7eb; border-radius: 14px;
+            box-shadow: 0 18px 45px rgba(15,23,42,.18); padding: 16px; z-index: 99999;
+        }
+        .global-header-popover h4 { margin: 0 0 10px; font-size: 15px; color: var(--text-dark); }
+        .global-header-popover p { margin: 0; font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+        .global-header-popover-item { padding: 11px; border: 1px solid #edf0f3; border-radius: 10px; background: #f8fafc; margin-top: 8px; }
+        .global-header-popover-item strong { display: block; font-size: 13px; color: var(--text-dark); }
+        .global-header-popover-item span { display: block; font-size: 11px; color: #667085; margin-top: 3px; }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 15px;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .logout-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .visitor-only-hidden { display:none !important; }
+        body:not(.is-admin) .visitor-only-hidden { display:none !important; }
+        body.is-admin .visitor-only-hidden { display:flex !important; }
+        .admin-only {
+            display: none !important;
+        }
+
+        body.is-admin .admin-only:not([hidden]) {
+            display: initial !important;
+        }
+
+        body.is-admin li.admin-only:not([hidden]) {
+            display: list-item !important;
+        }
+
+        body.is-admin button.admin-only:not([hidden]) {
+            display: inline-flex !important;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+        }
+
+        /* View Content Display */
+        .content-body {
+            flex-grow: 1;
+            padding: 28px 30px;
+            overflow-y: auto;
+        }
+
+        .page-view {
+            display: none;
+        }
+
+        .page-view.active {
+            display: block;
+        }
+
+        .page-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        /* Common Elements */
+        .btn {
+            padding: 9px 18px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-orange);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: #e05d00;
+        }
+
+        .btn-blue {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+        }
+
+        .btn-blue:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            color: var(--text-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--bg-light);
+        }
+
+        .btn-danger {
+            background-color: #ef4444;
+            color: #ffffff;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
+        }
+
+        /* Table Design */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .custom-table th, .custom-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .custom-table th {
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-success { background: #dcfce7; color: #166534; }
+        .badge-warning { background: #fef9c3; color: #854d0e; }
+        .badge-blue { background: #e0f2fe; color: #075985; }
+
+        /* Grid Layouts */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-2-1 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        /* Beranda Specifics */
+        .banner-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e40af 50%, var(--accent-cyan) 100%);
+            border-radius: 16px;
+            padding: 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-carousel {
+            min-height: 560px;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            background: #ffffff;
+            color: var(--text-dark);
+            margin-bottom: 0;
+            border: 1px solid var(--border-color);
+            display: grid;
+            grid-template-columns: 1fr 1.05fr;
+            gap: 34px;
+            padding: 46px;
+            box-shadow: 0 18px 50px rgba(17,24,39,0.08);
+        }
+
+        /* Transisi smooth foto riwayat event */
+        .home-visual-frame {
+            transition: transform .75s cubic-bezier(.22,1,.36,1), box-shadow .75s cubic-bezier(.22,1,.36,1);
+            will-change: transform, box-shadow;
+        }
+
+        .home-carousel-image {
+            cursor: pointer;
+            transform: scale(1) translate3d(0,0,0);
+            transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1), filter .8s cubic-bezier(.22,1,.36,1);
+            will-change: transform, opacity, filter;
+            backface-visibility: hidden;
+        }
+
+        .home-carousel-image.is-changing {
+            opacity: 0;
+            transform: translate3d(-16px,0,0);
+            filter: blur(1.2px);
+        }
+
+        .home-carousel-image.is-entering {
+            animation: eventPhotoEnter .82s cubic-bezier(.22,1,.36,1) both;
+        }
+
+        .home-carousel-image.is-bouncing {
+            animation: eventPhotoBounce .78s cubic-bezier(.22,1,.36,1);
+        }
+
+        .home-visual-frame:has(.home-carousel-image.is-bouncing) {
+            box-shadow: 0 20px 45px rgba(17,24,39,.16);
+        }
+
+        .home-carousel-content.is-changing {
+            animation: eventTextOut .34s cubic-bezier(.4,0,1,1) both;
+        }
+
+        .home-carousel-content.is-entering {
+            animation: eventTextIn .72s cubic-bezier(.22,1,.36,1) both;
+        }
+
+        @keyframes eventPhotoEnter {
+            0% { opacity: 0; transform: translate3d(18px,0,0); filter: blur(1.4px); }
+            55% { opacity: .94; transform: translate3d(3px,0,0); filter: blur(.3px); }
+            100% { opacity: 1; transform: translate3d(0,0,0); filter: blur(0); }
+        }
+
+        @keyframes eventPhotoBounce {
+            0% { transform: translate3d(0,0,0); }
+            25% { transform: translate3d(0,-4px,0); }
+            50% { transform: translate3d(0,2px,0); }
+            75% { transform: translate3d(0,-1px,0); }
+            100% { transform: translate3d(0,0,0); }
+        }
+
+        @keyframes eventTextOut {
+            from { opacity: 1; transform: translate3d(0,0,0); }
+            to { opacity: 0; transform: translate3d(-7px,3px,0); }
+        }
+
+        @keyframes eventTextIn {
+            from { opacity: 0; transform: translate3d(9px,0,0); }
+            to { opacity: 1; transform: translate3d(0,0,0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .home-carousel-image, .home-carousel-content, .home-visual-frame { transition: none !important; animation: none !important; }
+        }
+
+        .home-carousel img {
+            position: static;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            padding: 12px;
+            background: linear-gradient(145deg,#f8fafc,#eef2f7);
+            border-radius: 18px;
+            display: block;
+        }
+
+        .home-carousel-content {
+            min-height: 468px;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            max-width: 560px;
+        }
+
+        .home-carousel-content h3 {
+            font-size: 74px;
+            line-height: 0.96;
+            margin-bottom: 28px;
+            color: #171717;
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .home-carousel-content p {
+            font-size: 22px;
+            line-height: 1.55;
+            color: #5f6975;
+            margin-bottom: 28px;
+        }
+
+        .home-carousel-content .btn {
+            width: fit-content;
+            min-width: 0;
+            padding: 14px 28px;
+            border-radius: 999px;
+            box-shadow: 0 14px 26px rgba(243,112,33,0.22);
+        }
+
+        .home-visual {
+            position: relative;
+            min-height: 468px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .home-visual-frame {
+            width: 100%;
+            height: auto;
+            min-height: 0;
+            aspect-ratio: 4 / 3;
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(145deg,#f8fafc,#eef2f7);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            z-index: 2;
+            left: 46px;
+            bottom: 30px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .carousel-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #d1d5db;
+        }
+
+        .carousel-dot.active {
+            background: var(--accent-orange);
+        }
+
+        @media (max-width: 1050px) {
+            .home-carousel {
+                grid-template-columns: 1fr;
+                padding: 28px;
+            }
+
+            .home-carousel-content h3 {
+                font-size: 48px;
+            }
+
+            .home-visual,
+            .home-visual {
+                min-height: 340px;
+            }
+            .home-visual-frame { aspect-ratio: 16 / 10; }
+        }
+
+        .banner-text h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .banner-text p {
+            opacity: 0.9;
+            margin-bottom: 20px;
+            max-width: 450px;
+            font-size: 14px;
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: #e0f2fe;
+            color: #0284c7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-info h4 { font-size: 22px; font-weight: 700; }
+        .stat-info p { font-size: 12px; color: var(--text-muted); }
+
+        /* Event Card Specifics */
+        .event-card {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--border-color);
+        }
+
+
+        /* Tombol aksi event/history admin: selalu turun ke baris berikutnya jika ruang tidak cukup */
+        .event-card-actions {
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin-top:15px;
+            width:100%;
+        }
+        .event-card-actions .btn {
+            flex:1 1 120px;
+            min-width:120px;
+            justify-content:center;
+            white-space:nowrap;
+            box-sizing:border-box;
+        }
+        .event-detail-actions {
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:flex-end;
+            gap:8px;
+            min-width:0;
+        }
+        .event-detail-actions .btn {
+            flex:0 1 auto;
+            white-space:nowrap;
+        }
+        @media (max-width: 700px) {
+            .event-detail-actions { justify-content:flex-start; }
+            .event-detail-actions .btn { flex:1 1 140px; justify-content:center; }
+        }
+
+        .event-photo {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+            background: #e2e8f0;
+        }
+
+        .event-photo-placeholder {
+            height: 160px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+        }
+
+        .schedule-board {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .schedule-empty {
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--text-muted);
+            background: #f8fafc;
+            border: 1px dashed var(--border-color);
+            border-radius: 14px;
+        }
+
+        .schedule-date-group {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 18px;
+            align-items: start;
+            padding: 18px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, .05);
+        }
+
+        .schedule-date {
+            position: sticky;
+            top: 15px;
+            padding: 14px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
+            color: #fff;
+            text-align: center;
+        }
+
+        .schedule-date .day {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: .85;
+        }
+
+        .schedule-date .date {
+            display: block;
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin: 5px 0;
+        }
+
+        .schedule-date .month {
+            display: block;
+            font-size: 12px;
+            opacity: .9;
+        }
+
+        .schedule-events {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .schedule-event {
+            display: grid;
+            grid-template-columns: 76px 1fr auto;
+            gap: 14px;
+            align-items: center;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-cyan);
+            border-radius: 10px;
+            background: #f8fafc;
+            color: var(--text-dark);
+        }
+
+        .schedule-event .time {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .schedule-event .event-name {
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .schedule-event .event-meta {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .schedule-event .event-status {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 9px;
+            border-radius: 999px;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .history-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .event-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .event-gallery img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .detail-hero {
+            min-height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-blue));
+            color: #ffffff;
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .detail-hero img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(15,39,87,0.1), rgba(15,39,87,0.88));
+        }
+
+        .detail-hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 28px;
+            max-width: 720px;
+        }
+
+        .detail-hero-content h2 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .detail-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .detail-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+                .detail-photo-item { position:relative; min-width:0; }
+        .detail-photo-item img { display:block; }
+        .detail-photo-delete { position:absolute; top:8px; right:8px; z-index:20; pointer-events:auto; width:34px; height:34px; border:0; border-radius:8px; background:#ef4444; color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.25); }
+        .detail-photo-delete:hover { background:#dc2626; transform:scale(1.05); }
+        .event-photo-delete-viewer:hover { background:#fff1f2; }
+
+.detail-gallery img,
+        .detail-gallery-placeholder {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: #e2e8f0;
+        }
+
+        .detail-gallery img {
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .detail-gallery img:hover,
+        .detail-gallery img.active {
+            border-color: var(--accent-orange);
+            transform: translateY(-2px);
+        }
+
+        .detail-gallery-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 28px;
+        }
+
+        .event-photo-viewer { position:fixed; inset:0; z-index:99999; display:flex; align-items:center; justify-content:center; padding:24px; background:rgba(0,0,0,.82); }
+        .event-photo-viewer-inner { position:relative; width:min(100%,1050px); max-height:92vh; display:flex; flex-direction:column; align-items:center; gap:14px; }
+        .event-photo-viewer-image { display:block; max-width:100%; max-height:78vh; object-fit:contain; border-radius:10px; box-shadow:0 18px 50px rgba(0,0,0,.4); background:#111827; }
+        .event-photo-viewer-close { position:absolute; top:-8px; right:-8px; z-index:2; width:42px; height:42px; border:0; border-radius:50%; background:#fff; color:#111827; font-size:30px; line-height:1; cursor:pointer; box-shadow:0 5px 18px rgba(0,0,0,.25); }
+        .event-photo-viewer-close:hover { transform:scale(1.05); }
+        .event-photo-download { min-width:170px; justify-content:center; }
+        @media (max-width:700px) { .event-photo-viewer{padding:14px;} .event-photo-viewer-image{max-height:72vh;} .event-photo-viewer-close{top:-6px;right:-4px;} }
+
+        .event-photo-viewer {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.82);
+        }
+        .event-photo-viewer-inner {
+            position: relative;
+            width: min(100%, 1050px);
+            max-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+        .event-photo-viewer-image {
+            display: block;
+            max-width: 100%;
+            max-height: 78vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.4);
+            background: #111827;
+        }
+        .event-photo-viewer-close {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            z-index: 2;
+            width: 42px;
+            height: 42px;
+            border: 0;
+            border-radius: 50%;
+            background: #fff;
+            color: #111827;
+            font-size: 30px;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.25);
+        }
+        .event-photo-viewer-close:hover {
+            transform: scale(1.05);
+        }
+        .event-photo-download {
+            min-width: 170px;
+            justify-content: center;
+        }
+        @media (max-width: 700px) {
+            .event-photo-viewer { padding: 14px; }
+            .event-photo-viewer-image { max-height: 72vh; }
+            .event-photo-viewer-close { top: -6px; right: -4px; }
+        }
+
+
+        .info-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .info-item i {
+            color: var(--primary-blue);
+            margin-top: 2px;
+            width: 18px;
+            text-align: center;
+        }
+
+        @media (max-width: 900px) {
+            .detail-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .event-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sport-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--primary-dark);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .event-body {
+            padding: 15px;
+        }
+
+        .event-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 12px 0 6px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-cyan);
+            border-radius: 3px;
+        }
+
+        /* Crew Profile Cards */
+        .crew-card {
+            text-align: center;
+            padding: 24px;
+        }
+
+        .crew-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            object-fit: cover;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: var(--text-muted);
+        }
+
+
+        /* Crew - reference style */
+        .crew-page-ref{max-width:1180px;margin:0 auto;padding:10px 0 40px}
+        .crew-topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+        .crew-brand{display:flex;align-items:center;gap:12px}
+        .crew-brand img{width:48px;height:48px;border-radius:12px;object-fit:cover;border:1px solid var(--border-color)}
+        .crew-brand strong{display:block;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+        .crew-brand small{color:var(--text-muted);font-size:12px}
+        .crew-actions{display:flex;gap:8px;flex-wrap:wrap}
+        .crew-actions .btn{border-radius:999px;padding:8px 13px;font-size:12px}
+        .crew-hero{text-align:center;padding:28px 20px 20px}
+        .crew-hero h1{font-size:38px;letter-spacing:.08em;margin:0 0 8px;font-weight:800}
+        .crew-hero p{color:var(--text-muted);font-size:14px;margin:0}
+        .crew-total{text-align:center;margin:8px 0 18px;font-size:13px;color:var(--text-muted)}
+        .crew-total b{color:var(--text-dark);font-size:16px}
+        .crew-search{max-width:620px;margin:0 auto 20px;position:relative}
+        .crew-search i{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--text-muted)}
+        .crew-search input{width:100%;padding:13px 16px 13px 43px;border:1px solid var(--border-color);border-radius:999px;background:#fff;outline:none;font-size:13px}
+        .crew-search input:focus{border-color:var(--accent-orange);box-shadow:0 0 0 3px rgba(243,112,33,.10)}
+        .crew-directory{background:#fff;border:1px solid var(--border-color);border-radius:18px;padding:22px;box-shadow:0 8px 25px rgba(17,24,39,.05)}
+        .crew-member-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+        .crew-member{display:flex;align-items:center;gap:13px;padding:14px;border:1px solid var(--border-color);border-radius:14px;background:#fff;transition:.2s;cursor:pointer}
+        .crew-member:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(17,24,39,.07);border-color:#cbd5e1}
+        .crew-member-avatar{width:54px;height:54px;flex:0 0 54px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--primary-dark),var(--primary-blue));color:#fff;font-weight:800;font-size:16px;overflow:hidden}
+        .crew-member-avatar img{width:100%;height:100%;object-fit:cover}
+        .crew-member-info{min-width:0;flex:1}.crew-member-info strong{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crew-member-info span{display:block;color:var(--text-muted);font-size:12px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .crew-pagination{display:flex;justify-content:center;gap:7px;margin:18px 0 4px}.crew-pagination button{width:36px;height:36px;border:1px solid var(--border-color);background:#fff;border-radius:9px;cursor:pointer}.crew-pagination button:hover{border-color:var(--accent-orange)}
+        .crew-identify{margin-top:28px;background:#fff;border:1px solid var(--border-color);border-radius:18px;padding:24px}.crew-identify h2{font-size:20px;margin-bottom:7px}.crew-identify>p{font-size:13px;color:var(--text-muted);margin-bottom:20px}.crew-identify-grid{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end}.crew-identify label{display:block;font-size:12px;font-weight:600;margin-bottom:7px}.crew-identify input{width:100%;padding:11px 12px;border:1px solid var(--border-color);border-radius:10px;outline:none}.crew-identify-actions{display:flex;gap:8px}.crew-audio{display:flex;justify-content:center;margin:16px 0}.crew-audio button{width:42px;height:42px;border-radius:50%;border:1px solid var(--border-color);background:#fff;cursor:pointer}.crew-modal-content{max-height:70vh;overflow:auto}.crew-profile-head{display:flex;align-items:center;gap:15px;padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid var(--border-color)}.crew-profile-avatar{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--primary-dark),var(--primary-blue));color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;overflow:hidden}.crew-profile-avatar img{width:100%;height:100%;object-fit:cover}.crew-history-list{display:grid;gap:10px;margin-top:12px}.crew-history-item{display:flex;justify-content:space-between;gap:15px;padding:12px;border:1px solid var(--border-color);border-radius:10px}.crew-history-item small{color:var(--text-muted)}
+        @media(max-width:900px){.crew-member-list{grid-template-columns:repeat(2,minmax(0,1fr))}.crew-identify-grid{grid-template-columns:1fr}.crew-identify-actions{justify-content:flex-start}}
+        @media(max-width:600px){.crew-member-list{grid-template-columns:1fr}.crew-topbar{align-items:flex-start;flex-direction:column}.crew-hero h1{font-size:30px}.crew-directory,.crew-identify{padding:16px}}
+
+        /* Calendar View */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .calendar-day-head {
+            background: #f8fafc;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .calendar-cell {
+            background: #ffffff;
+            min-height: 90px;
+            padding: 8px;
+            font-size: 12px;
+        }
+
+        .calendar-cell .date {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-muted);
+        }
+
+        .event-tag {
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: white;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .tag-futsal { background-color: #0284c7; }
+        .tag-badminton { background-color: #16a34a; }
+        .tag-basketball { background-color: #ea580c; }
+
+        /* Modal Styling */
+.modal-backdrop {
+    position: fixed; inset: 0; width: 100%; height: 100%; padding: 20px;
+    background: rgba(15, 39, 87, 0.6); backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center; z-index: 9999;
+}
+.modal-backdrop.show { display: flex; }
+.modal-box {
+    background: #fff; border-radius: 16px; width: 560px; max-width: 100%;
+    max-height: calc(100dvh - 40px); display:flex; flex-direction:column;
+    box-shadow: 0 20px 55px rgba(0,0,0,0.25); overflow: hidden; animation: popup 0.3s ease;
+}
+@keyframes popup { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.modal-header { padding: 18px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex:0 0 auto; }
+.modal-header h3 { font-size: 16px; color: var(--primary-dark); }
+.modal-close { font-size: 22px; cursor: pointer; color: var(--text-muted); }
+.modal-body { padding: 24px; overflow-y:auto; overscroll-behavior:contain; min-height:0; scrollbar-gutter:stable; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-dark); }
+.form-control { width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 13px; outline: none; }
+.form-control:focus { border-color: var(--accent-cyan); }
+.modal-footer { padding: 16px 24px; background: #f8fafc; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 10px; flex:0 0 auto; }
+@media(max-width:600px){.modal-backdrop{padding:10px;align-items:flex-end}.modal-box{max-height:calc(100dvh - 20px);border-radius:16px 16px 10px 10px}.modal-header,.modal-body,.modal-footer{padding-left:16px;padding-right:16px}.modal-footer .btn{min-height:44px}}
+
+/* Toast Notification Styling */
+#toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
+.toast {
+    padding: 12px 20px; border-radius: 8px; color: #fff; font-size: 13px; font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px;
+    animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+}
+.toast-success { background: #16a34a; }
+.toast-danger { background: #ef4444; }
+.toast-info { background: #0284c7; }
+@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes fadeOut { to { opacity: 0; transform: translateY(10px); } }
+    </style>
+
+<style id="music-widget-style">
+.compact-player{position:fixed;right:22px;bottom:22px;z-index:9999;width:min(360px,calc(100vw - 30px));height:58px;background:#fff;border:1px solid #e5e7eb;box-shadow:0 10px 30px rgba(15,23,42,.18);display:flex;align-items:center;padding:0 12px;gap:10px;font-family:inherit}
+.player-btn{width:38px;height:38px;border:0;background:transparent;color:#8b7bc8;border-radius:8px;cursor:pointer;font-size:16px;display:grid;place-items:center}.player-btn:hover{background:#f1eff8}.player-play{color:#5c7fc7;background:#eef2fa}.player-track{flex:1;min-width:0;color:#4b5563;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.player-volume{color:#7a8795}.compact-player iframe{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+@media(max-width:600px){.compact-player{right:10px;bottom:10px;height:54px}.player-btn{width:34px;height:34px}}
+</style>
+<style id="sportify-loading-style">#sportify-page-loader{position:fixed;inset:0;background:rgba(17,24,39,.97);display:flex;align-items:center;justify-content:center;z-index:99999;opacity:1;visibility:visible;transition:opacity .35s ease,visibility .35s ease}#sportify-page-loader.hide{opacity:0;visibility:hidden;pointer-events:none}.sportify-loader-box{text-align:center}.sportify-loader-wrap{position:relative;width:150px;height:150px;margin:0 auto;display:flex;align-items:center;justify-content:center}.sportify-loader-logo-base,.sportify-loader-logo-fill{position:absolute;width:150px;height:150px;object-fit:contain;display:block}.sportify-loader-logo-base{opacity:.28;filter:brightness(0) invert(1) drop-shadow(0 8px 18px rgba(0,0,0,.35))}.sportify-loader-logo-fill{padding:0;background:linear-gradient(120deg,transparent 0%,transparent 30%,#ffcf00 45%,#f37021 55%,transparent 70%,transparent 100%);background-size:260% 100%;-webkit-mask-image:url('./img/logo_sportify_loader.png');mask-image:url('./img/logo_sportify_loader.png');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-position:center;mask-position:center;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;animation:sportifyLogoLoad 1.35s ease-in-out infinite;filter:drop-shadow(0 8px 18px rgba(255,207,0,.22))}.sportify-loader-text{margin-top:14px;color:#fff;font-weight:800;letter-spacing:1.5px;font-size:15px}.sportify-loader-dots{margin-top:8px;color:#ffcf00;letter-spacing:4px;animation:sportifyDots 1s infinite}@keyframes sportifyLogoLoad{0%{background-position:100% 0;transform:scale(.96)}50%{background-position:0 0;transform:scale(1.02)}100%{background-position:-100% 0;transform:scale(.96)}}@keyframes sportifyDots{0%,100%{opacity:.35}50%{opacity:1}}</style>
+
+<style id="sportify-header-icons-keep-visible">
+.header-icon-btn,.global-header-icon-btn{display:inline-flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+.header-icon-btn i,.global-header-icon-btn i{visibility:visible!important;opacity:1!important;}
+.header-badge,.global-header-badge,.about-badge{pointer-events:none;}
+</style>
+
+<style id="sportify-admin-login-top">
+.header-admin-login{display:inline-flex;align-items:center;justify-content:center;gap:0;width:36px;height:36px;padding:0;border:1px solid #e2e8f0;border-radius:9px;background:#fff;color:#243746;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap;transition:.2s}
+.header-admin-login:hover{background:#fff3c4;border-color:#ffcf00;color:#111827}
+</style>
+<style id="sportify-header-icons-right-fix">
+/* Header: lonceng dan pesan berada di sisi kanan */
+.top-header, .top { position: relative; }
+.header-actions, .actions { margin-left: auto !important; display:flex !important; align-items:center !important; justify-content:flex-end !important; }
+.header-icons, .icons { margin-left:auto !important; display:flex !important; align-items:center !important; justify-content:flex-end !important; }
+/* Kolom pencarian header disembunyikan agar ikon berada di kanan */
+.top-header .search-box, .top .search-box { display:none !important; }
+.top-header .search, .top .search { display:none !important; }
+@media (max-width:600px){ .header-actions,.actions{gap:8px !important;} }
+</style>
+<style id="sportify-admin-login-responsive">.header-admin-login{display:inline-flex;align-items:center;justify-content:center;width:30px;height:38px;padding:0;border:0!important;border-radius:0;background:transparent!important;color:#6b168f!important;text-decoration:none;font-size:17px;font-weight:400;white-space:nowrap;transition:transform .15s ease,color .15s ease;box-shadow:none!important}.header-admin-login:hover{background:transparent!important;color:#4f0f6b!important;transform:scale(1.08)}.header-admin-login i{font-size:15px;line-height:1}.header-admin-login span{display:none!important}@media(max-width:600px){.header-admin-login{width:30px;height:38px;padding:0}.header-admin-login i{font-size:15px}}</style>
+<style id="sportify-user-top-icons-common">
+.top-header .header-actions, .top .actions, .top .header-actions{margin-left:auto!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;}
+.top-header .header-icons, .top .icons, .top .header-icons{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:14px!important;margin-left:auto!important;}
+.global-header-icon-btn,.header-icon-btn,.icon-btn{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#7f8c8d!important;text-decoration:none!important;box-shadow:none!important;cursor:pointer!important;}
+.global-header-icon-btn:hover,.header-icon-btn:hover,.icon-btn:hover{background:#f4f7fb!important;color:#243746!important;}
+.global-header-icon-btn i,.header-icon-btn i,.icon-btn i{font-size:17px!important;line-height:1!important;}
+.header-admin-login{width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;color:#6b168f!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;text-decoration:none!important;box-shadow:none!important;}
+.header-admin-login:hover{background:#f4f7fb!important;color:#4f0f6b!important;transform:none!important;}
+.header-admin-login i{font-size:16px!important;line-height:1!important;}
+.header-admin-login span{display:none!important;}
+@media(max-width:600px){.top-header .header-icons,.top .icons,.top .header-icons{gap:8px!important;}.global-header-icon-btn,.header-icon-btn,.icon-btn,.header-admin-login{width:32px!important;height:32px!important;min-width:32px!important;}}
+</style>
+
+<style id="kdm-universal-user-top-icons">
+/* KDM: ikon header kanan atas diseragamkan di semua halaman user */
+.top, .top-header {
+  height: 64px !important;
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  padding: 0 28px !important;
+  background: #fff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+}
+.top .actions, .top-header .header-actions {
+  width: 100% !important;
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+.top .icons, .top-header .header-icons {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+}
+.top .icon-btn, .top-header .global-header-icon-btn, .top-header .header-icon-btn, .top .header-icon-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  border-radius: 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #7f8c8d !important;
+  font-size: 18px !important;
+  box-shadow: none !important;
+}
+.top .icon-btn:hover, .top-header .global-header-icon-btn:hover, .top-header .header-icon-btn:hover {
+  background: #f4f6f8 !important;
+}
+.top .icon-btn i, .top-header .global-header-icon-btn i, .top-header .header-icon-btn i {
+  font-size: 17px !important;
+  line-height: 1 !important;
+}
+.header-admin-login {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  color: #6b168f !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+.header-admin-login:hover {
+  background: #f4f6f8 !important;
+  color: #4f0f6b !important;
+  transform: none !important;
+}
+.header-admin-login i { font-size: 17px !important; line-height: 1 !important; }
+.header-admin-login span { display: none !important; }
+@media (max-width: 700px) {
+  .top, .top-header { padding: 0 16px !important; }
+  .top .icons, .top-header .header-icons { gap: 8px !important; }
+}
+</style>
+
+
+<style id="gallery-only-admin-login-style">
+  #headerAdminLogin[hidden]{display:none !important;}
+</style>
+
+<style id="admin-logout-sidebar">
+.admin-logout-nav{display:none!important;}
+body.is-admin .admin-logout-nav{display:block!important;}
+.admin-logout-nav a{color:#ffb4b4!important;}
+.admin-logout-nav a:hover{background:rgba(239,68,68,.14)!important;color:#fff!important;}
+</style>
+
+<style id="kdm-common-top-header-final">
+/* Header kanan atas diseragamkan di semua halaman */
+.top, .top-header {height:64px!important;background:#fff!important;border-bottom:1px solid #e5e7eb!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;padding:0 18px!important;box-sizing:border-box!important;}
+.top .actions, .top-header .header-actions {margin-left:auto!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:0!important;height:100%!important;}
+.top .icons, .top-header .header-icons {display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:12px!important;margin:0!important;}
+.top .icon-btn, .top-header .global-header-icon-btn, .top-header .header-icon-btn {width:34px!important;height:34px!important;min-width:34px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:8px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;color:#7f8c8d!important;font-size:17px!important;cursor:pointer!important;}
+.top .icon-btn:hover, .top-header .global-header-icon-btn:hover, .top-header .header-icon-btn:hover {background:#f4f7fb!important;color:#243746!important;}
+.top .user, .top .user-profile {display:flex!important;align-items:center!important;gap:10px!important;margin-left:8px!important;padding-left:15px!important;border-left:1px solid #e5e7eb!important;height:36px!important;}
+.top .user > span:first-child, .top .user-profile > span:first-child {font-size:13px!important;font-weight:600!important;color:#263746!important;white-space:nowrap!important;}
+.top .avatar, .top .user-avatar {width:36px!important;height:36px!important;min-width:36px!important;border-radius:50%!important;background:#d1d5db!important;display:grid!important;place-items:center!important;color:#4b5563!important;}
+.top .logout, .top .logout-link {color:#7f8c8d!important;text-decoration:none!important;font-size:18px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin-left:2px!important;}
+.top .logout:hover, .top .logout-link:hover {color:#243746!important;}
+.kdm-admin-only-logout{display:none!important;}
+body.body-admin .kdm-admin-only-logout, body.is-admin .kdm-admin-only-logout{display:inline-flex!important;}
+@media(max-width:600px){.top,.top-header{height:58px!important;padding:0 10px!important}.top .icons,.top-header .header-icons{gap:6px!important}.top .user,.top .user-profile{margin-left:3px!important;padding-left:8px!important}.top .icon-btn,.top-header .global-header-icon-btn,.top-header .header-icon-btn{width:30px!important;height:30px!important;min-width:30px!important}.top .avatar,.top .user-avatar{width:32px!important;height:32px!important;min-width:32px!important}}
+</style>
+
+</head>
+<body>
+<div id="sportify-page-loader" class="hide" aria-hidden="true"><div class="sportify-loader-box"><div class="sportify-loader-wrap"><img class="sportify-loader-logo-base" src="img/logo_sportify_loader.png" alt=""><span class="sportify-loader-logo-fill" aria-hidden="true"></span></div><div class="sportify-loader-text">SPORTIFY KANDILO</div><div class="sportify-loader-dots">•••</div></div></div>
+
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="brand-logo">
+            <img src="./img/logo_sportify.jpeg" alt="Logo Sportify Kandilo">
+            <div class="brand-text"><b>SPORTIFY</b><span>KANDILO</span></div>
+        </div>
+        
+        <div class="menu-label">Main Menu</div>
+       <!-- KODE BARU (Sudah ditambahkan ', this') -->
+<ul class="nav-menu">
+    <li class="nav-item">
+        <a class="nav-link active" onclick="switchTab('beranda', this)">
+            <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="registerNavLink" href="registrasi.html" title="Gabung">
+            <i class="fa-solid fa-user-plus"></i>
+            <span id="registerNavText">Join Event</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" onclick="switchTab('history', this)">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Galery</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" onclick="switchTab('event', this)">
+            <i class="fa-solid fa-trophy"></i>
+            <span>Event</span>
+        </a>
+    </li>
+    
+    
+    <li class="nav-item">
+        <a class="nav-link" href="crew.html" title="Crew">
+            <i class="fa-solid fa-users"></i>
+            <span>Crew</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" onclick="switchTab('jadwal', this)">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Jadwal</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="tentang-kami.html">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>Tentang Kami</span>
+        </a>
+    </li>
+    <li class="nav-item admin-logout-nav">
+        <a class="nav-link" href="logout.php" title="Logout Admin">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout Admin</span>
+        </a>
+    </li>
+</ul>
+    </aside>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- Header TopBar -->
+        <header class="top-header">
+
+            
+            <div class="header-actions">
+                
+                <div class="header-icons">
+                    <button type="button" class="global-header-icon-btn" id="global-notification-btn" title="Notifikasi" aria-label="Notifikasi">
+                        <i class="fa-regular fa-bell"></i><span class="global-header-badge" id="global-notification-badge">0</span>
+                    </button>
+                    <a href="login.php" class="header-admin-login gallery-admin-login" id="headerAdminLogin" title="Login Admin" hidden><i class="fa-solid fa-trash-can"></i><span id="headerAdminLoginText">Login Admin</span></a>
+                    <button type="button" class="global-header-icon-btn" id="global-message-btn" title="Pesan" aria-label="Pesan">
+                        <i class="fa-regular fa-envelope"></i><span class="global-header-badge" id="global-message-badge"></span>
+                    </button>
+                </div>
+                <div class="user-profile visitor-only-hidden">
+                    <span id="header-user-name" style="font-size: 13px; font-weight: 600;">User Name</span>
+                    <div class="user-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <a href="logout.php" class="logout-link" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Body Content -->
+        <main class="content-body">
+            
+            <!-- 1. BERANDA PAGE -->
+            <section id="page-beranda" class="page-view active">
+                <h2 class="page-title">Beranda - Selamat Datang di Sportify Kandilo!</h2>
+                
+                <div class="home-carousel" id="home-carousel"></div>
+            </section>
+
+            <!-- 2. HISTORY PAGE -->
+            <section id="page-history" class="page-view">
+                <h2 class="page-title">Galery - Arsip Acara</h2>
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <select id="history-year-filter" class="btn btn-outline" aria-label="Filter tahun">
+                                <option value="all">Semua Tahun</option>
+                            </select>
+                            <select id="history-sport-filter" class="btn btn-outline" aria-label="Filter olahraga">
+                                <option value="all">Semua Olahraga</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="history-list" id="history-events"></div>
+                </div>
+            </section>
+
+            <!-- 3. EVENT PAGE -->
+            <section id="page-event" class="page-view">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 class="page-title" style="margin-bottom: 0;">Event - Kelola Acara Anda</h2>
+                    <button class="btn btn-primary admin-only"><i class="fa-solid fa-plus"></i> Buat Acara Baru</button>
+                </div>
+
+                <div class="grid-3"></div>
+            </section>
+
+            <section id="page-event-detail" class="page-view">
+                <div id="event-detail-content"></div>
+            </section>
+
+            <!-- 5. JADWAL PAGE -->
+            <section id="page-jadwal" class="page-view">
+                <h2 class="page-title">Jadwal - Timeline Acara</h2>
+                <div class="card">
+                    <div class="table-responsive">
+                        <div class="schedule-board" id="schedule-board"></div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Custom Modal Form -->
+    <div id="custom-modal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modal-title">Form Input</h3>
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="modal-body" class="modal-body">
+                <!-- Form dinamis akan dimasukkan lewat JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Batal</button>
+                <button id="modal-submit-btn" class="btn btn-primary">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+
+<script>
+(function(){
+  const escapeHtml = (v) => String(v ?? '').replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+  function closeGlobalHeaderPopover(){ document.querySelectorAll('.global-header-popover').forEach(e=>e.remove()); }
+  async function getEvents(){
+    try{ const r=await fetch('events.php?_='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error('Gagal mengambil data event'); const d=await r.json(); return Array.isArray(d)?d:[]; }
+    catch(e){ return []; }
+  }
+  function openGlobalPopover(type){
+    closeGlobalHeaderPopover();
+    const box=document.createElement('div'); box.className='global-header-popover';
+    if(type==='notification'){
+      box.innerHTML='<h4><i class="fa-regular fa-bell"></i> Notifikasi</h4><p>Memuat event terbaru...</p>';
+      document.body.appendChild(box);
+      getEvents().then(events=>{
+        const active=events.filter(e=>String(e.status||'').toLowerCase()!=='selesai').slice(0,6);
+        box.innerHTML='<h4><i class="fa-regular fa-bell"></i> Notifikasi</h4>'+(active.length?active.map(e=>`<div class="global-header-popover-item"><strong>${escapeHtml(e.nama_event||'Event')}</strong><span>${escapeHtml(e.tanggal_pelaksanaan||'')} ${escapeHtml(e.jam_pelaksanaan||'')} • ${escapeHtml(e.cabang_olahraga||'')}</span></div>`).join(''):'<p>Tidak ada notifikasi event saat ini.</p>');
+      });
+    }else{
+      const name=document.getElementById('header-user-name')?.textContent?.trim() || 'admin';
+      box.innerHTML=`<h4><i class="fa-regular fa-envelope"></i> Pesan</h4><div class="global-header-popover-item"><strong>Sportify Kandilo</strong><span>Halo ${escapeHtml(name)}, informasi event dan jadwal terbaru akan ditampilkan melalui sistem.</span></div>`;
+      document.body.appendChild(box);
+    }
+    setTimeout(()=>{
+      const outside=(ev)=>{ if(!box.contains(ev.target) && !ev.target.closest('.global-header-icon-btn')){ box.remove(); document.removeEventListener('click',outside); } };
+      document.addEventListener('click',outside);
+    },0);
+  }
+  async function refreshNotificationBadge(){
+    const events=await getEvents();
+    const n=events.filter(e=>String(e.status||'').toLowerCase()!=='selesai').length;
+    const seen=JSON.parse(localStorage.getItem('sportifySeenEventNotifications')||'[]');
+    const unseen=events.filter(e=>String(e.status||'').toLowerCase()!=='selesai' && !seen.includes(String(e.id||e.id_event||((e.nama_event||'')+'|'+(e.tanggal_pelaksanaan||'')))));
+    const b=document.getElementById('global-notification-badge'); if(b){ b.textContent=unseen.length?String(Math.min(unseen.length,9)):''; b.classList.toggle('active',unseen.length>0); }
+    const m=document.getElementById('global-message-badge'); if(m){ const seenMsg=localStorage.getItem('sportifyMessageSeen')==='1'; m.textContent=seenMsg?'':'1'; m.classList.toggle('active',!seenMsg); }
+  }
+  function markNotificationRead(){
+    getEvents().then(events=>{
+      const ids=events.filter(x=>String(x.status||'').toLowerCase()!=='selesai').map(x=>String(x.id||x.id_event||((x.nama_event||'')+'|'+(x.tanggal_pelaksanaan||''))));
+      localStorage.setItem('sportifySeenEventNotifications',JSON.stringify([...new Set(ids)]));
+      const b=document.getElementById('global-notification-badge');
+      if(b){b.textContent='';b.classList.remove('active');}
+    });
+  }
+  function markMessageRead(){
+    localStorage.setItem('sportifyMessageSeen','1');
+    const m=document.getElementById('global-message-badge');
+    if(m){m.textContent='';m.classList.remove('active');}
+  }
+  document.addEventListener('DOMContentLoaded',()=>{
+    const nb=document.getElementById('global-notification-btn');
+    const mb=document.getElementById('global-message-btn');
+    if(nb){nb.onclick=(e)=>{e.preventDefault();e.stopPropagation();markNotificationRead();openGlobalPopover('notification');};}
+    if(mb){mb.onclick=(e)=>{e.preventDefault();e.stopPropagation();markMessageRead();openGlobalPopover('message');};}
+    refreshNotificationBadge();
+  });
+})();
+</script>
+    <script src="functions_master.js"></script>
+
+<div class="compact-player" id="compactPlayer">
+  <button class="player-btn" type="button" id="musicRestartBtn" title="Sebelumnya / ulangi"><i class="fa-solid fa-backward-step"></i></button>
+  <button class="player-btn player-play" id="musicPlayBtn" type="button" title="Putar / jeda"><i class="fa-solid fa-play"></i></button>
+  <button class="player-btn" type="button" id="musicNextBtn" title="Berikutnya"><i class="fa-solid fa-forward-step"></i></button>
+  <div class="player-track">UT Jingle - United Tractors</div>
+  <button class="player-btn player-volume" id="musicVolumeBtn" type="button" title="Suara"><i class="fa-solid fa-volume-high"></i></button>
+  <audio id="kdmMusic" preload="auto" src="./ut_jingle.mp3" loop autoplay></audio>
+</div>
+<script id="kdm-music-controller">
+let musicPlaying=false,musicMuted=false;
+const kdmAudio=document.getElementById('kdmMusic');
+const KDM_POS_KEY='kdm_ut_jingle_position';
+const KDM_PLAY_KEY='kdm_ut_jingle_playing';
+let kdmUserPaused=false;
+function saveKdmMusicState(){if(!kdmAudio)return;try{localStorage.setItem(KDM_POS_KEY,String(kdmAudio.currentTime||0));localStorage.setItem(KDM_PLAY_KEY,kdmAudio.paused?'0':'1');}catch(e){}}
+function syncMusicIcon(){const i=document.querySelector('#musicPlayBtn i');if(i)i.className=musicPlaying?'fa-solid fa-pause':'fa-solid fa-play';}
+function toggleMusic(){if(!kdmAudio)return;if(kdmAudio.paused){kdmUserPaused=false;kdmAudio.play().then(()=>{musicPlaying=true;saveKdmMusicState();syncMusicIcon();}).catch(()=>{});}else{kdmUserPaused=true;kdmAudio.pause();musicPlaying=false;saveKdmMusicState();syncMusicIcon();}}
+function restartMusic(){if(!kdmAudio)return;kdmUserPaused=false;kdmAudio.currentTime=0;kdmAudio.play().then(()=>{musicPlaying=true;saveKdmMusicState();syncMusicIcon();}).catch(()=>{});}
+function nextMusic(){restartMusic();}
+function toggleMusicVolume(){if(!kdmAudio)return;kdmAudio.muted=!kdmAudio.muted;musicMuted=kdmAudio.muted;const i=document.querySelector('#musicVolumeBtn i');if(i)i.className=musicMuted?'fa-solid fa-volume-xmark':'fa-solid fa-volume-high';}
+function autoStartKdmMusic(){
+  if(!kdmAudio)return;
+  let savedPos=0,savedPlay=true;
+  try{const p=parseFloat(localStorage.getItem(KDM_POS_KEY)||'0');if(Number.isFinite(p)&&p>=0)savedPos=p;savedPlay=localStorage.getItem(KDM_PLAY_KEY)!=='0';}catch(e){}
+  const restore=()=>{try{if(savedPos>0&&kdmAudio.duration&&savedPos<kdmAudio.duration-0.5)kdmAudio.currentTime=savedPos;}catch(e){}};
+  if(kdmAudio.readyState>=1)restore();else kdmAudio.addEventListener('loadedmetadata',restore,{once:true});
+  const tryStart=()=>{if(!savedPlay||kdmUserPaused)return;kdmAudio.play().then(()=>{musicPlaying=true;syncMusicIcon();}).catch(()=>{});};
+  tryStart();
+  // Only use the first interaction to satisfy browser autoplay policy.
+  ['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,tryStart,{once:true,passive:true}));
+}
+if(kdmAudio){
+  kdmAudio.addEventListener('play',()=>{musicPlaying=true;syncMusicIcon();saveKdmMusicState();});
+  kdmAudio.addEventListener('pause',()=>{musicPlaying=false;syncMusicIcon();saveKdmMusicState();});
+  kdmAudio.addEventListener('ended',()=>{kdmAudio.currentTime=0;if(!kdmUserPaused){try{kdmAudio.play().then(()=>{musicPlaying=true;syncMusicIcon();saveKdmMusicState();}).catch(()=>{});}catch(e){}}});
+}
+
+// Hosting-safe binding: avoid inline onclick so CSP/server settings cannot block the player.
+document.addEventListener('DOMContentLoaded',()=>{
+  const playBtn=document.getElementById('musicPlayBtn');
+  const restartBtn=document.getElementById('musicRestartBtn');
+  const nextBtn=document.getElementById('musicNextBtn');
+  const volumeBtn=document.getElementById('musicVolumeBtn');
+  if(playBtn) playBtn.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();toggleMusic();});
+  if(restartBtn) restartBtn.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();restartMusic();});
+  if(nextBtn) nextBtn.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();nextMusic();});
+  if(volumeBtn) volumeBtn.addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();toggleMusicVolume();});
+  autoStartKdmMusic();
+});
+</script>
+<script>
+// Sinkronisasi mode Admin pada sidebar. Halaman User tetap publik dan tidak memerlukan login.
+(async function(){
+  try {
+    const r = await fetch('session.php?_='+Date.now(), {credentials:'same-origin', cache:'no-store'});
+    const d = await r.json();
+    const admin = !!d.is_admin;
+    document.body.classList.toggle('is-admin', admin);
+    const link = document.getElementById('headerAdminLogin');
+    const text = document.getElementById('headerAdminLoginText');
+    const icon = link ? link.querySelector('i') : null;
+    const registerLink = document.getElementById('registerNavLink');
+    const registerText = document.getElementById('registerNavText');
+    if (registerLink && registerText) {
+      registerLink.title = 'Join Event';
+      registerText.textContent = 'Join Event';
+    }
+    if (link && text) {
+      if (admin) {
+        link.href = 'switch_to_user.php';
+        link.title = 'Buka Halaman User';
+        text.textContent = 'Halaman User';
+        if (icon) icon.className = 'fa-solid fa-user';
+      } else {
+        link.href = 'login.php';
+        link.title = 'Login Admin';
+        text.textContent = 'Login Admin';
+        if (icon) icon.className = 'fa-solid fa-right-to-bracket';
+      }
+    }
+  } catch(e) {
+    document.body.classList.remove('is-admin');
+  }
+})();
+</script>
+
+<script id="sportify-loading-script">(function(){
+const loader=document.getElementById('sportify-page-loader');
+function show(){if(loader){loader.classList.remove('hide');loader.setAttribute('aria-hidden','false');}}
+function hide(){if(loader){loader.classList.add('hide');loader.setAttribute('aria-hidden','true');}}
+// Loader awal dibuat terlihat cukup lama agar transisi benar-benar terlihat.
+window.addEventListener('load',function(){setTimeout(hide,500);});
+if(document.readyState==='complete') setTimeout(hide,500);
+// Semua perpindahan halaman memakai loader. Navigasi ditunda sedikit agar animasi sempat tampil.
+document.addEventListener('click',function(e){
+  const a=e.target.closest('a');
+  if(!a||!loader) return;
+  const href=a.getAttribute('href')||'';
+  if(!href||href.startsWith('#')||href.startsWith('javascript:')||a.target==='_blank'||a.hasAttribute('download')) return;
+  if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey||e.button!==0) return;
+  let u;
+  try{u=new URL(a.href,location.href);}catch(_){return;}
+  if(u.origin!==location.origin) return;
+  // Jangan menahan link yang benar-benar sama tanpa perubahan hash/query.
+  if(u.href===location.href) return;
+  e.preventDefault();
+  show();
+  sessionStorage.setItem('sportifyShowLoader','1');
+  setTimeout(function(){location.href=u.href;},650);
+},true);
+})();</script>
+<style id="sportify-notification-click-fix">
+#sportify-universal-utility{position:fixed;top:62px;right:24px;width:330px;max-width:calc(100vw - 32px);background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 18px 45px rgba(15,23,42,.18);z-index:200000;display:none;overflow:hidden;font-family:inherit}
+#sportify-universal-utility.show{display:block;animation:sportifyUtilityIn .18s ease-out}
+#sportify-universal-utility .su-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #eef2f7;font-weight:700;color:#1e293b}
+#sportify-universal-utility .su-close{border:0;background:#f1f5f9;border-radius:8px;width:28px;height:28px;cursor:pointer;font-size:17px}
+#sportify-universal-utility .su-body{padding:16px;color:#64748b;font-size:13px;line-height:1.6}
+@keyframes sportifyUtilityIn{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+</style>
+<div id="sportify-universal-utility" aria-live="polite"><div class="su-head"><span id="su-title">Notifikasi</span><button class="su-close" type="button" id="su-close">×</button></div><div class="su-body" id="su-body"></div></div>
+<script id="sportify-notification-click-fix-script">
+(function(){
+  function ready(fn){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fn,{once:true});else fn();}
+  ready(function(){
+    const panel=document.getElementById('sportify-universal-utility');
+    const title=document.getElementById('su-title');
+    const body=document.getElementById('su-body');
+    const close=document.getElementById('su-close');
+    if(!panel||!title||!body)return;
+    const notifIds=['global-notification-btn','crew-notification-btn','aboutNotificationBtn'];
+    const msgIds=['global-message-btn','crew-message-btn','aboutMessageBtn'];
+    const hideBadges=ids=>ids.forEach(id=>{const btn=document.getElementById(id);if(!btn)return;const p=btn.querySelector('.global-header-badge, .header-badge, .about-badge');if(p){p.textContent='';p.classList.remove('active');p.style.display='none';}btn.style.display='inline-flex';btn.style.visibility='visible';btn.style.opacity='1';});
+    function show(type){
+      panel.classList.add('show');
+      if(type==='message'){
+        title.textContent='Pesan';
+        body.innerHTML='<strong>Sportify Kandilo</strong><p style="margin:8px 0 0">Selamat datang di Sportify Kandilo. Informasi kegiatan dan jadwal terbaru tersedia melalui menu di sidebar.</p>';
+        localStorage.setItem('sportifyMessageSeen','1'); hideBadges(msgIds);
+      }else{
+        title.textContent='Notifikasi';
+        body.innerHTML='<strong>Tidak ada notifikasi baru.</strong><p style="margin:8px 0 0">Notifikasi yang sudah dibuka akan ditandai sebagai telah dibaca.</p>';
+        localStorage.setItem('sportifyNotificationsRead','1'); hideBadges(notifIds);
+      }
+    }
+    function hide(){panel.classList.remove('show');}
+    close.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();hide();});
+    document.addEventListener('click',function(e){
+      const btn=e.target.closest('button');
+      if(!btn)return;
+      if(notifIds.includes(btn.id)){e.preventDefault();e.stopImmediatePropagation();show('notification');return;}
+      if(msgIds.includes(btn.id)){e.preventDefault();e.stopImmediatePropagation();show('message');return;}
+      if(panel.classList.contains('show')&&!panel.contains(e.target))hide();
+    },true);
+    window.addEventListener('pageshow',hide);
+  });
+})();
+</script>
+
+<script id="gallery-only-admin-login-init">
+(function(){
+  const link=document.getElementById('headerAdminLogin');
+  if(!link) return;
+  const show=!!document.querySelector('#page-history.active, #page-event-detail.active');
+  link.hidden=!show;
+})();
+</script>
+<style id="brand-logo-consistency">
+@media(max-width:900px){
+  .brand-logo{height:70px;padding:12px;justify-content:center;}
+  .brand-logo img{width:46px;height:46px;min-width:46px;}
+  .brand-logo .brand-text{display:none;}
+}
+</style>
+
+
+<link rel="stylesheet" href="responsive.css">
+<script src="responsive.js"></script>
+</body>
+</html>
+   
