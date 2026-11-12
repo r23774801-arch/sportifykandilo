@@ -91,6 +91,98 @@ body{margin:0;background:var(--bg);color:#263746}
 .form label{font-size:11px;display:block;margin:0 0 5px;font-weight:700;color:var(--blue)}
 .photo-preview{width:72px;height:72px;object-fit:cover;border-radius:16px;display:none;margin-top:8px;border:2px solid var(--line)}
 
+/* ---------- Photo Position Editor ---------- */
+.photo-editor{
+  position:fixed;
+  inset:0;
+  background:#101828cc;
+  backdrop-filter:blur(3px);
+  display:none;
+  place-items:center;
+  z-index:50;
+  padding:16px;
+}
+.photo-editor.show{display:grid;animation:fadeIn .18s ease}
+.photo-editor-box{
+  background:#fff;
+  width:min(450px,100%);
+  padding:20px;
+  border-radius:18px;
+  box-shadow:0 24px 60px #0006;
+}
+.photo-editor-box h3{margin:0 0 15px;font-size:16px}
+.photo-frame{
+  position:relative;
+  width:200px;
+  height:200px;
+  overflow:hidden;
+  border:2px solid var(--line);
+  border-radius:16px;
+  background:#f8fafc;
+  cursor:move;
+  margin:0 auto 15px;
+}
+.photo-frame img{
+  position:absolute;
+  cursor:move;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.photo-controls{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  justify-content:center;
+  margin:15px 0;
+}
+.photo-controls button{
+  width:36px;
+  height:36px;
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:16px;
+  display:grid;
+  place-items:center;
+}
+.photo-controls button:hover{border-color:var(--orange);color:var(--orange)}
+.photo-editor-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+}
+.checkbox-label{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 14px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--navy);
+  cursor:pointer;
+  transition:all .15s ease;
+  margin:4px 6px 4px 0;
+  background:var(--bg);
+}
+.checkbox-label:hover{
+  border-color:var(--orange);
+  background:#fff7f0;
+  color:var(--orange);
+}
+.checkbox-label input[type="checkbox"]{
+  transform:scale(1.2);
+  margin:0;
+  cursor:pointer;
+  accent-color:var(--orange);
+}
+.checkbox-label input[type="checkbox"]:checked{
+  background-color:var(--orange);
+  color:#fff;
+}
+
 /* ---------- Toast ---------- */
 .toast{position:fixed;bottom:20px;right:20px;padding:13px 18px;border-radius:10px;background:#17212e;color:#fff;display:none;z-index:50;font-size:14px;box-shadow:0 10px 26px #0004}
 
@@ -212,6 +304,25 @@ body{margin:0;background:var(--bg);color:#263746}
     </section>
   </div>
 </main>
+
+<!-- Photo Position Editor Modal -->
+<div class="photo-editor" id="photo-editor">
+  <div class="photo-editor-box">
+    <h3><i class="fa-solid fa-crop-simple"></i> Atur Posisi Foto</h3>
+    <div class="photo-frame" id="photo-frame">
+      <img id="photo-editor-img" src="" alt="Foto profil">
+    </div>
+    <div class="photo-controls">
+      <button onclick="zoomPhoto(-0.1)" title="Zoom out"><i class="fa-solid fa-minus"></i></button>
+      <button onclick="zoomPhoto(0.1)" title="Zoom in"><i class="fa-solid fa-plus"></i></button>
+      <button onclick="resetPhoto()" title="Reset"><i class="fa-solid fa-rotate-left"></i></button>
+    </div>
+    <div class="photo-editor-actions">
+      <button class="btn" onclick="cancelPhotoPosition()">Batal</button>
+      <button class="btn primary" onclick="savePhotoPosition()">Simpan Posisi</button>
+    </div>
+  </div>
+</div>
 
 <div class="modal" id="modal">
   <div class="modal-box" id="modal-box">
@@ -392,7 +503,9 @@ function formHTML(m) {
     </div>
     <div>
       <label for="f-hobby">Hobby</label>
-      <select id="f-hobby">${hobbies.map(x => `<option ${x === m.hobby ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select>
+      <div id="hobby-checkboxes" style="display:flex; flex-wrap:wrap; gap:8px;">
+        ${hobbies.map(x => `<label class="checkbox-label"><input type="checkbox" name="hobby" value="${esc(x)}"${m.hobby && m.hobby.includes(x) ? ' checked' : ''}> ${esc(x)}</label>`).join('')}</div>
+      <input type="hidden" id="hobby-checkboxes-value" name="hobby" value="${m.hobby || ''}">
     </div>
   </div>`;
 }
@@ -401,14 +514,129 @@ function previewPhoto(input) {
   const img = document.getElementById('f-foto-preview');
   if (!img) return;
   if (input.files && input.files[0]) {
-    img.src = URL.createObjectURL(input.files[0]);
-    img.style.display = 'block';
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      img.src = e.target.result;
+      img.style.display = 'block';
+      // Show photo position editor
+      openPhotoEditor(e.target.result);
+    };
+    reader.readAsDataURL(file);
   }
+}
+
+let photoScale = 1, photoPosX = 0, photoPosY = 0, photoImg = null;
+
+function openPhotoEditor(src) {
+  photoImg = document.getElementById('photo-editor-img');
+  photoImg.src = src;
+  photoScale = 1;
+  photoPosX = 0;
+  photoPosY = 0;
+  updatePhotoTransform();
+  document.getElementById('photo-editor').classList.add('show');
+  
+  // Setup drag functionality
+  const frame = document.getElementById('photo-frame');
+  let isDragging = false;
+  let startX, startY;
+  
+  photoImg.onmousedown = function(e) {
+    isDragging = true;
+    startX = e.clientX - photoPosX;
+    startY = e.clientY - photoPosY;
+    e.preventDefault();
+  };
+  
+  document.onmousemove = function(e) {
+    if (!isDragging) return;
+    photoPosX = e.clientX - startX;
+    photoPosY = e.clientY - startY;
+    updatePhotoTransform();
+  };
+  
+  document.onmouseup = function() {
+    isDragging = false;
+  };
+}
+
+function zoomPhoto(delta) {
+  photoScale += delta;
+  if (photoScale < 0.5) photoScale = 0.5;
+  if (photoScale > 3) photoScale = 3;
+  updatePhotoTransform();
+}
+
+function resetPhoto() {
+  photoScale = 1;
+  photoPosX = 0;
+  photoPosY = 0;
+  updatePhotoTransform();
+}
+
+function updatePhotoTransform() {
+  if (!photoImg) return;
+  photoImg.style.transform = `translate(${photoPosX}px, ${photoPosY}px) scale(${photoScale})`;
+}
+
+function cancelPhotoPosition() {
+  document.getElementById('photo-editor').classList.remove('show');
+  // Reset preview if needed
+}
+
+function savePhotoPosition() {
+  if (!photoImg) return;
+  // Create a canvas to capture the cropped image
+  const canvas = document.createElement('canvas');
+  canvas.width = 200;
+  canvas.height = 200;
+  const ctx = canvas.getContext('2d');
+  
+  // Draw the image with current transform
+  const img = photoImg;
+  const rect = document.getElementById('photo-frame').getBoundingClientRect();
+  const offsetX = photoPosX;
+  const offsetY = photoPosY;
+  
+  ctx.save();
+  ctx.translate(offsetX, offsetY);
+  ctx.scale(photoScale, photoScale);
+  ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+  ctx.restore();
+  
+  // Convert to blob
+  canvas.toBlob(function(blob) {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    // Update preview
+    const preview = document.getElementById('f-foto-preview');
+    if (preview) {
+      preview.src = url;
+      preview.style.display = 'block';
+    }
+    // Store the blob for upload
+    window.photoBlob = blob;
+    document.getElementById('photo-editor').classList.remove('show');
+  }, 'image/jpeg', 0.9);
 }
 
 async function uploadPhoto() {
   const input = document.getElementById('f-foto');
   if (!input?.files?.[0]) return editingPhoto;
+  
+  // Check if we have a positioned photo blob
+  if (window.photoBlob) {
+    const form = new FormData();
+    form.append('foto', window.photoBlob, 'photo.jpg');
+    const response = await fetch('hobby_api.php?action=upload_photo', { method: 'POST', body: form, credentials: 'same-origin' });
+    const data = await response.json();
+    if (!response.ok || data.status !== 'success') throw Error(data.message || 'Upload foto gagal.');
+    window.photoBlob = null;
+    return data.path;
+  }
+  
+  // Fallback to original upload
   const form = new FormData();
   form.append('foto', input.files[0]);
   const response = await fetch('hobby_api.php?action=upload_photo', { method: 'POST', body: form, credentials: 'same-origin' });
@@ -418,12 +646,14 @@ async function uploadPhoto() {
 }
 
 function values() {
+  const checkboxes = document.querySelectorAll('#hobby-checkboxes input[type="checkbox"]:checked');
+  const hobbies = Array.from(checkboxes).map(c => c.value);
   return {
     nama: document.getElementById('f-nama').value.trim(),
     nrp: document.getElementById('f-nrp').value.trim(),
     foto_path: editingPhoto,
     perusahaan: document.getElementById('f-perusahaan').value,
-    hobby: document.getElementById('f-hobby').value
+    hobby: hobbies.join(', ')
   };
 }
 
